@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#14b8a6">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>FitPass69 | สิทธิพิเศษสมาชิกใหม่</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary:      #14b8a6;
+            --primary-dark: #0d9488;
+            --accent:       #0ea5e9;
+            --glass-bg:     rgba(255,255,255,0.78);
+            --glass-border: rgba(255,255,255,0.9);
+            --text-main:    #1e293b;
+            --text-sub:     #475569;
+            --text-muted:   #94a3b8;
+            --fs-xs:    clamp(0.75rem,  2vw,  0.875rem);
+            --fs-sm:    clamp(0.875rem, 2.5vw, 1rem);
+            --fs-base:  clamp(1rem,     3vw,  1.125rem);
+            --fs-lg:    clamp(1.125rem, 3.5vw, 1.375rem);
+            --fs-xl:    clamp(1.25rem,  4vw,  1.625rem);
+            --fs-2xl:   clamp(1.5rem,   5vw,  2rem);
+            --fs-hero:  clamp(2.25rem,  8vw,  3.25rem);
+            --sp-sm:  clamp(0.75rem, 3vw, 1.25rem);
+            --sp-md:  clamp(1rem,    4vw, 1.75rem);
+            --sp-lg:  clamp(1.5rem,  5vw, 2.5rem);
+            --sp-xl:  clamp(2rem,    6vw, 3.5rem);
+            --card-w: min(100%, 520px);
+            --card-r: clamp(1rem, 4vw, 1.75rem);
+        }
+
+        *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html, body {
+            margin: 0; padding: 0;
+            height: 100%;
+            -webkit-text-size-adjust: 100%;
+        }
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            font-size: var(--fs-base);
+            color: var(--text-main);
+            background: linear-gradient(145deg, #e8fdf5 0%, #e0f4ff 55%, #f8faff 100%);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+
+        #app-shell {
+            width: var(--card-w);
+            min-height: 100vh;
+            min-height: 100dvh;
+            display: flex;
+            flex-direction: column;
+            background: var(--glass-bg);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            box-shadow: 0 0 60px -10px rgba(14,165,233,0.15);
+        }
+
+        @media (min-width: 560px) {
+            body { align-items: center; padding: 1.5rem; min-height: 100vh; }
+            #app-shell {
+                min-height: auto;
+                height: calc(100vh - 3rem);
+                height: calc(100dvh - 3rem);
+                border-radius: var(--card-r);
+                border: 1px solid var(--glass-border);
+            }
+        }
+
+        #app-header {
+            flex-shrink: 0;
+            padding: var(--sp-sm) var(--sp-md);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.6);
+            border-bottom: 1px solid rgba(255,255,255,0.7);
+            position: sticky; top: 0; z-index: 10;
+        }
+        .brand-label { font-family: 'Cinzel', serif; font-size: var(--fs-sm); color: var(--text-muted); letter-spacing: 0.15em; }
+        .admin-btn {
+            display: inline-flex; align-items: center; gap: 0.4em;
+            font-size: var(--fs-xs); font-weight: 600; color: var(--text-muted);
+            padding: 0.45em 1em; border-radius: 999px; border: none;
+            background: transparent; cursor: pointer; transition: all 0.2s;
+        }
+        .admin-btn:hover { color: var(--primary-dark); background: rgba(255,255,255,0.75); }
+
+        #app-main {
+            flex: 1;
+            padding: var(--sp-md);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .step { display: none; }
+        .step.active { display: block; animation: fadeUp 0.35s ease-out both; }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-icon {
+            width: clamp(4rem, 14vw, 6rem); height: clamp(4rem, 14vw, 6rem);
+            border-radius: 50%;
+            background: linear-gradient(135deg, #ccfbf1, #e0f2fe);
+            color: #0f766e;
+            display: flex; align-items: center; justify-content: center;
+            font-size: clamp(1.5rem, 5vw, 2.25rem);
+            box-shadow: inset 0 2px 4px rgba(255,255,255,0.9), 0 6px 20px rgba(13,148,136,0.12);
+            margin-inline: auto;
+        }
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: var(--fs-hero);
+            background: linear-gradient(135deg, #059669, #0284c7);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: 0.05em; line-height: 1.1; text-align: center;
+        }
+        .date-badge {
+            display: inline-flex; align-items: center; gap: 0.6em;
+            background: rgba(255,255,255,0.85); border: 1px solid rgba(20,184,166,0.15);
+            border-radius: 999px; padding: 0.55em 1.4em;
+            font-size: var(--fs-sm); font-weight: 600; color: var(--text-sub);
+        }
+        .date-dot {
+            width: 0.55em; height: 0.55em; border-radius: 50%;
+            animation: blink-dot 2s ease-in-out infinite;
+        }
+        @keyframes blink-dot {
+            0%,100% { background: #2dd4bf; box-shadow: 0 0 0 0 rgba(45,212,191,0.4); }
+            50%      { background: #38bdf8; box-shadow: 0 0 0 5px rgba(56,189,248,0); }
+        }
+
+        .field-label {
+            font-size: var(--fs-xs); font-weight: 700; color: var(--text-muted);
+            text-transform: uppercase; letter-spacing: 0.12em;
+            display: block; margin-bottom: 0.5em; margin-left: 0.25em;
+        }
+        .input-wrap { position: relative; }
+        .input-icon {
+            position: absolute; left: 1.1em; top: 50%; transform: translateY(-50%);
+            font-size: var(--fs-lg); color: var(--text-muted); pointer-events: none; transition: color 0.2s;
+        }
+        .input-wrap:focus-within .input-icon { color: var(--primary); }
+        .field-input {
+            width: 100%; background: rgba(255,255,255,0.7);
+            border: 1.5px solid #e2e8f0; border-radius: var(--card-r);
+            padding: 0.9em 1.2em 0.9em 3em;
+            font-family: 'Prompt', sans-serif; font-size: var(--fs-lg); font-weight: 600;
+            color: var(--text-main); transition: all 0.2s; -webkit-appearance: none;
+        }
+        .field-input::placeholder { color: #cbd5e1; font-weight: 400; }
+        .field-input:focus {
+            background: rgba(255,255,255,0.98); border-color: #99f6e4;
+            box-shadow: 0 0 0 4px rgba(153,246,228,0.28); outline: none;
+        }
+        .pin-input { letter-spacing: 0.7em; text-align: center; padding-left: 1.2em !important; -webkit-text-security: disc; text-security: disc; }
+
+        .btn-primary {
+            width: 100%;
+            background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
+            color: #fff; font-family: 'Prompt', sans-serif;
+            font-size: var(--fs-lg); font-weight: 700;
+            border: none; border-radius: var(--card-r); padding: 1em 1.5em;
+            cursor: pointer; position: relative; overflow: hidden;
+            box-shadow: 0 6px 24px rgba(56,189,248,0.28);
+            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+        }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(56,189,248,0.38); }
+        .btn-primary:active { transform: translateY(0); }
+        .btn-primary:disabled { background: linear-gradient(135deg, #e2e8f0, #cbd5e1); box-shadow: none; color: #94a3b8; cursor: not-allowed; }
+        .btn-ghost { width: 100%; background: transparent; border: none; font-family: 'Prompt', sans-serif; font-size: var(--fs-sm); color: var(--text-muted); padding: 0.75em; cursor: pointer; transition: color 0.2s; }
+        .btn-ghost:hover { color: var(--text-sub); }
+
+        .g-card { background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.8); border-radius: var(--card-r); box-shadow: 0 4px 20px rgba(14,165,233,0.06); }
+
+        .quota-track { background: #e2e8f0; border-radius: 999px; height: 9px; overflow: hidden; }
+        .quota-fill { background: linear-gradient(90deg, #34d399, #38bdf8); border-radius: 999px; height: 100%; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+
+        .ticket-divider { border-top: 2px dashed rgba(148,163,184,0.3); margin: var(--sp-md) 0; padding-top: var(--sp-md); }
+
+        .swal2-container { position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 1rem !important; z-index: 9999 !important; }
+        .swal2-popup { border-radius: 1.5rem !important; font-family: 'Prompt', sans-serif !important; font-size: var(--fs-base) !important; width: min(90vw, 400px) !important; }
+        .swal2-title { font-size: var(--fs-xl) !important; font-weight: 700 !important; color: var(--text-main) !important; }
+        .swal2-confirm, .swal2-cancel { font-family: 'Prompt', sans-serif !important; font-size: var(--fs-base) !important; border-radius: 0.875rem !important; padding: 0.65em 1.4em !important; }
+
+        .icon-soft { background: linear-gradient(135deg, #ccfbf1, #e0f2fe); color: #0f766e; }
+        .space-y > * + * { margin-top: var(--sp-md); }
+        .space-y-sm > * + * { margin-top: var(--sp-sm); }
+        button, a, input, select { touch-action: manipulation; }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+<div id="app-shell">
+
+    <header id="app-header">
+        <span class="brand-label">FitPass69</span>
+        <button class="admin-btn" onclick="goToAdmin()">
+            <i class="fa-solid fa-user-shield"></i> ผู้ดูแลระบบ
+        </button>
+    </header>
+
+    <main id="app-main">
+
+        <div id="step-identify" class="step active">
+            <div class="space-y" style="text-align:center;">
+                <div class="hero-icon"><i class="fa-solid fa-person-running"></i></div>
+                <div class="space-y-sm">
+                    <h1 class="hero-title">FitPass69</h1>
+                    <p style="font-size:var(--fs-sm);color:var(--text-sub);">สิทธิพิเศษสำหรับนักศึกษารหัส 69</p>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:0.6em;">
+                    <div class="date-badge"><span class="date-dot"></span>18 – 30 มิถุนายน 2569</div>
+                    <p style="font-size:var(--fs-xs);color:var(--text-muted);">กิจกรรมเฉพาะวันที่ 18–30 มิถุนายนเท่านั้น</p>
+                </div>
+                <div class="g-card space-y-sm" style="padding:var(--sp-md);text-align:left;margin-top:var(--sp-md);">
+                    <label class="field-label" for="input-studentId">รหัสนักศึกษา</label>
+                    <div class="input-wrap">
+                        <span class="input-icon"><i class="fa-solid fa-id-card"></i></span>
+                        <input type="text" id="input-studentId" class="field-input" inputmode="numeric" maxlength="11" placeholder="69xxxxxxxx" onkeydown="if(event.key==='Enter') handleIdentify()">
+                    </div>
+                    <button class="btn-primary" onclick="handleIdentify()" style="margin-top:var(--sp-sm);">
+                        ตรวจสอบข้อมูล <i class="fa-solid fa-arrow-right" style="margin-left:0.4em;"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="step-pin" class="step">
+            <div class="space-y" style="text-align:center;">
+                <div style="width:clamp(3.5rem,12vw,5rem);height:clamp(3.5rem,12vw,5rem);border-radius:50%;margin-inline:auto;display:flex;align-items:center;justify-content:center;font-size:clamp(1.25rem,4.5vw,2rem);" class="icon-soft">
+                    <i class="fa-solid fa-lock"></i>
+                </div>
+                <div>
+                    <h2 id="pin-title" style="font-size:var(--fs-2xl);font-weight:800;color:var(--text-main);">ยืนยันตัวตน</h2>
+                    <p id="pin-name" style="font-size:var(--fs-lg);font-weight:700;color:var(--text-sub);margin-top:0.25em;"></p>
+                    <p id="pin-id-display" style="font-size:var(--fs-sm);color:var(--text-muted);"></p>
+                </div>
+                <div class="g-card space-y-sm" style="padding:var(--sp-md);text-align:left;">
+                    <div id="section-new-pin">
+                        <div class="space-y-sm">
+                            <div>
+                                <label class="field-label">ตั้ง PIN 6 หลัก</label>
+                                <input type="text" id="new-pin-1" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="field-input pin-input" placeholder="• • • • • •">
+                            </div>
+                            <div>
+                                <label class="field-label">ยืนยัน PIN อีกครั้ง</label>
+                                <input type="text" id="new-pin-2" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="field-input pin-input" placeholder="• • • • • •">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="section-login-pin" class="hidden">
+                        <label class="field-label">ใส่ PIN 6 หลัก</label>
+                        <input type="text" id="login-pin" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="field-input pin-input" placeholder="• • • • • •" onkeydown="if(event.key==='Enter') handlePinSubmit()">
+                    </div>
+                    <button class="btn-primary" onclick="handlePinSubmit()" style="margin-top:var(--sp-sm);">
+                        ยืนยัน <i class="fa-solid fa-check" style="margin-left:0.4em;"></i>
+                    </button>
+                    <button class="btn-ghost" onclick="goToStep('step-identify')">
+                        <i class="fa-solid fa-arrow-left" style="margin-right:0.3em;"></i> ย้อนกลับ
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="step-dashboard" class="step">
+            <div class="space-y">
+                <div class="g-card space-y-sm" style="padding:var(--sp-md);text-align:center;">
+                    <div style="width:clamp(3.5rem,12vw,5rem);height:clamp(3.5rem,12vw,5rem);border-radius:50%;margin-inline:auto;display:flex;align-items:center;justify-content:center;font-size:clamp(1.25rem,4.5vw,2rem);" class="icon-soft">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <h2 id="dash-name" style="font-size:var(--fs-xl);font-weight:800;color:var(--text-main);">คุณ...</h2>
+                        <p style="font-size:var(--fs-sm);color:var(--text-muted);">รหัส: <span id="dash-id" style="font-weight:600;"></span></p>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.55);border-radius:calc(var(--card-r)*0.7);padding:var(--sp-sm);border:1px solid rgba(255,255,255,0.7);">
+                        <div style="display:flex;justify-content:space-between;font-size:var(--fs-sm);color:var(--text-sub);margin-bottom:0.6em;">
+                            <span>สิทธิ์ที่ใช้ไปแล้ว</span>
+                            <span><span id="dash-used" style="color:#0d9488;font-weight:800;font-size:var(--fs-base);">0</span> / 3 วัน</span>
+                        </div>
+                        <div class="quota-track"><div id="quota-bar" class="quota-fill" style="width:0%"></div></div>
+                        <p style="text-align:center;font-size:var(--fs-sm);color:var(--text-sub);margin-top:0.6em;">
+                            สิทธิ์คงเหลือ <span id="dash-remaining" style="color:#0d9488;font-weight:800;">3</span> วัน
+                        </p>
+                    </div>
+                    <button id="checkin-btn" class="btn-primary" onclick="handleGoToCheckin()">
+                        <i class="fa-solid fa-bolt" style="margin-right:0.4em;"></i>เข้าใช้งานตอนนี้
+                    </button>
+                    <p id="lock-msg" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;"></p>
+                </div>
+                <div class="g-card" style="padding:var(--sp-md);">
+                    <h3 style="font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:var(--sp-sm);">ประวัติการใช้บริการ</h3>
+                    <div id="history-list"><p style="text-align:center;color:var(--text-muted);padding:1.5em 0;">กำลังโหลด...</p></div>
+                </div>
+                <button class="btn-ghost" onclick="handleLogout()">
+                    <i class="fa-solid fa-right-from-bracket" style="margin-right:0.4em;"></i>ออกจากระบบ
+                </button>
+            </div>
+        </div>
+
+        <div id="step-success" class="step">
+            <div style="border-radius:var(--card-r);overflow:hidden;box-shadow:0 20px 50px -8px rgba(14,165,233,0.2);border:1px solid rgba(255,255,255,0.7);">
+                <div style="background:linear-gradient(135deg,#10b981,#0ea5e9);padding:var(--sp-lg);text-align:center;color:#fff;">
+                    <i class="fa-solid fa-circle-check" style="font-size:clamp(2.5rem,8vw,4rem);"></i>
+                    <h2 style="font-size:var(--fs-2xl);font-weight:800;margin-top:0.5em;">เช็คอินสำเร็จ!</h2>
+                    <p style="font-size:var(--fs-sm);opacity:0.85;">โชว์หน้าจอนี้ต่อเจ้าหน้าที่</p>
+                </div>
+                <div style="background:rgba(255,255,255,0.55);padding:var(--sp-md);text-align:center;">
+                    <div class="ticket-divider">
+                        <p style="font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:0.4em;">วันที่ใช้สิทธิ์</p>
+                        <div style="display:flex;align-items:baseline;justify-content:center;gap:0.3em;">
+                            <span id="res-day" style="font-size:clamp(4rem,18vw,7rem);font-weight:800;color:#0d9488;line-height:1;">1</span>
+                            <span style="font-size:var(--fs-2xl);color:#cbd5e1;font-weight:300;">/3</span>
+                        </div>
+                    </div>
+                    <div style="margin-bottom:var(--sp-sm);">
+                        <h3 id="res-name" style="font-size:var(--fs-xl);font-weight:800;color:var(--text-main);"></h3>
+                        <p id="res-id" style="font-size:var(--fs-sm);color:var(--text-muted);font-family:monospace;margin-top:0.2em;"></p>
+                    </div>
+                    <div style="background:rgba(204,251,241,0.5);border:1px solid rgba(167,243,208,0.6);border-radius:calc(var(--card-r)*0.7);padding:var(--sp-sm) var(--sp-md);margin-bottom:var(--sp-sm);">
+                        <p style="font-size:var(--fs-xs);font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.25em;">สถานที่ใช้บริการ</p>
+                        <p id="res-location" style="font-size:var(--fs-xl);font-weight:800;color:#065f46;"></p>
+                    </div>
+                    <div style="background:rgba(254,243,199,0.6);border:1px solid rgba(253,230,138,0.6);border-radius:calc(var(--card-r)*0.7);padding:var(--sp-sm);text-align:left;margin-bottom:var(--sp-sm);">
+                        <p style="font-size:var(--fs-sm);font-weight:700;color:#92400e;margin-bottom:0.4em;"><i class="fa-solid fa-triangle-exclamation" style="margin-right:0.4em;"></i>กรุณาแสดงต่อเจ้าหน้าที่</p>
+                        <ul style="font-size:var(--fs-xs);color:#b45309;list-style:disc;padding-left:1.2em;line-height:1.8;">
+                            <li>บัตรนักศึกษา (ตัวจริง)</li>
+                            <li>แอป <strong>SIS PSU</strong> หน้าบัตรดิจิตอล</li>
+                        </ul>
+                    </div>
+                    <div style="display:flex;justify-content:space-between;font-size:var(--fs-xs);color:var(--text-muted);font-family:monospace;">
+                        <span>REF: <strong id="res-token" style="color:var(--text-sub);"></strong></span>
+                        <span id="res-time"></span>
+                    </div>
+                </div>
+                <button onclick="goToDashboard()" style="width:100%;background:linear-gradient(135deg,#10b981,#0ea5e9);color:#fff;border:none;padding:var(--sp-sm) var(--sp-md);font-family:'Prompt',sans-serif;font-size:var(--fs-base);font-weight:700;cursor:pointer;">
+                    <i class="fa-solid fa-chart-bar" style="margin-right:0.4em;"></i>ดูสรุปสิทธิ์ของฉัน
+                </button>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<script>
+const API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
+const ADMIN_URL = API_URL + '?page=admin';
+
+async function api(action, params = {}) {
+    const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain' },
+        body: JSON.stringify({ action, ...params })
+    });
+    if (!res.ok) throw new Error('Network error: ' + res.status);
+    return res.json();
+}
+
+const state = { studentId: '', name: '', isNewUser: false };
+
+['input-studentId','new-pin-1','new-pin-2','login-pin'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('input', () => { el.value = el.value.replace(/\D/g, ''); });
+});
+
+function goToStep(stepId) {
+    document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
+    document.getElementById(stepId).classList.add('active');
+    document.getElementById('app-main').scrollTo({ top: 0, behavior: 'smooth' });
+}
+function goToDashboard() { renderDashboard(); goToStep('step-dashboard'); }
+function goToAdmin() { window.location.href = ADMIN_URL; }
+function handleLogout() {
+    state.studentId = ''; state.name = ''; state.isNewUser = false;
+    ['input-studentId','new-pin-1','new-pin-2','login-pin'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.value = '';
+    });
+    goToStep('step-identify');
+}
+
+const swalOpts = { scrollbarPadding: false, heightAuto: false };
+function loading(title) {
+    Swal.fire({ ...swalOpts, title, allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+}
+function toast(icon, title) {
+    Swal.fire({ icon, title, toast: true, position: 'top', timer: 2500, showConfirmButton: false });
+}
+
+async function handleIdentify() {
+    const sid = document.getElementById('input-studentId').value.trim();
+    if (!sid) return toast('warning', 'กรุณากรอกรหัสนักศึกษา');
+    loading('กำลังตรวจสอบ...');
+    try {
+        const res = await api('findStudent', { studentId: sid });
+        Swal.close();
+        if (res.status === 'found') {
+            state.studentId = res.studentId; state.name = res.name; state.isNewUser = !res.isRegistered;
+            setupPinPage(); goToStep('step-pin');
+        } else {
+            Swal.fire({ ...swalOpts, icon: 'error', title: 'ไม่พบข้อมูล', text: res.message, confirmButtonColor: '#0d9488' });
+        }
+    } catch(e) {
+        Swal.close();
+        Swal.fire({ ...swalOpts, icon: 'error', title: 'เชื่อมต่อไม่ได้', text: e.message });
+    }
+}
+
+function setupPinPage() {
+    document.getElementById('pin-name').innerText = state.name;
+    document.getElementById('pin-id-display').innerText = 'รหัส: ' + state.studentId;
+    ['new-pin-1','new-pin-2','login-pin'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+    if (state.isNewUser) {
+        document.getElementById('pin-title').innerText = '🎉 ยินดีต้อนรับ! ตั้ง PIN';
+        document.getElementById('section-new-pin').classList.remove('hidden');
+        document.getElementById('section-login-pin').classList.add('hidden');
+    } else {
+        document.getElementById('pin-title').innerText = '🔐 ยืนยันตัวตน';
+        document.getElementById('section-new-pin').classList.add('hidden');
+        document.getElementById('section-login-pin').classList.remove('hidden');
+        setTimeout(() => document.getElementById('login-pin').focus(), 300);
+    }
+}
+function handlePinSubmit() { state.isNewUser ? handleRegister() : handleLogin(); }
+
+async function handleRegister() {
+    const p1 = document.getElementById('new-pin-1').value.trim();
+    const p2 = document.getElementById('new-pin-2').value.trim();
+    if (p1.length !== 6) return toast('warning', 'PIN ต้องมี 6 หลัก');
+    if (p1 !== p2) return toast('error', 'PIN ทั้งสองครั้งไม่ตรงกัน');
+    loading('กำลังลงทะเบียน...');
+    try {
+        const res = await api('register', { studentId: state.studentId, pin: p1, name: state.name });
+        Swal.close();
+        if (res.status === 'success') {
+            goToDashboard();
+            toast('success', 'ลงทะเบียนสำเร็จ! 🎉');
+        } else {
+            Swal.fire({ ...swalOpts, icon: 'error', title: 'ผิดพลาด', text: res.message, confirmButtonColor: '#0d9488' });
+        }
+    } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
+}
+
+async function handleLogin() {
+    const pin = document.getElementById('login-pin').value.trim();
+    if (pin.length !== 6) return toast('warning', 'PIN ต้องมี 6 หลัก');
+    loading('กำลังยืนยัน...');
+    try {
+        const res = await api('verifyPin', { studentId: state.studentId, pin });
+        Swal.close();
+        if (res.status === 'success') { goToDashboard(); }
+        else {
+            document.getElementById('login-pin').value = '';
+            Swal.fire({ ...swalOpts, icon: 'error', title: 'PIN ไม่ถูกต้อง', text: 'กรุณาลองใหม่', confirmButtonColor: '#0d9488' });
+        }
+    } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
+}
+
+async function renderDashboard() {
+    document.getElementById('dash-name').innerText = 'คุณ ' + state.name;
+    document.getElementById('dash-id').innerText = state.studentId;
+    document.getElementById('history-list').innerHTML = '<p style="text-align:center;color:#94a3b8;padding:1.5em 0;">กำลังโหลด...</p>';
+    const btn = document.getElementById('checkin-btn');
+    const msg = document.getElementById('lock-msg');
+    btn.disabled = false; msg.classList.add('hidden');
+    try {
+        const res = await api('getDashboard', { studentId: state.studentId });
+        document.getElementById('dash-used').innerText = res.totalUsed;
+        document.getElementById('dash-remaining').innerText = res.remaining;
+        document.getElementById('quota-bar').style.width = ((res.totalUsed / res.maxDays) * 100) + '%';
+        if (res.remaining <= 0) { btn.disabled = true; msg.classList.remove('hidden'); msg.innerText = '❌ หมดสิทธิ์แล้ว ขอบคุณที่ใช้บริการ'; }
+        else if (res.usedToday) { btn.disabled = true; msg.classList.remove('hidden'); msg.innerText = '🔒 วันนี้ใช้งานที่ "' + res.todayLocation + '" แล้ว'; }
+        const list = document.getElementById('history-list');
+        if (!res.history || res.history.length === 0) {
+            list.innerHTML = '<p style="text-align:center;color:#94a3b8;padding:1.5em 0;">ยังไม่มีประวัติการใช้งาน</p>';
+        } else {
+            list.innerHTML = res.history.map((item, i) => `
+                <div style="display:flex;align-items:center;justify-content:space-between;padding:0.85em 0;${i < res.history.length-1 ? 'border-bottom:1px solid rgba(226,232,240,0.5);' : ''}">
+                    <div style="display:flex;align-items:center;gap:0.75em;">
+                        <div style="width:2.2em;height:2.2em;background:rgba(204,251,241,0.6);color:#0d9488;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:var(--fs-xs);font-weight:800;flex-shrink:0;">${res.totalUsed - i}</div>
+                        <span style="font-size:var(--fs-sm);font-weight:700;color:var(--text-sub);">${item.location}</span>
+                    </div>
+                    <span style="font-size:var(--fs-xs);color:var(--text-muted);flex-shrink:0;margin-left:0.5em;">${item.timestamp}</span>
+                </div>`).join('');
+        }
+    } catch(e) {
+        document.getElementById('history-list').innerHTML = '<p style="text-align:center;color:#f43f5e;padding:1.5em 0;">โหลดข้อมูลไม่สำเร็จ</p>';
+    }
+}
+
+async function handleGoToCheckin() {
+    const { value: loc } = await Swal.fire({
+        ...swalOpts, title: 'เลือกสถานที่', input: 'select',
+        inputOptions: { 'ฟิตเนส': '🏋️‍♂️  ฟิตเนส', 'สระว่ายน้ำ': '🏊‍♀️  สระว่ายน้ำ' },
+        inputPlaceholder: 'กรุณาเลือกสถานที่', showCancelButton: true,
+        confirmButtonText: 'ถัดไป →', cancelButtonText: 'ยกเลิก', confirmButtonColor: '#0d9488',
+        inputValidator: v => { if (!v) return 'กรุณาเลือกสถานที่ก่อน'; }
+    });
+    if (!loc) return;
+    const { isConfirmed } = await Swal.fire({
+        ...swalOpts, icon: 'info', title: 'ยืนยันการเข้าใช้บริการ',
+        html: `คุณกำลังจะเข้าใช้<br><span style="font-size:var(--fs-xl);font-weight:800;color:#0d9488;">${loc}</span><br><br><small style="color:#94a3b8;">⚠️ เมื่อยืนยันแล้วจะไม่สามารถเปลี่ยนสถานที่ในวันนี้ได้</small>`,
+        showCancelButton: true, confirmButtonText: '✓ ยืนยัน', cancelButtonText: 'ยกเลิก', confirmButtonColor: '#0d9488'
+    });
+    if (!isConfirmed) return;
+    loading('กำลังบันทึก...');
+    try {
+        const res = await api('checkIn', { studentId: state.studentId, location: loc });
+        Swal.close();
+        if (res.status === 'success') {
+            document.getElementById('res-day').innerText = res.day;
+            document.getElementById('res-name').innerText = res.name;
+            document.getElementById('res-id').innerText = res.studentId;
+            document.getElementById('res-location').innerText = res.location;
+            document.getElementById('res-token').innerText = res.token;
+            document.getElementById('res-time').innerText = res.timestamp;
+            goToStep('step-success');
+            confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 } });
+        } else {
+            Swal.fire({ ...swalOpts, icon: 'error', title: 'ไม่สำเร็จ', text: res.message, confirmButtonColor: '#0d9488' });
+        }
+    } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
+}
+</script>
+</body>
+</html>
