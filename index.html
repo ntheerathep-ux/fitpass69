@@ -364,14 +364,22 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
 const ADMIN_URL = API_URL + '?page=admin';
 
-async function api(action, params = {}) {
-    const res = await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain' },
-        body: JSON.stringify({ action, ...params })
+// JSONP — เลี่ยงปัญหา CORS ของ Apps Script เวลาเรียกจากเว็บนอก (GitHub Pages)
+function api(action, params = {}) {
+    return new Promise((resolve, reject) => {
+        const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+        const cleanup = () => {
+            delete window[cbName];
+            if (script.parentNode) script.parentNode.removeChild(script);
+        };
+        window[cbName] = (data) => { resolve(data); cleanup(); };
+
+        const query = new URLSearchParams({ action, callback: cbName, ...params }).toString();
+        const script = document.createElement('script');
+        script.src = API_URL + '?' + query;
+        script.onerror = () => { reject(new Error('เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ')); cleanup(); };
+        document.body.appendChild(script);
     });
-    if (!res.ok) throw new Error('Network error: ' + res.status);
-    return res.json();
 }
 
 const state = { studentId: '', name: '', isNewUser: false };
