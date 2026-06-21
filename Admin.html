@@ -774,8 +774,6 @@ async function loadOverview() {
 function renderOverview(data) {
   // Stat cards
   document.getElementById('s-today').textContent = data.todayCount;
-  document.getElementById('s-yesterday').textContent = data.yesterdayCount || 0;
-  document.getElementById('s-total').textContent = data.totalCheckIns;
   document.getElementById('s-users').textContent = data.totalUsers;
   document.getElementById('s-pct').textContent = data.remainingQuota.percent;
 
