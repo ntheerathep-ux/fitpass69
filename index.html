@@ -362,7 +362,9 @@
 
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
-const ADMIN_URL = API_URL + '?page=admin';
+
+// ✅ แก้แล้ว: ชี้ไปที่หน้า Admin ใหม่บน GitHub Pages โดยตรง แทนหน้า Admin เก่าใน Apps Script
+const ADMIN_URL = 'https://ntheerathep-ux.github.io/fitpass69/Admin.html';
 
 // JSONP — เลี่ยงปัญหา CORS ของ Apps Script เวลาเรียกจากเว็บนอก (GitHub Pages)
 function api(action, params = {}) {
