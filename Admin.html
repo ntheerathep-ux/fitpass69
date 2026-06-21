@@ -549,17 +549,26 @@ tr:hover td{background:#fafafa;}
 
 <script>
 // ===================== CONFIG =====================
-var API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec'; // ← ใส่ Apps Script URL ตรงนี้
+var API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
 
-// ===================== API =====================
-async function api(action, params) {
+// ===================== API (JSONP — เลี่ยงปัญหา CORS เวลาเรียกจาก GitHub Pages) =====================
+function api(action, params) {
   params = params || {};
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(Object.assign({ action: action }, params))
+  return new Promise(function(resolve, reject) {
+    var cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+    var script = document.createElement('script');
+    function cleanup() {
+      delete window[cbName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+    window[cbName] = function(data) { resolve(data); cleanup(); };
+
+    var allParams = Object.assign({ action: action, callback: cbName }, params);
+    var query = new URLSearchParams(allParams).toString();
+    script.src = API_URL + '?' + query;
+    script.onerror = function() { reject(new Error('เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ')); cleanup(); };
+    document.body.appendChild(script);
   });
-  return res.json();
 }
 
 // ===================== CLOCK =====================
@@ -581,16 +590,12 @@ function doLogin() {
   var pass = document.getElementById('admin-pass').value;
   if (!pass) return;
   document.getElementById('login-error').style.display = 'none';
-  if (API_URL) {
-    api('adminLogin', { password: pass }).then(function(res) {
-      if (res.success) { showApp(); }
-      else { document.getElementById('login-error').style.display = 'block'; }
-    });
-  } else {
-    // Dev mode — ไม่มี API URL ยังใช้ได้
-    if (pass === 'fitpass69') { showApp(); }
+  api('adminLogin', { password: pass }).then(function(res) {
+    if (res.success) { showApp(); }
     else { document.getElementById('login-error').style.display = 'block'; }
-  }
+  }).catch(function() {
+    document.getElementById('login-error').style.display = 'block';
+  });
 }
 function showApp() {
   sessionStorage.setItem('adminAuth', '1');
@@ -699,15 +704,13 @@ function makePeakChart(peakHours) {
   var slots = [];
   var fitData = [];
   var poolData = [];
-  // สร้าง slot ทุก 30 นาที ตั้งแต่ 06:30 ถึง 21:00
   for (var h = 6; h <= 21; h++) {
     var minutes = (h === 6) ? [30] : (h === 21) ? [0] : [0, 30];
     minutes.forEach(function(m) {
       var label = (h < 10 ? '0' : '') + h + ':' + (m === 0 ? '00' : '30');
       slots.push(label);
-      // map ชั่วโมงนั้นๆ
       var key = String(h);
-      var ratio = 0.5; // แต่ละ slot = ครึ่งชั่วโมง แบ่งค่า hour ออกเป็น 2
+      var ratio = 0.5;
       fitData.push(Math.round(((peakHours[key] && peakHours[key].fitness) || 0) * ratio));
       poolData.push(Math.round(((peakHours[key] && peakHours[key].pool) || 0) * ratio));
     });
@@ -739,47 +742,6 @@ function makePeakChart(peakHours) {
 
 // ===================== LOAD OVERVIEW =====================
 async function loadOverview() {
-  if (!API_URL) {
-    // Demo data ถ้าไม่มี API
-    renderOverview({
-      todayCount: 12, yesterdayCount: 8, totalCheckIns: 47, totalUsers: 25,
-      remainingQuota: { percent: 63 },
-      locations: { 'ฟิตเนส': 28, 'สระว่ายน้ำ': 19 },
-      daily: [
-        { date: '14/06', fitness: 3, pool: 2 },
-        { date: '15/06', fitness: 5, pool: 4 },
-        { date: '16/06', fitness: 4, pool: 3 },
-        { date: '17/06', fitness: 6, pool: 5 },
-        { date: '18/06', fitness: 4, pool: 2 },
-        { date: '19/06', fitness: 2, pool: 1 },
-        { date: '20/06', fitness: 4, pool: 2 },
-      ],
-      peakHours: {
-        '6':  { fitness: 0, pool: 0 },
-        '7':  { fitness: 2, pool: 1 },
-        '8':  { fitness: 5, pool: 3 },
-        '9':  { fitness: 7, pool: 4 },
-        '10': { fitness: 6, pool: 5 },
-        '11': { fitness: 4, pool: 3 },
-        '12': { fitness: 3, pool: 2 },
-        '13': { fitness: 4, pool: 3 },
-        '14': { fitness: 5, pool: 4 },
-        '15': { fitness: 6, pool: 3 },
-        '16': { fitness: 5, pool: 4 },
-        '17': { fitness: 4, pool: 2 },
-        '18': { fitness: 3, pool: 2 },
-        '19': { fitness: 2, pool: 1 },
-        '20': { fitness: 1, pool: 1 },
-        '21': { fitness: 0, pool: 0 },
-      },
-      recent: [
-        { name: 'สมชาย ใจดี', id: '6910511001', location: 'ฟิตเนส', time: '09:14' },
-        { name: 'สมหญิง รักดี', id: '6910511002', location: 'สระว่ายน้ำ', time: '09:30' },
-        { name: 'ทดสอบ ระบบ', id: '6910511003', location: 'ฟิตเนส', time: '10:02' },
-      ]
-    });
-    return;
-  }
   try {
     var data = await api('getAdminStats');
     renderOverview(data);
@@ -787,7 +749,6 @@ async function loadOverview() {
 }
 
 function renderOverview(data) {
-  // Stat cards
   document.getElementById('s-today').textContent = data.todayCount;
   document.getElementById('s-yesterday').textContent = data.yesterdayCount || 0;
   document.getElementById('s-total').textContent = data.totalCheckIns;
@@ -800,12 +761,10 @@ function renderOverview(data) {
   else if (diff < 0) vsEl.innerHTML = '<span class="down">↓ ' + Math.abs(diff) + ' คน จากเมื่อวาน</span>';
   else vsEl.innerHTML = '<span class="neutral">เท่ากับเมื่อวาน</span>';
 
-  // Location counts
   var fit = data.locations['ฟิตเนส'] || 0;
   var pool = data.locations['สระว่ายน้ำ'] || 0;
   var total = fit + pool || 1;
 
-  // Line chart labels
   document.getElementById('c-fitness-num').textContent = fit;
   document.getElementById('c-fitness-baht').textContent = (fit * 15).toLocaleString('th-TH');
   document.getElementById('c-pool-num').textContent = pool;
@@ -813,11 +772,9 @@ function renderOverview(data) {
   document.getElementById('c-fitness-pct').textContent = '15 ฿ / ครั้ง';
   document.getElementById('c-pool-pct').textContent = '25 ฿ / ครั้ง';
 
-  // Subsidy calculation: ฟิตเนส 15฿ + สระ 25฿
   var subsidy = (fit * 15) + (pool * 25);
   document.getElementById('s-subsidy').textContent = subsidy.toLocaleString('th-TH') + ' ฿';
 
-  // Mini pie bars
   var fitPct = Math.round(fit / total * 100);
   var poolPct = Math.round(pool / total * 100);
   document.getElementById('mini-fit-pct').textContent = fitPct + '%';
@@ -825,7 +782,6 @@ function renderOverview(data) {
   document.getElementById('mini-fit-bar').style.width = fitPct + '%';
   document.getElementById('mini-pool-bar').style.width = poolPct + '%';
 
-  // Line charts — มูลค่า (บาท) ต่อวัน: ฟิตเนส×15 + สระ×25
   var daily = data.daily || [];
   var labels = daily.map(function(d) { return d.date; });
   var fitnessValue = daily.map(function(d) { return (d.fitness || 0) * 15; });
@@ -839,11 +795,9 @@ function renderOverview(data) {
   chartPool    = makeLine('chart-pool',    labels, poolValue,    '#f97316', '฿');
   makeBar(labels, fitnessCount, poolCount);
 
-  // Peak hour chart
   var peakHours = data.peakHours || {};
   makePeakChart(peakHours);
 
-  // Recent table
   var tbody = document.getElementById('recent-tbody');
   if (!data.recent || data.recent.length === 0) {
     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ยังไม่มีรายการ</td></tr>';
@@ -865,12 +819,6 @@ async function loadDailyReport() {
   document.getElementById('report-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;"><span class="spinner"></span>กำลังโหลด...</td></tr>';
   document.getElementById('report-date-label').textContent = 'รายงานวันที่ ' + date;
 
-  if (!API_URL) {
-    setTimeout(function() {
-      document.getElementById('report-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ยังไม่ได้เชื่อมต่อ API</td></tr>';
-    }, 800);
-    return;
-  }
   try {
     var data = await api('getDailyReport', { dateString: date });
     var tbody = document.getElementById('report-tbody');
@@ -911,12 +859,6 @@ async function addStudent() {
     resultEl.textContent = 'PIN ต้องมี 6 หลัก';
     return;
   }
-  if (!API_URL) {
-    resultEl.className = 'result-box result-error';
-    resultEl.style.display = 'block';
-    resultEl.textContent = 'ยังไม่ได้เชื่อมต่อ API';
-    return;
-  }
   try {
     var res = await api('register', { studentId: id, pin: pin, name: name });
     if (res.status === 'success') {
@@ -942,12 +884,6 @@ async function searchStudent() {
   var id = document.getElementById('search-id').value.trim();
   var resultEl = document.getElementById('search-result');
   if (!id) return;
-  if (!API_URL) {
-    resultEl.className = 'result-box result-error';
-    resultEl.style.display = 'block';
-    resultEl.textContent = 'ยังไม่ได้เชื่อมต่อ API';
-    return;
-  }
   try {
     var res = await api('getDashboard', { studentId: id });
     if (res.name) {
