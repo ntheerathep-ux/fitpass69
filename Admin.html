@@ -30,19 +30,17 @@
   --sidebar-w-collapsed:64px;
 }
 html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);}
+
+/* ───── LOGIN ───── */
 #login-page{
-  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  min-height:100vh;display:flex;align-items:center;justify-content:center;
   background:linear-gradient(145deg,#e8fdf5 0%,#e0f4ff 55%,#f8faff 100%);
-  font-family:'Prompt',sans-serif;
-  padding:1rem;
+  font-family:'Prompt',sans-serif;padding:1rem;
 }
 .login-card{
-  background:rgba(255,255,255,0.78);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-radius:1.5rem;
-  padding:2.5rem 2rem;
-  width:min(100%,420px);
-  box-shadow:0 8px 40px rgba(14,165,233,0.13), 0 1.5px 6px rgba(0,0,0,0.04);
+  background:rgba(255,255,255,0.78);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-radius:1.5rem;padding:2.5rem 2rem;width:min(100%,420px);
+  box-shadow:0 8px 40px rgba(14,165,233,0.13),0 1.5px 6px rgba(0,0,0,0.04);
   border:1px solid rgba(255,255,255,0.9);
 }
 .login-logo{
@@ -57,8 +55,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   font-family:'Cinzel',serif;font-size:clamp(2rem,7vw,2.75rem);
   background:linear-gradient(135deg,#059669,#0284c7);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  letter-spacing:0.05em;line-height:1.1;text-align:center;
-  display:block;margin-bottom:0.25rem;
+  letter-spacing:0.05em;line-height:1.1;text-align:center;display:block;margin-bottom:0.25rem;
 }
 .login-sub{font-size:0.9rem;color:#475569;text-align:center;margin-bottom:0.5rem;font-weight:500;}
 .login-badge{
@@ -67,13 +64,10 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   border-radius:999px;padding:0.4em 1.1em;font-size:0.8rem;font-weight:600;
   color:#475569;margin:0 auto 1.75rem;
 }
-.login-badge-dot{width:0.5em;height:0.5em;border-radius:50%;background:#2dd4bf;
-  box-shadow:0 0 0 3px rgba(45,212,191,0.2);}
-.login-label{font-size:0.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;
-  letter-spacing:0.12em;display:block;margin-bottom:0.5em;margin-left:0.2em;}
+.login-badge-dot{width:0.5em;height:0.5em;border-radius:50%;background:#2dd4bf;box-shadow:0 0 0 3px rgba(45,212,191,0.2);}
+.login-label{font-size:0.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.12em;display:block;margin-bottom:0.5em;margin-left:0.2em;}
 .login-input-wrap{position:relative;margin-bottom:1rem;}
-.login-input-icon{position:absolute;left:1em;top:50%;transform:translateY(-50%);
-  color:#94a3b8;pointer-events:none;font-size:1rem;}
+.login-input-icon{position:absolute;left:1em;top:50%;transform:translateY(-50%);color:#94a3b8;pointer-events:none;font-size:1rem;}
 .login-input{
   width:100%;background:rgba(255,255,255,0.7);border:1.5px solid #e2e8f0;
   border-radius:1rem;padding:0.85em 1.1em 0.85em 2.8em;
@@ -81,8 +75,7 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   color:#1e293b;transition:all 0.2s;-webkit-appearance:none;
 }
 .login-input::placeholder{color:#cbd5e1;font-weight:400;}
-.login-input:focus{background:rgba(255,255,255,0.98);border-color:#99f6e4;
-  box-shadow:0 0 0 4px rgba(153,246,228,0.28);outline:none;}
+.login-input:focus{background:rgba(255,255,255,0.98);border-color:#99f6e4;box-shadow:0 0 0 4px rgba(153,246,228,0.28);outline:none;}
 .login-btn{
   width:100%;margin-top:0.25rem;padding:0.95em;border:none;border-radius:1rem;
   background:linear-gradient(135deg,#14b8a6 0%,#0ea5e9 100%);color:#fff;
@@ -92,79 +85,83 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .login-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(14,184,166,0.38);}
 .login-btn:active{transform:translateY(0);}
 .login-error{color:#f43f5e;font-size:0.8rem;font-weight:600;text-align:center;margin-top:0.75rem;display:none;}
+
+/* ───── APP SHELL ───── */
 #app{display:none;height:100vh;overflow:hidden;}
 .layout{display:flex;height:100%;}
+
+/* ───── SIDEBAR ───── */
 .sidebar{
   width:var(--sidebar-w);flex-shrink:0;
   background:var(--surface);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;
-  transition:width 0.25s ease;overflow:hidden;
+  display:flex;flex-direction:column;transition:width 0.25s ease;overflow:hidden;
 }
 .sidebar.collapsed{width:var(--sidebar-w-collapsed);}
-.sidebar-top{
-  padding:1.25rem 1rem;display:flex;align-items:center;gap:0.75rem;
-  border-bottom:1px solid var(--border);
-}
-.sidebar-logo{
-  width:36px;height:36px;flex-shrink:0;border-radius:10px;
-  background:linear-gradient(135deg,#7c3aed,#a855f7);
-  display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;
-}
+.sidebar-top{padding:1.25rem 1rem;display:flex;align-items:center;gap:0.75rem;border-bottom:1px solid var(--border);}
+.sidebar-logo{width:36px;height:36px;flex-shrink:0;border-radius:10px;background:linear-gradient(135deg,#7c3aed,#a855f7);display:flex;align-items:center;justify-content:center;color:#fff;font-size:15px;}
 .sidebar-brand{font-size:0.95rem;font-weight:700;white-space:nowrap;overflow:hidden;}
 .sidebar-brand span{color:var(--primary);}
-.sidebar-toggle{
-  margin-left:auto;flex-shrink:0;background:none;border:none;
-  color:var(--text-muted);cursor:pointer;font-size:16px;padding:4px;
-  border-radius:6px;transition:all 0.2s;
-}
+.sidebar-toggle{margin-left:auto;flex-shrink:0;background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:4px;border-radius:6px;transition:all 0.2s;}
 .sidebar-toggle:hover{background:var(--bg);color:var(--text-primary);}
 .sidebar-section{padding:1rem 0.75rem 0.25rem;font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap;overflow:hidden;}
 .sidebar.collapsed .sidebar-section{opacity:0;}
 .nav-item{
-  display:flex;align-items:center;gap:0.75rem;
-  padding:0.6rem 0.75rem;border-radius:10px;margin:1px 0.5rem;
-  cursor:pointer;transition:all 0.15s;color:var(--text-secondary);
-  white-space:nowrap;overflow:hidden;border:none;background:none;width:calc(100% - 1rem);
-  font-family:'Inter',sans-serif;font-size:0.875rem;font-weight:500;text-align:left;
+  display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;border-radius:10px;margin:1px 0.5rem;
+  cursor:pointer;transition:all 0.15s;color:var(--text-secondary);white-space:nowrap;overflow:hidden;
+  border:none;background:none;width:calc(100% - 1rem);font-family:'Inter',sans-serif;font-size:0.875rem;font-weight:500;text-align:left;
 }
 .nav-item i{font-size:16px;flex-shrink:0;width:20px;text-align:center;}
 .nav-item:hover{background:var(--bg);color:var(--text-primary);}
 .nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:600;}
 .nav-label{white-space:nowrap;overflow:hidden;}
 .sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding:0.75rem 0.5rem;}
-.logout-btn{
-  display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;
-  border-radius:10px;cursor:pointer;color:var(--danger);background:none;border:none;
-  width:100%;font-family:'Inter',sans-serif;font-size:0.875rem;font-weight:500;
-  transition:all 0.15s;white-space:nowrap;overflow:hidden;
-}
+.logout-btn{display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;border-radius:10px;cursor:pointer;color:var(--danger);background:none;border:none;width:100%;font-family:'Inter',sans-serif;font-size:0.875rem;font-weight:500;transition:all 0.15s;white-space:nowrap;overflow:hidden;}
 .logout-btn:hover{background:#fef2f2;}
 .logout-btn i{font-size:16px;flex-shrink:0;width:20px;text-align:center;}
+
+/* ───── MAIN ───── */
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
 .topbar{
   background:var(--surface);border-bottom:1px solid var(--border);
-  padding:0 1.5rem;height:60px;display:flex;align-items:center;
-  justify-content:space-between;flex-shrink:0;position:sticky;top:0;z-index:5;
+  padding:0 1.5rem;height:60px;display:flex;align-items:center;justify-content:space-between;
+  flex-shrink:0;position:sticky;top:0;z-index:5;
 }
 .topbar-title{font-size:1.1rem;font-weight:700;}
 .topbar-right{display:flex;align-items:center;gap:0.75rem;}
 .refresh-btn{
-  display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.9rem;
-  border-radius:8px;border:1px solid var(--border);background:var(--surface);
-  font-size:0.8rem;font-weight:500;color:var(--text-secondary);cursor:pointer;
-  transition:all 0.2s;font-family:'Inter',sans-serif;
+  display:flex;align-items:center;gap:0.5rem;padding:0.45rem 0.9rem;border-radius:8px;
+  border:1px solid var(--border);background:var(--surface);font-size:0.8rem;font-weight:500;
+  color:var(--text-secondary);cursor:pointer;transition:all 0.2s;font-family:'Inter',sans-serif;
 }
 .refresh-btn:hover{border-color:var(--primary);color:var(--primary);}
 .topbar-time{font-size:0.8rem;color:var(--text-muted);}
 .content{padding:1.5rem;flex:1;}
 .page{display:none;}
 .page.active{display:block;}
-.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;}
-.stat-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:14px;
-  padding:1.25rem;transition:all 0.2s;
+
+/* ───── DATE CONTEXT BANNER ───── */
+.date-banner{
+  display:flex;align-items:center;justify-content:space-between;
+  background:var(--primary-light);border:1px solid #c4b5fd;border-radius:12px;
+  padding:0.75rem 1.25rem;margin-bottom:1.25rem;
+  transition:all 0.3s;
 }
+.date-banner.is-today{background:#f0fdf4;border-color:#bbf7d0;}
+.date-banner-left{display:flex;align-items:center;gap:0.75rem;}
+.date-banner-icon{font-size:1.1rem;}
+.date-banner-text{font-size:0.875rem;font-weight:600;color:var(--text-primary);}
+.date-banner-sub{font-size:0.75rem;color:var(--text-secondary);margin-top:1px;}
+.date-banner-tag{
+  font-size:0.72rem;font-weight:700;padding:3px 10px;border-radius:999px;
+  background:var(--primary);color:#fff;letter-spacing:0.03em;
+}
+.date-banner.is-today .date-banner-tag{background:#10b981;}
+
+/* ───── STAT CARDS ───── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;transition:all 0.2s;}
 .stat-card:hover{box-shadow:0 4px 16px rgba(0,0,0,0.06);transform:translateY(-2px);}
+.stat-card.static-card{border-style:dashed;opacity:0.85;}
 .stat-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
 .stat-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;}
 .stat-badge{font-size:0.7rem;font-weight:600;padding:3px 8px;border-radius:999px;}
@@ -174,27 +171,20 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .up{color:var(--success);}
 .down{color:var(--danger);}
 .neutral{color:var(--text-muted);}
+
+/* ───── CHARTS ───── */
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
 @media(max-width:900px){.chart-grid{grid-template-columns:1fr;}}
-.chart-card{
-  background:var(--surface);border:1px solid var(--border);border-radius:14px;
-  padding:1.25rem;
-}
+.chart-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;}
 .chart-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;}
 .chart-title{font-size:0.8rem;font-weight:600;color:var(--text-secondary);text-transform:uppercase;letter-spacing:0.05em;}
-.chart-num{font-size:2rem;font-weight:700;margin-top:0.1rem;line-height:1;}
-.chart-pct{font-size:0.8rem;font-weight:600;}
 .chart-wrap{position:relative;height:140px;}
 .bar-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;}
 .bar-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
 .bar-card-title{font-size:1rem;font-weight:700;}
 .bar-wrap{position:relative;height:200px;}
-.hbar-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;}
-.hbar-item{margin-bottom:1rem;}
-.hbar-item:last-child{margin-bottom:0;}
-.hbar-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;font-size:0.875rem;font-weight:500;}
-.hbar-track{background:#f1f5f9;border-radius:999px;height:8px;overflow:hidden;}
-.hbar-fill{height:100%;border-radius:999px;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
+
+/* ───── TABLE ───── */
 .table-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.5rem;}
 .table-head{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
 .table-title{font-size:1rem;font-weight:700;}
@@ -206,16 +196,14 @@ tr:hover td{background:#fafafa;}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:0.75rem;font-weight:600;}
 .badge-teal{background:var(--teal-light);color:var(--teal);}
 .badge-coral{background:var(--coral-light);color:var(--coral);}
+
+/* ───── REPORT / MANAGE ───── */
 .filter-bar{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap;}
 .field-group{display:flex;flex-direction:column;gap:0.4rem;}
 .field-group label{font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;}
 .field-input{border:1.5px solid var(--border);border-radius:8px;padding:0.55rem 0.875rem;font-family:'Inter',sans-serif;font-size:0.875rem;color:var(--text-primary);background:var(--bg);transition:all 0.2s;min-width:160px;}
 .field-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.1);}
-.search-btn{
-  padding:0.6rem 1.25rem;border:none;border-radius:8px;
-  background:var(--primary);color:#fff;font-family:'Inter',sans-serif;
-  font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap;
-}
+.search-btn{padding:0.6rem 1.25rem;border:none;border-radius:8px;background:var(--primary);color:#fff;font-family:'Inter',sans-serif;font-size:0.875rem;font-weight:600;cursor:pointer;transition:all 0.2s;white-space:nowrap;}
 .search-btn:hover{background:#6d28d9;}
 .report-summary{font-size:0.875rem;color:var(--text-secondary);text-align:center;padding:0.75rem;border-top:1px solid var(--border);}
 .manage-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
@@ -232,8 +220,12 @@ tr:hover td{background:#fafafa;}
 .result-box{padding:0.875rem 1rem;border-radius:10px;font-size:0.875rem;margin-top:0.75rem;display:none;}
 .result-success{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;}
 .result-error{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;}
+
+/* ───── MISC ───── */
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(124,58,237,0.2);border-top-color:var(--primary);border-radius:50%;animation:spin 0.7s linear infinite;margin-right:6px;}
 @keyframes spin{to{transform:rotate(360deg);}}
+
+/* ───── MOBILE ───── */
 @media(max-width:768px){
   .sidebar{position:fixed;left:-250px;top:0;bottom:0;z-index:100;transition:left 0.25s;}
   .sidebar.open{left:0;box-shadow:0 0 30px rgba(0,0,0,0.15);}
@@ -241,39 +233,41 @@ tr:hover td{background:#fafafa;}
   .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.4);z-index:99;}
   .overlay.show{display:block;}
   .mob-menu-btn{display:flex !important;}
+  .topbar-right{gap:0.4rem;}
+  .topbar-time{display:none;}
 }
 .mob-menu-btn{display:none;background:none;border:none;font-size:20px;color:var(--text-secondary);cursor:pointer;padding:4px;}
 </style>
 </head>
 <body>
+
+<!-- ══════════════ LOGIN ══════════════ -->
 <div id="login-page">
   <div class="login-card">
     <div class="login-logo"><i class="fa-solid fa-person-running"></i></div>
     <span class="login-brand">FitPass69</span>
     <p class="login-sub">ระบบจัดการสมาชิก</p>
     <div style="display:flex;justify-content:center;">
-      <div class="login-badge">
-        <span class="login-badge-dot"></span>ผู้ดูแลระบบ
-      </div>
+      <div class="login-badge"><span class="login-badge-dot"></span>ผู้ดูแลระบบ</div>
     </div>
     <label class="login-label" for="admin-pass">รหัสผ่าน</label>
     <div class="login-input-wrap">
       <span class="login-input-icon"><i class="fa-solid fa-lock"></i></span>
       <input type="password" id="admin-pass" class="login-input" placeholder="กรอกรหัสผ่าน" onkeydown="if(event.key==='Enter') doLogin()">
     </div>
-    <button class="login-btn" onclick="doLogin()">
-      เข้าสู่ระบบ <i class="fa-solid fa-arrow-right" style="margin-left:0.4em;"></i>
-    </button>
+    <button class="login-btn" onclick="doLogin()">เข้าสู่ระบบ <i class="fa-solid fa-arrow-right" style="margin-left:0.4em;"></i></button>
     <p class="login-error" id="login-error">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</p>
   </div>
 </div>
+
+<!-- ══════════════ APP ══════════════ -->
 <div id="app">
   <div class="layout">
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-top">
         <div class="sidebar-logo"><i class="fa-solid fa-person-running"></i></div>
         <span class="sidebar-brand">Fit<span>Pass</span>69</span>
-        <button class="sidebar-toggle" onclick="toggleSidebar()" title="ย่อ/ขยาย"><i class="fa-solid fa-bars"></i></button>
+        <button class="sidebar-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
       </div>
       <div class="sidebar-section">เมนูหลัก</div>
       <button class="nav-item active" id="nav-overview" onclick="switchPage('overview')">
@@ -292,7 +286,9 @@ tr:hover td{background:#fafafa;}
       </div>
     </aside>
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
+
     <div class="main">
+      <!-- TOPBAR -->
       <div class="topbar">
         <div style="display:flex;align-items:center;gap:0.75rem;">
           <button class="mob-menu-btn" onclick="openSidebar()"><i class="fa-solid fa-bars"></i></button>
@@ -300,10 +296,23 @@ tr:hover td{background:#fafafa;}
         </div>
         <div class="topbar-right">
           <span class="topbar-time" id="topbar-time"></span>
-          <div style="display:flex;align-items:center;gap:0.5rem;">
+          <!-- Date picker (overview only) -->
+          <div id="overview-date-controls" style="display:flex;align-items:center;gap:0.5rem;">
+            <button onclick="shiftDate(-1)" title="วันก่อนหน้า"
+              style="padding:0.4rem 0.6rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:0.85rem;transition:all 0.2s;"
+              onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)'"
+              onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
             <input type="date" id="overview-date"
               style="border:1px solid var(--border);border-radius:8px;padding:0.4rem 0.6rem;font-family:'Inter',sans-serif;font-size:0.8rem;color:var(--text-primary);background:var(--surface);cursor:pointer;"
               onchange="onOverviewDateChange()">
+            <button onclick="shiftDate(1)" title="วันถัดไป"
+              style="padding:0.4rem 0.6rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:0.85rem;transition:all 0.2s;"
+              onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)'"
+              onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
             <button onclick="resetOverviewToToday()" id="btn-today"
               style="padding:0.4rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-family:'Inter',sans-serif;font-size:0.8rem;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all 0.2s;"
               onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)'"
@@ -311,38 +320,40 @@ tr:hover td{background:#fafafa;}
               วันนี้
             </button>
           </div>
-          <button class="refresh-btn" onclick="refreshOverview()">
+          <button class="refresh-btn" onclick="refreshCurrent()">
             <i class="fa-solid fa-rotate-right"></i> รีเฟรช
           </button>
         </div>
       </div>
+
+      <!-- CONTENT -->
       <div class="content">
+
+        <!-- ══ PAGE: OVERVIEW ══ -->
         <div class="page active" id="page-overview">
+
+          <!-- Date context banner -->
+          <div class="date-banner is-today" id="date-banner">
+            <div class="date-banner-left">
+              <span class="date-banner-icon">📅</span>
+              <div>
+                <div class="date-banner-text" id="date-banner-text">วันนี้</div>
+                <div class="date-banner-sub" id="date-banner-sub">ข้อมูลอัปเดตอัตโนมัติทุก 30 วินาที</div>
+              </div>
+            </div>
+            <span class="date-banner-tag" id="date-banner-tag">LIVE</span>
+          </div>
+
+          <!-- Stat cards row 1: date-filtered -->
           <div class="stat-grid">
             <div class="stat-card">
               <div class="stat-top">
                 <div class="stat-icon" style="background:#ede9fe;color:#7c3aed;"><i class="fa-solid fa-users"></i></div>
-                <span class="stat-badge" style="background:#ede9fe;color:#7c3aed;">วันนี้</span>
+                <span class="stat-badge" id="s-today-badge" style="background:#ede9fe;color:#7c3aed;">วันนี้</span>
               </div>
               <div class="stat-num" id="s-today">—</div>
               <div class="stat-label" id="s-today-label">คนเข้าใช้วันนี้</div>
-              <div class="stat-change" id="s-today-vs"><span class="neutral">เทียบเมื่อวาน: —</span></div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-top">
-                <div class="stat-icon" style="background:#dbeafe;color:#2563eb;"><i class="fa-solid fa-database"></i></div>
-              </div>
-              <div class="stat-num" id="s-master">—</div>
-              <div class="stat-label">นักศึกษาทั้งหมดในระบบ</div>
-              <div class="stat-change"><span class="neutral">จาก MasterStudent</span></div>
-            </div>
-            <div class="stat-card">
-              <div class="stat-top">
-                <div class="stat-icon" style="background:#ede9fe;color:#7c3aed;"><i class="fa-solid fa-user-check"></i></div>
-              </div>
-              <div class="stat-num" id="s-users">—</div>
-              <div class="stat-label">ลงทะเบียนแล้ว</div>
-              <div class="stat-change"><span class="neutral">ยังไม่ลงทะเบียน: <span id="s-not-reg">—</span> คน</span></div>
+              <div class="stat-change" id="s-today-vs"><span class="neutral">—</span></div>
             </div>
             <div class="stat-card">
               <div class="stat-top">
@@ -378,20 +389,45 @@ tr:hover td{background:#fafafa;}
                 </div>
               </div>
             </div>
-            <div class="stat-card">
+          </div>
+
+          <!-- Stat cards row 2: static system info (always full dataset) -->
+          <div class="stat-grid" style="margin-bottom:1.5rem;">
+            <div class="stat-card static-card">
+              <div class="stat-top">
+                <div class="stat-icon" style="background:#dbeafe;color:#2563eb;"><i class="fa-solid fa-database"></i></div>
+                <span class="stat-badge" style="background:#f1f5f9;color:#64748b;">ระบบ</span>
+              </div>
+              <div class="stat-num" id="s-master">—</div>
+              <div class="stat-label">นักศึกษาทั้งหมดในระบบ</div>
+              <div class="stat-change"><span class="neutral">จาก MasterStudent</span></div>
+            </div>
+            <div class="stat-card static-card">
+              <div class="stat-top">
+                <div class="stat-icon" style="background:#ede9fe;color:#7c3aed;"><i class="fa-solid fa-user-check"></i></div>
+                <span class="stat-badge" style="background:#f1f5f9;color:#64748b;">ระบบ</span>
+              </div>
+              <div class="stat-num" id="s-users">—</div>
+              <div class="stat-label">ลงทะเบียนแล้ว</div>
+              <div class="stat-change"><span class="neutral">ยังไม่ลงทะเบียน: <span id="s-not-reg">—</span> คน</span></div>
+            </div>
+            <div class="stat-card static-card">
               <div class="stat-top">
                 <div class="stat-icon" style="background:#ccfbf1;color:#0d9488;"><i class="fa-solid fa-person-running"></i></div>
+                <span class="stat-badge" style="background:#f1f5f9;color:#64748b;">ระบบ</span>
               </div>
               <div class="stat-num" id="s-pct" style="font-size:1.75rem;">—%</div>
-              <div class="stat-label">สิทธิ์ที่ใช้ไปแล้ว</div>
+              <div class="stat-label">สิทธิ์ที่ใช้ไปแล้วทั้งหมด</div>
               <div class="stat-change"><span class="neutral">จากทั้งหมด <span id="s-total-quota">—</span> ครั้ง</span></div>
             </div>
           </div>
+
+          <!-- Line charts -->
           <div class="chart-grid">
             <div class="chart-card">
               <div class="chart-header">
                 <div>
-                  <div class="chart-title">ฟิตเนส · มูลค่ารายวัน</div>
+                  <div class="chart-title">ฟิตเนส · มูลค่า</div>
                   <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:0.25rem;">
                     <div>
                       <span id="c-fitness-num" style="font-size:1.75rem;font-weight:800;color:#7c3aed;line-height:1;">—</span>
@@ -402,7 +438,7 @@ tr:hover td{background:#fafafa;}
                       <span style="font-size:0.75rem;color:var(--text-muted);margin-left:3px;">฿</span>
                     </div>
                   </div>
-                  <div id="c-fitness-pct" style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">15 ฿ / ครั้ง</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">15 ฿ / ครั้ง</div>
                 </div>
                 <i class="fa-solid fa-dumbbell" style="font-size:20px;color:#c4b5fd;"></i>
               </div>
@@ -411,7 +447,7 @@ tr:hover td{background:#fafafa;}
             <div class="chart-card">
               <div class="chart-header">
                 <div>
-                  <div class="chart-title">สระว่ายน้ำ · มูลค่ารายวัน</div>
+                  <div class="chart-title">สระว่ายน้ำ · มูลค่า</div>
                   <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:0.25rem;">
                     <div>
                       <span id="c-pool-num" style="font-size:1.75rem;font-weight:800;color:#f97316;line-height:1;">—</span>
@@ -422,42 +458,48 @@ tr:hover td{background:#fafafa;}
                       <span style="font-size:0.75rem;color:var(--text-muted);margin-left:3px;">฿</span>
                     </div>
                   </div>
-                  <div id="c-pool-pct" style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">25 ฿ / ครั้ง</div>
+                  <div style="font-size:0.7rem;color:var(--text-muted);margin-top:4px;">25 ฿ / ครั้ง</div>
                 </div>
                 <i class="fa-solid fa-person-swimming" style="font-size:20px;color:#fed7aa;"></i>
               </div>
               <div class="chart-wrap"><canvas id="chart-pool"></canvas></div>
             </div>
           </div>
+
+          <!-- Bar chart: ยอดผู้ใช้ (1 bar หรือ 7 bars) -->
           <div class="bar-card">
             <div class="bar-card-header">
-              <span class="bar-card-title">ยอดผู้ใช้ 7 วันย้อนหลัง</span>
+              <span class="bar-card-title" id="bar-chart-title">ยอดผู้ใช้ 7 วันย้อนหลัง</span>
               <span style="font-size:0.8rem;color:var(--text-muted);">ฟิตเนส vs สระว่ายน้ำ</span>
             </div>
             <div class="bar-wrap"><canvas id="chart-bar"></canvas></div>
           </div>
+
+          <!-- Peak Hour -->
           <div class="bar-card" style="margin-bottom:1.5rem;">
             <div class="bar-card-header">
               <span class="bar-card-title">ช่วงเวลาที่มาใช้บริการ (Peak Hour)</span>
-              <span style="font-size:0.8rem;color:var(--text-muted);">06:00 – 21:00 น.</span>
+              <span style="font-size:0.8rem;color:var(--text-muted);" id="peak-date-label">วันนี้</span>
             </div>
             <div class="bar-wrap" style="height:220px;"><canvas id="chart-peak"></canvas></div>
           </div>
+
+          <!-- Recent table -->
           <div class="table-card">
             <div class="table-head">
-              <span class="table-title">รายการล่าสุด</span>
-              <span style="font-size:0.8rem;color:var(--text-muted);">10 รายการ</span>
+              <span class="table-title" id="recent-table-title">รายการล่าสุด</span>
+              <span style="font-size:0.8rem;color:var(--text-muted);" id="recent-count">10 รายการ</span>
             </div>
             <div style="overflow-x:auto;">
               <table>
-                <thead><tr>
-                  <th>ชื่อ</th><th>รหัส</th><th>สถานที่</th><th>เวลา</th>
-                </tr></thead>
+                <thead><tr><th>ชื่อ</th><th>รหัส</th><th>สถานที่</th><th>เวลา</th></tr></thead>
                 <tbody id="recent-tbody"><tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">กำลังโหลด...</td></tr></tbody>
               </table>
             </div>
           </div>
         </div>
+
+        <!-- ══ PAGE: REPORT ══ -->
         <div class="page" id="page-report">
           <div class="filter-bar">
             <div class="field-group">
@@ -482,6 +524,8 @@ tr:hover td{background:#fafafa;}
             <div class="report-summary" id="report-summary"></div>
           </div>
         </div>
+
+        <!-- ══ PAGE: MANAGE ══ -->
         <div class="page" id="page-manage">
           <div class="manage-grid">
             <div class="manage-card">
@@ -492,9 +536,9 @@ tr:hover td{background:#fafafa;}
                 </p>
                 <div class="form-group">
                   <label class="form-label">รหัสนักศึกษา</label>
-                  <input type="text" id="reset-id" class="form-input" placeholder="เช่น 6910512345" inputmode="numeric" onkeydown="if(event.key==='Enter') resetPin()">
+                  <input type="text" id="reset-id" class="form-input" placeholder="เช่น 6910512345" inputmode="numeric" onkeydown="if(event.key==='Enter') doResetPin()">
                 </div>
-                <button class="submit-btn" onclick="resetPin()" style="background:linear-gradient(135deg,#dc2626,#f97316);">
+                <button class="submit-btn" onclick="doResetPin()" style="background:linear-gradient(135deg,#dc2626,#f97316);">
                   <i class="fa-solid fa-key" style="margin-right:6px;"></i>รีเซ็ต PIN
                 </button>
                 <div class="result-box" id="reset-result"></div>
@@ -515,53 +559,70 @@ tr:hover td{background:#fafafa;}
             </div>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</div>
+
+      </div><!-- /content -->
+    </div><!-- /main -->
+  </div><!-- /layout -->
+</div><!-- /app -->
+
 <script>
+/* ══════════════════════════════════════════
+   CONFIG & API
+══════════════════════════════════════════ */
 var API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
+
 async function api(action, params) {
   params = params || {};
-  const res = await fetch(API_URL, {
+  var res = await fetch(API_URL, {
     method: 'POST',
     headers: { 'Content-Type': 'text/plain' },
     body: JSON.stringify(Object.assign({ action: action }, params))
   });
   return res.json();
 }
+
+/* ══════════════════════════════════════════
+   CLOCK & AUTO-REFRESH
+══════════════════════════════════════════ */
 function updateClock() {
   var now = new Date();
   document.getElementById('topbar-time').textContent =
     now.toLocaleDateString('th-TH', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' +
     now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
 }
-setInterval(updateClock, 1000); updateClock();
-setInterval(function() {
-  if (document.getElementById('page-overview').classList.contains('active')) refreshOverview();
+setInterval(updateClock, 1000);
+updateClock();
+
+// Auto-refresh overview every 30s ONLY when viewing today
+setInterval(function () {
+  if (document.getElementById('page-overview').classList.contains('active')) {
+    var sel = document.getElementById('overview-date').value;
+    if (sel === getTodayStr()) loadOverview(); // live only for today
+  }
 }, 30000);
+
+/* ══════════════════════════════════════════
+   AUTH
+══════════════════════════════════════════ */
 function doLogin() {
   var pass = document.getElementById('admin-pass').value;
   if (!pass) return;
   document.getElementById('login-error').style.display = 'none';
-  if (API_URL) {
-    api('adminLogin', { password: pass }).then(function(res) {
-      if (res.success) { showApp(); }
-      else { document.getElementById('login-error').style.display = 'block'; }
-    });
-  } else {
-    if (pass === 'fitpass69') { showApp(); }
-    else { document.getElementById('login-error').style.display = 'block'; }
-  }
+  api('adminLogin', { password: pass }).then(function (res) {
+    if (res.success) showApp();
+    else document.getElementById('login-error').style.display = 'block';
+  }).catch(function () {
+    document.getElementById('login-error').style.display = 'block';
+  });
 }
 function showApp() {
   sessionStorage.setItem('adminAuth', '1');
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.getElementById('filter-date').valueAsDate = new Date();
-  // ตั้งค่า date picker ภาพรวมเป็นวันนี้
   document.getElementById('overview-date').valueAsDate = new Date();
-  loadOverview();
+  loadSystemStats(); // โหลด masterCount / totalUsers ครั้งเดียว
+  loadOverview();   // โหลดข้อมูลวันนี้
 }
 function doLogout() {
   sessionStorage.removeItem('adminAuth');
@@ -569,7 +630,27 @@ function doLogout() {
   document.getElementById('login-page').style.display = 'flex';
   document.getElementById('admin-pass').value = '';
 }
-if (sessionStorage.getItem('adminAuth')) { showApp(); }
+if (sessionStorage.getItem('adminAuth')) showApp();
+
+/* ══════════════════════════════════════════
+   NAVIGATION
+══════════════════════════════════════════ */
+var pageTitles = { overview: 'ภาพรวม', report: 'รายงาน', manage: 'จัดการสมาชิก' };
+function switchPage(name) {
+  document.querySelectorAll('.page').forEach(function (p) { p.classList.remove('active'); });
+  document.querySelectorAll('.nav-item').forEach(function (n) { n.classList.remove('active'); });
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  document.getElementById('topbar-title').textContent = pageTitles[name];
+  // show/hide date picker controls
+  document.getElementById('overview-date-controls').style.display =
+    (name === 'overview') ? 'flex' : 'none';
+  closeSidebar();
+}
+
+/* ══════════════════════════════════════════
+   SIDEBAR
+══════════════════════════════════════════ */
 var sidebarCollapsed = false;
 function toggleSidebar() {
   sidebarCollapsed = !sidebarCollapsed;
@@ -583,45 +664,121 @@ function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('show');
 }
-var pageTitles = { overview: 'ภาพรวม', report: 'รายงาน', manage: 'จัดการสมาชิก' };
-function switchPage(name) {
-  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
-  document.querySelectorAll('.nav-item').forEach(function(n) { n.classList.remove('active'); });
-  document.getElementById('page-' + name).classList.add('active');
-  document.getElementById('nav-' + name).classList.add('active');
-  document.getElementById('topbar-title').textContent = pageTitles[name];
-  closeSidebar();
+
+/* ══════════════════════════════════════════
+   DATE HELPERS
+══════════════════════════════════════════ */
+function getTodayStr() {
+  return new Date().toISOString().split('T')[0];
 }
-var chartFitness, chartPool, chartBar;
-function makeLine(id, labels, data, color, unit) {
-  var ctx = document.getElementById(id).getContext('2d');
+function formatThaiDate(dateStr) {
+  var p = dateStr.split('-');
+  var thYear = parseInt(p[0]) + 543;
+  var months = ['ม.ค.','ก.พ.','มี.ค.','เม.ย.','พ.ค.','มิ.ย.','ก.ค.','ส.ค.','ก.ย.','ต.ค.','พ.ย.','ธ.ค.'];
+  return p[2] + ' ' + months[parseInt(p[1]) - 1] + ' ' + thYear;
+}
+function formatShortDate(dateStr) {
+  // dd/MM
+  var p = dateStr.split('-');
+  return p[2] + '/' + p[1];
+}
+
+/* ══════════════════════════════════════════
+   DATE PICKER CONTROLS
+══════════════════════════════════════════ */
+function onOverviewDateChange() {
+  var sel = document.getElementById('overview-date').value;
+  if (!sel) return;
+  if (sel === getTodayStr()) {
+    loadOverview();
+  } else {
+    loadDayOverview(sel);
+  }
+}
+function resetOverviewToToday() {
+  document.getElementById('overview-date').valueAsDate = new Date();
+  loadOverview();
+}
+function shiftDate(delta) {
+  var picker = document.getElementById('overview-date');
+  var d = picker.value ? new Date(picker.value + 'T00:00:00') : new Date();
+  d.setDate(d.getDate() + delta);
+  picker.valueAsDate = d;
+  onOverviewDateChange();
+}
+function refreshCurrent() {
+  if (document.getElementById('page-overview').classList.contains('active')) {
+    onOverviewDateChange();
+  }
+}
+
+/* ══════════════════════════════════════════
+   UPDATE DATE BANNER
+══════════════════════════════════════════ */
+function updateBanner(dateStr) {
+  var banner  = document.getElementById('date-banner');
+  var textEl  = document.getElementById('date-banner-text');
+  var subEl   = document.getElementById('date-banner-sub');
+  var tagEl   = document.getElementById('date-banner-tag');
+  var peakEl  = document.getElementById('peak-date-label');
+  var rtTitle = document.getElementById('recent-table-title');
+  var barTitle = document.getElementById('bar-chart-title');
+
+  if (dateStr === getTodayStr()) {
+    banner.classList.add('is-today');
+    textEl.textContent  = 'วันนี้ — ' + formatThaiDate(dateStr);
+    subEl.textContent   = 'ข้อมูลอัปเดตอัตโนมัติทุก 30 วินาที';
+    tagEl.textContent   = 'LIVE';
+    peakEl.textContent  = 'วันนี้';
+    rtTitle.textContent = 'รายการล่าสุดวันนี้';
+    barTitle.textContent = 'ยอดผู้ใช้ 7 วันย้อนหลัง';
+    document.getElementById('s-today-badge').textContent = 'วันนี้';
+    document.getElementById('s-today-label').textContent = 'คนเข้าใช้วันนี้';
+  } else {
+    banner.classList.remove('is-today');
+    textEl.textContent  = 'ดูข้อมูลย้อนหลัง — ' + formatThaiDate(dateStr);
+    subEl.textContent   = 'ข้อมูลสถิติเฉพาะวันที่เลือก';
+    tagEl.textContent   = formatShortDate(dateStr);
+    peakEl.textContent  = formatThaiDate(dateStr);
+    rtTitle.textContent = 'รายการทั้งหมด ' + formatThaiDate(dateStr);
+    barTitle.textContent = 'ยอดผู้ใช้วันที่ ' + formatThaiDate(dateStr);
+    document.getElementById('s-today-badge').textContent = formatShortDate(dateStr);
+    document.getElementById('s-today-label').textContent = 'คนเข้าใช้วันนี้';
+  }
+}
+
+/* ══════════════════════════════════════════
+   CHART INSTANCES
+══════════════════════════════════════════ */
+var chartFitness, chartPool, chartBar, chartPeak;
+
+function makeLine(id, labels, data, color) {
+  var ctx  = document.getElementById(id).getContext('2d');
   var grad = ctx.createLinearGradient(0, 0, 0, 140);
   grad.addColorStop(0, color + '40');
   grad.addColorStop(1, color + '00');
-  var cfg = {
+  return new Chart(ctx, {
     type: 'line',
     data: {
       labels: labels,
-      datasets: [{ data: data, borderColor: color, borderWidth: 2.5, fill: true, backgroundColor: grad, tension: 0.4, pointRadius: 4, pointBackgroundColor: color, pointBorderColor: '#fff', pointBorderWidth: 2 }]
+      datasets: [{ data: data, borderColor: color, borderWidth: 2.5, fill: true,
+        backgroundColor: grad, tension: 0.4, pointRadius: 4,
+        pointBackgroundColor: color, pointBorderColor: '#fff', pointBorderWidth: 2 }]
     },
     options: {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { display: false },
-        tooltip: { callbacks: { label: function(c) { return c.parsed.y.toLocaleString('th-TH') + ' ' + (unit || '฿'); } } }
+        tooltip: { callbacks: { label: function (c) { return c.parsed.y.toLocaleString('th-TH') + ' ฿'; } } }
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#9ca3af' } },
-        y: {
-          grid: { color: '#f1f5f9' },
-          ticks: { font: { size: 10 }, color: '#9ca3af', callback: function(v) { return v.toLocaleString('th-TH') + '฿'; } },
-          beginAtZero: true
-        }
+        y: { grid: { color: '#f1f5f9' }, ticks: { font: { size: 10 }, color: '#9ca3af', callback: function (v) { return v + '฿'; } }, beginAtZero: true }
       }
     }
-  };
-  return new Chart(ctx, cfg);
+  });
 }
+
 function makeBar(labels, fitnessData, poolData) {
   var ctx = document.getElementById('chart-bar').getContext('2d');
   if (chartBar) chartBar.destroy();
@@ -638,7 +795,7 @@ function makeBar(labels, fitnessData, poolData) {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { position: 'top', labels: { font: { size: 12 }, usePointStyle: true, pointStyleWidth: 8 } },
-        tooltip: { callbacks: { label: function(c) { return c.dataset.label + ': ' + c.parsed.y + ' คน'; } } }
+        tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + c.parsed.y + ' คน'; } } }
       },
       scales: {
         x: { grid: { display: false }, ticks: { font: { size: 11 } } },
@@ -647,21 +804,15 @@ function makeBar(labels, fitnessData, poolData) {
     }
   });
 }
-var chartPeak;
+
 function makePeakChart(peakHours) {
-  var slots = [];
-  var fitData = [];
-  var poolData = [];
+  var slots = [], fitData = [], poolData = [];
   for (var h = 6; h <= 21; h++) {
-    var minutes = (h === 21) ? [0] : [0, 30];
-    minutes.forEach(function(m) {
-      var label = (h < 10 ? '0' : '') + h + ':' + (m === 0 ? '00' : '30');
-      slots.push(label);
-      var key = String(h);
-      var ratio = 0.5;
-      fitData.push(Math.round(((peakHours[key] && peakHours[key].fitness) || 0) * ratio));
-      poolData.push(Math.round(((peakHours[key] && peakHours[key].pool) || 0) * ratio));
-    });
+    var label = (h < 10 ? '0' : '') + h + ':00';
+    slots.push(label);
+    var key = String(h);
+    fitData.push((peakHours[key] && peakHours[key].fitness) || 0);
+    poolData.push((peakHours[key] && peakHours[key].pool) || 0);
   }
   var ctx = document.getElementById('chart-peak').getContext('2d');
   if (chartPeak) chartPeak.destroy();
@@ -678,219 +829,188 @@ function makePeakChart(peakHours) {
       responsive: true, maintainAspectRatio: false,
       plugins: {
         legend: { position: 'top', labels: { font: { size: 11 }, usePointStyle: true, pointStyleWidth: 8 } },
-        tooltip: { callbacks: { label: function(c) { return c.dataset.label + ': ' + c.parsed.y + ' คน'; } } }
+        tooltip: { callbacks: { label: function (c) { return c.dataset.label + ': ' + c.parsed.y + ' คน'; } } }
       },
       scales: {
-        x: { grid: { display: false }, ticks: { font: { size: 9 }, color: '#9ca3af', maxRotation: 45, autoSkip: true, maxTicksLimit: 16 } },
+        x: { grid: { display: false }, ticks: { font: { size: 10 }, color: '#9ca3af', maxRotation: 45, autoSkip: true, maxTicksLimit: 16 } },
         y: { grid: { color: '#f1f5f9' }, ticks: { stepSize: 1, font: { size: 10 }, color: '#9ca3af' }, beginAtZero: true }
       }
     }
   });
 }
-// ===================== OVERVIEW DATE PICKER =====================
-function getTodayStr() {
-  var d = new Date();
-  return d.toISOString().split('T')[0];
-}
-function onOverviewDateChange() {
-  var sel = document.getElementById('overview-date').value;
-  var today = getTodayStr();
-  if (sel === today || !sel) {
-    loadOverview();
-  } else {
-    loadDayOverview(sel);
-  }
-}
-function resetOverviewToToday() {
-  document.getElementById('overview-date').valueAsDate = new Date();
-  loadOverview();
-}
-function refreshOverview() {
-  var sel = document.getElementById('overview-date') && document.getElementById('overview-date').value;
-  var today = getTodayStr();
-  if (sel && sel !== today) {
-    loadDayOverview(sel);
-  } else {
-    loadOverview();
-  }
-}
-async function loadDayOverview(dateStr) {
-  try {
-    var data = await api('getDailyReport', { dateString: dateStr });
-    // คำนวณ stats จากข้อมูลวันนั้น
-    var fit = 0, pool = 0;
-    var peakHours = {};
-    for (var h = 6; h <= 21; h++) peakHours[String(h)] = { fitness: 0, pool: 0 };
-    data.forEach(function(r) {
-      if (r.location === 'ฟิตเนส') fit++;
-      else if (r.location === 'สระว่ายน้ำ') pool++;
-      // peak hour จาก time string "HH:mm:ss"
-      if (r.time) {
-        var h = parseInt(r.time.split(':')[0]);
-        if (h >= 6 && h <= 21) {
-          if (!peakHours[String(h)]) peakHours[String(h)] = { fitness: 0, pool: 0 };
-          if (r.location === 'ฟิตเนส') peakHours[String(h)].fitness++;
-          else if (r.location === 'สระว่ายน้ำ') peakHours[String(h)].pool++;
-        }
-      }
-    });
-    // แสดงวันที่ที่เลือกใน label
-    var parts = dateStr.split('-');
-    var label = parts[2] + '/' + parts[1] + '/' + (parseInt(parts[0]) + 543);
-    document.getElementById('s-today').textContent = data.length;
-    document.getElementById('s-today-label').textContent = 'คนเข้าใช้ ' + label;
-    document.getElementById('s-today-vs').innerHTML = '<span class="neutral">ฟิตเนส ' + fit + ' · สระ ' + pool + ' คน</span>';
-    var total = fit + pool || 1;
-    var subsidy = (fit * 15) + (pool * 25);
-    document.getElementById('c-fitness-num').textContent = fit;
-    document.getElementById('c-fitness-baht').textContent = (fit * 15).toLocaleString('th-TH');
-    document.getElementById('c-pool-num').textContent = pool;
-    document.getElementById('c-pool-baht').textContent = (pool * 25).toLocaleString('th-TH');
-    document.getElementById('s-subsidy').textContent = subsidy.toLocaleString('th-TH') + ' ฿';
-    var fitPct = Math.round(fit / total * 100);
-    var poolPct = Math.round(pool / total * 100);
-    document.getElementById('mini-fit-pct').textContent = fitPct + '%';
-    document.getElementById('mini-pool-pct').textContent = poolPct + '%';
-    document.getElementById('mini-fit-bar').style.width = fitPct + '%';
-    document.getElementById('mini-pool-bar').style.width = poolPct + '%';
-    makePeakChart(peakHours);
-    // recent table
-    var tbody = document.getElementById('recent-tbody');
-    if (data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ไม่มีข้อมูลวันที่ ' + label + '</td></tr>';
-    } else {
-      tbody.innerHTML = data.slice().reverse().map(function(r) {
-        var badge = r.location === 'ฟิตเนส'
-          ? '<span class="badge badge-teal"><i class="fa-solid fa-dumbbell"></i>' + r.location + '</span>'
-          : '<span class="badge badge-coral"><i class="fa-solid fa-person-swimming"></i>' + r.location + '</span>';
-        return '<tr><td style="font-weight:500;">' + r.name + '</td><td style="font-family:monospace;color:var(--text-muted);">' + r.id + '</td><td>' + badge + '</td><td style="color:var(--text-muted);">' + r.time + '</td></tr>';
-      }).join('');
-    }
-  } catch(e) { console.error(e); }
-}
 
-async function loadOverview() {
-  if (!API_URL) {
-    renderOverview({
-      todayCount: 12, yesterdayCount: 8, totalCheckIns: 47, totalUsers: 25,
-      remainingQuota: { percent: 63 },
-      locations: { 'ฟิตเนส': 28, 'สระว่ายน้ำ': 19 },
-      daily: [
-        { date: '14/06', fitness: 3, pool: 2 },
-        { date: '15/06', fitness: 5, pool: 4 },
-        { date: '16/06', fitness: 4, pool: 3 },
-        { date: '17/06', fitness: 6, pool: 5 },
-        { date: '18/06', fitness: 4, pool: 2 },
-        { date: '19/06', fitness: 2, pool: 1 },
-        { date: '20/06', fitness: 4, pool: 2 },
-      ],
-      peakHours: {
-        '6':  { fitness: 0, pool: 0 },
-        '7':  { fitness: 2, pool: 1 },
-        '8':  { fitness: 5, pool: 3 },
-        '9':  { fitness: 7, pool: 4 },
-        '10': { fitness: 6, pool: 5 },
-        '11': { fitness: 4, pool: 3 },
-        '12': { fitness: 3, pool: 2 },
-        '13': { fitness: 4, pool: 3 },
-        '14': { fitness: 5, pool: 4 },
-        '15': { fitness: 6, pool: 3 },
-        '16': { fitness: 5, pool: 4 },
-        '17': { fitness: 4, pool: 2 },
-        '18': { fitness: 3, pool: 2 },
-        '19': { fitness: 2, pool: 1 },
-        '20': { fitness: 1, pool: 1 },
-        '21': { fitness: 0, pool: 0 },
-      },
-      recent: [
-        { name: 'สมชาย ใจดี', id: '6910511001', location: 'ฟิตเนส', time: '09:14' },
-        { name: 'สมหญิง รักดี', id: '6910511002', location: 'สระว่ายน้ำ', time: '09:30' },
-        { name: 'ทดสอบ ระบบ', id: '6910511003', location: 'ฟิตเนส', time: '10:02' },
-      ]
-    });
-    return;
-  }
-  try {
-    var data = await api('getAdminStats');
-    renderOverview(data);
-  } catch(e) { console.error(e); }
-}
-function renderOverview(data) {
-  document.getElementById('s-today').textContent = data.todayCount;
-  document.getElementById('s-today-label').textContent = 'คนเข้าใช้วันนี้';
-  document.getElementById('s-master').textContent = data.masterCount || '—';
-  document.getElementById('s-users').textContent = data.totalUsers;
-  document.getElementById('s-not-reg').textContent = ((data.masterCount || 0) - data.totalUsers);
-  document.getElementById('s-pct').textContent = data.remainingQuota.percent + '%';
-  document.getElementById('s-total-quota').textContent = data.remainingQuota.total;
-  var diff = data.todayCount - (data.yesterdayCount || 0);
-  var vsEl = document.getElementById('s-today-vs');
-  if (diff > 0) vsEl.innerHTML = '<span class="up">↑ ' + diff + ' คน จากเมื่อวาน</span>';
-  else if (diff < 0) vsEl.innerHTML = '<span class="down">↓ ' + Math.abs(diff) + ' คน จากเมื่อวาน</span>';
-  else vsEl.innerHTML = '<span class="neutral">เท่ากับเมื่อวาน</span>';
-  var fit = data.locations['ฟิตเนส'] || 0;
-  var pool = data.locations['สระว่ายน้ำ'] || 0;
-  var total = fit + pool || 1;
-  document.getElementById('c-fitness-num').textContent = fit;
-  document.getElementById('c-fitness-baht').textContent = (fit * 15).toLocaleString('th-TH');
-  document.getElementById('c-pool-num').textContent = pool;
-  document.getElementById('c-pool-baht').textContent = (pool * 25).toLocaleString('th-TH');
-  document.getElementById('c-fitness-pct').textContent = '15 ฿ / ครั้ง';
-  document.getElementById('c-pool-pct').textContent = '25 ฿ / ครั้ง';
+/* ══════════════════════════════════════════
+   RENDER HELPERS — แยกชัด
+══════════════════════════════════════════ */
+
+// อัปเดต stat cards ที่ขึ้นกับวัน
+function renderDateStats(fit, pool, total, recent, peakHours, dailyArr, dateStr) {
+  var totalCount = fit + pool;
+  document.getElementById('s-today').textContent = totalCount;
+
+  // subsidy
   var subsidy = (fit * 15) + (pool * 25);
   document.getElementById('s-subsidy').textContent = subsidy.toLocaleString('th-TH') + ' ฿';
-  var fitPct = Math.round(fit / total * 100);
-  var poolPct = Math.round(pool / total * 100);
-  document.getElementById('mini-fit-pct').textContent = fitPct + '%';
+
+  // mini bars
+  var tot = totalCount || 1;
+  var fitPct  = Math.round(fit  / tot * 100);
+  var poolPct = Math.round(pool / tot * 100);
+  document.getElementById('mini-fit-pct').textContent  = fitPct + '%';
   document.getElementById('mini-pool-pct').textContent = poolPct + '%';
-  document.getElementById('mini-fit-bar').style.width = fitPct + '%';
+  document.getElementById('mini-fit-bar').style.width  = fitPct + '%';
   document.getElementById('mini-pool-bar').style.width = poolPct + '%';
-  var daily = data.daily || [];
-  var labels = daily.map(function(d) { return d.date; });
-  var fitnessValue = daily.map(function(d) { return (d.fitness || 0) * 15; });
-  var poolValue    = daily.map(function(d) { return (d.pool || 0) * 25; });
-  var fitnessCount = daily.map(function(d) { return d.fitness || 0; });
-  var poolCount    = daily.map(function(d) { return d.pool || 0; });
+
+  // fitness/pool header numbers
+  document.getElementById('c-fitness-num').textContent  = fit;
+  document.getElementById('c-fitness-baht').textContent = (fit * 15).toLocaleString('th-TH');
+  document.getElementById('c-pool-num').textContent     = pool;
+  document.getElementById('c-pool-baht').textContent    = (pool * 25).toLocaleString('th-TH');
+
+  // line charts (single point for single day, multi for 7-day)
+  var labels    = dailyArr.map(function (d) { return d.date; });
+  var fitValues = dailyArr.map(function (d) { return (d.fitness || 0) * 15; });
+  var poolValues = dailyArr.map(function (d) { return (d.pool || 0) * 25; });
+  var fitCounts  = dailyArr.map(function (d) { return d.fitness || 0; });
+  var poolCounts = dailyArr.map(function (d) { return d.pool || 0; });
+
   if (chartFitness) chartFitness.destroy();
-  if (chartPool) chartPool.destroy();
-  chartFitness = makeLine('chart-fitness', labels, fitnessValue, '#7c3aed', '฿');
-  chartPool    = makeLine('chart-pool',    labels, poolValue,    '#f97316', '฿');
-  makeBar(labels, fitnessCount, poolCount);
-  var peakHours = data.peakHours || {};
+  if (chartPool)    chartPool.destroy();
+  chartFitness = makeLine('chart-fitness', labels, fitValues,  '#7c3aed');
+  chartPool    = makeLine('chart-pool',    labels, poolValues, '#f97316');
+  makeBar(labels, fitCounts, poolCounts);
   makePeakChart(peakHours);
+
+  // recent table
   var tbody = document.getElementById('recent-tbody');
-  if (!data.recent || data.recent.length === 0) {
-    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ยังไม่มีรายการ</td></tr>';
+  var rcCount = document.getElementById('recent-count');
+  if (!recent || recent.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ไม่มีข้อมูลวันนี้</td></tr>';
+    rcCount.textContent = '0 รายการ';
   } else {
-    tbody.innerHTML = data.recent.map(function(r) {
+    rcCount.textContent = recent.length + ' รายการ';
+    tbody.innerHTML = recent.map(function (r) {
       var badge = r.location === 'ฟิตเนส'
-        ? '<span class="badge badge-teal"><i class="fa-solid fa-dumbbell"></i>' + r.location + '</span>'
-        : '<span class="badge badge-coral"><i class="fa-solid fa-person-swimming"></i>' + r.location + '</span>';
-      return '<tr><td style="font-weight:500;">' + r.name + '</td><td style="font-family:monospace;color:var(--text-muted);">' + r.id + '</td><td>' + badge + '</td><td style="color:var(--text-muted);">' + r.time + '</td></tr>';
+        ? '<span class="badge badge-teal"><i class="fa-solid fa-dumbbell"></i> ' + r.location + '</span>'
+        : '<span class="badge badge-coral"><i class="fa-solid fa-person-swimming"></i> ' + r.location + '</span>';
+      return '<tr><td style="font-weight:500;">' + (r.name || '—') + '</td><td style="font-family:monospace;color:var(--text-muted);">' + (r.id || r.studentId || '—') + '</td><td>' + badge + '</td><td style="color:var(--text-muted);">' + (r.time || '—') + '</td></tr>';
     }).join('');
   }
 }
+
+// อัปเดต stat cards ที่เป็น system-level (ไม่เปลี่ยนตามวัน)
+function renderSystemStats(data) {
+  document.getElementById('s-master').textContent = data.masterCount || '—';
+  document.getElementById('s-users').textContent  = data.totalUsers  || '—';
+  document.getElementById('s-not-reg').textContent = ((data.masterCount || 0) - (data.totalUsers || 0));
+  document.getElementById('s-pct').textContent    = (data.remainingQuota && data.remainingQuota.percent != null) ? data.remainingQuota.percent + '%' : '—%';
+  document.getElementById('s-total-quota').textContent = (data.remainingQuota && data.remainingQuota.total) || '—';
+}
+
+/* ══════════════════════════════════════════
+   LOAD SYSTEM STATS (once on login)
+══════════════════════════════════════════ */
+async function loadSystemStats() {
+  try {
+    var data = await api('getAdminStats');
+    renderSystemStats(data);
+    // เก็บไว้เผื่อ compare yesterday
+    window._systemStats = data;
+  } catch (e) { console.error('loadSystemStats', e); }
+}
+
+/* ══════════════════════════════════════════
+   LOAD TODAY (full stats from getAdminStats)
+══════════════════════════════════════════ */
+async function loadOverview() {
+  var dateStr = getTodayStr();
+  updateBanner(dateStr);
+  document.getElementById('s-today-vs').innerHTML = '<span class="neutral"><span class="spinner"></span>กำลังโหลด...</span>';
+
+  try {
+    var data = await api('getAdminStats');
+    renderSystemStats(data);
+    window._systemStats = data;
+
+    var fit  = (data.locations && data.locations['ฟิตเนส'])    || 0;
+    var pool = (data.locations && data.locations['สระว่ายน้ำ']) || 0;
+
+    // today vs yesterday
+    var diff = data.todayCount - (data.yesterdayCount || 0);
+    var vsEl = document.getElementById('s-today-vs');
+    if (diff > 0)      vsEl.innerHTML = '<span class="up">↑ ' + diff + ' คน จากเมื่อวาน</span>';
+    else if (diff < 0) vsEl.innerHTML = '<span class="down">↓ ' + Math.abs(diff) + ' คน จากเมื่อวาน</span>';
+    else               vsEl.innerHTML = '<span class="neutral">เท่ากับเมื่อวาน</span>';
+
+    var daily7 = data.daily || [];
+    var recent = data.recent || [];
+
+    renderDateStats(fit, pool, data.todayCount, recent, data.peakHours || {}, daily7, dateStr);
+  } catch (e) { console.error('loadOverview', e); }
+}
+
+/* ══════════════════════════════════════════
+   LOAD PAST DAY (getDailyReport)
+══════════════════════════════════════════ */
+async function loadDayOverview(dateStr) {
+  updateBanner(dateStr);
+  document.getElementById('s-today-vs').innerHTML = '<span class="neutral"><span class="spinner"></span>กำลังโหลด...</span>';
+
+  try {
+    var rows = await api('getDailyReport', { dateString: dateStr });
+
+    var fit = 0, pool = 0;
+    var peakHours = {};
+    for (var h = 6; h <= 21; h++) peakHours[String(h)] = { fitness: 0, pool: 0 };
+
+    var recent = [];
+    rows.forEach(function (r) {
+      if (r.location === 'ฟิตเนส') fit++;
+      else if (r.location === 'สระว่ายน้ำ') pool++;
+      if (r.time) {
+        var hr = parseInt(r.time.split(':')[0]);
+        if (hr >= 6 && hr <= 21) {
+          if (r.location === 'ฟิตเนส') peakHours[String(hr)].fitness++;
+          else if (r.location === 'สระว่ายน้ำ') peakHours[String(hr)].pool++;
+        }
+      }
+      recent.push({ name: r.name, id: r.id, location: r.location, time: r.time });
+    });
+
+    // today vs this day comparison (use system stats if available)
+    var vsEl = document.getElementById('s-today-vs');
+    vsEl.innerHTML = '<span class="neutral">ฟิตเนส ' + fit + ' · สระ ' + pool + ' คน</span>';
+
+    // single bar for selected day
+    var p = dateStr.split('-');
+    var barLabel = p[2] + '/' + p[1];
+    var dailyArr = [{ date: barLabel, fitness: fit, pool: pool }];
+
+    renderDateStats(fit, pool, rows.length, recent, peakHours, dailyArr, dateStr);
+  } catch (e) {
+    console.error('loadDayOverview', e);
+    document.getElementById('s-today-vs').innerHTML = '<span style="color:var(--danger);">โหลดไม่สำเร็จ</span>';
+  }
+}
+
+/* ══════════════════════════════════════════
+   REPORT PAGE
+══════════════════════════════════════════ */
 async function loadDailyReport() {
   var date = document.getElementById('filter-date').value;
   if (!date) return;
   document.getElementById('report-table-wrap').style.display = 'block';
   document.getElementById('report-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;"><span class="spinner"></span>กำลังโหลด...</td></tr>';
-  document.getElementById('report-date-label').textContent = 'รายงานวันที่ ' + date;
-  if (!API_URL) {
-    setTimeout(function() {
-      document.getElementById('report-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ยังไม่ได้เชื่อมต่อ API</td></tr>';
-    }, 800);
-    return;
-  }
+  document.getElementById('report-date-label').textContent = 'รายงานวันที่ ' + formatThaiDate(date);
   try {
     var data = await api('getDailyReport', { dateString: date });
     var tbody = document.getElementById('report-tbody');
     document.getElementById('report-count').textContent = data.length + ' คน';
     if (data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ไม่มีข้อมูลวันนี้</td></tr>';
-      document.getElementById('report-summary').textContent = 'ไม่มีผู้ใช้งานในวันที่ ' + date;
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ไม่มีข้อมูล</td></tr>';
+      document.getElementById('report-summary').textContent = 'ไม่มีผู้ใช้งานในวันที่ ' + formatThaiDate(date);
     } else {
-      tbody.innerHTML = data.map(function(r) {
+      tbody.innerHTML = data.map(function (r) {
         var badge = r.location === 'ฟิตเนส'
           ? '<span class="badge badge-teal"><i class="fa-solid fa-dumbbell"></i> ' + r.location + '</span>'
           : '<span class="badge badge-coral"><i class="fa-solid fa-person-swimming"></i> ' + r.location + '</span>';
@@ -898,12 +1018,16 @@ async function loadDailyReport() {
       }).join('');
       document.getElementById('report-summary').textContent = 'รวมทั้งหมด ' + data.length + ' คน';
     }
-  } catch(e) {
+  } catch (e) {
     document.getElementById('report-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--danger);padding:2rem;">โหลดไม่สำเร็จ</td></tr>';
   }
 }
-async function resetPin() {
-  var id  = document.getElementById('reset-id').value.trim();
+
+/* ══════════════════════════════════════════
+   MANAGE PAGE
+══════════════════════════════════════════ */
+async function doResetPin() {
+  var id = document.getElementById('reset-id').value.trim();
   var resultEl = document.getElementById('reset-result');
   if (!id) {
     resultEl.className = 'result-box result-error';
@@ -922,27 +1046,21 @@ async function resetPin() {
       resultEl.textContent = '✗ ' + res.message;
     }
     resultEl.style.display = 'block';
-  } catch(e) {
+  } catch (e) {
     resultEl.className = 'result-box result-error';
     resultEl.textContent = 'เกิดข้อผิดพลาด: ' + e.message;
     resultEl.style.display = 'block';
   }
 }
+
 async function searchStudent() {
   var id = document.getElementById('search-id').value.trim();
   var resultEl = document.getElementById('search-result');
   if (!id) return;
-  if (!API_URL) {
-    resultEl.className = 'result-box result-error';
-    resultEl.style.display = 'block';
-    resultEl.textContent = 'ยังไม่ได้เชื่อมต่อ API';
-    return;
-  }
   try {
     var res = await api('getDashboard', { studentId: id });
     if (res.name) {
       resultEl.className = 'result-box result-success';
-      resultEl.style.display = 'block';
       resultEl.innerHTML =
         '<strong>' + res.name + '</strong><br>' +
         'รหัส: ' + res.studentId + '<br>' +
@@ -950,10 +1068,10 @@ async function searchStudent() {
         'คงเหลือ: ' + res.remaining + ' วัน';
     } else {
       resultEl.className = 'result-box result-error';
-      resultEl.style.display = 'block';
       resultEl.textContent = 'ไม่พบข้อมูลนักศึกษา';
     }
-  } catch(e) {
+    resultEl.style.display = 'block';
+  } catch (e) {
     resultEl.className = 'result-box result-error';
     resultEl.textContent = 'เกิดข้อผิดพลาด';
     resultEl.style.display = 'block';
