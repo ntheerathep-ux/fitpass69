@@ -498,15 +498,21 @@ function doLogin() {
   var pass = document.getElementById('admin-pass').value;
   if (!pass) return;
   document.getElementById('login-error').style.display = 'none';
-  if (API_URL) {
-    api('adminLogin', { password: pass }).then(function(res) {
-      if (res.success) { showApp(); }
-      else { document.getElementById('login-error').style.display = 'block'; }
-    });
-  } else {
-    if (pass === 'fitpass2569**+-') { showApp(); }
-    else { document.getElementById('login-error').style.display = 'block'; }
+  
+  // ตรวจสอบฝั่ง client ก่อน (password อยู่ใน HTML อยู่แล้ว ไม่ต้องรอ API)
+  if (pass === 'fitpass2569**+-') {
+    showApp();
+    return;
   }
+  
+  // ถ้าไม่ตรง ค่อยยิง API เพื่อ double-check
+  api('adminLogin', { password: pass }).then(function(res) {
+    if (res.success) { showApp(); }
+    else { document.getElementById('login-error').style.display = 'block'; }
+  }).catch(function(err) {
+    document.getElementById('login-error').style.display = 'block';
+    console.error('Login error:', err);
+  });
 }
 function showApp() {
   sessionStorage.setItem('adminAuth', '1');
