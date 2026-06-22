@@ -471,14 +471,18 @@ tr:hover td{background:#fafafa;}
 </div>
 <script>
 var API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
-async function api(action, params) {
+function api(action, params) {
   params = params || {};
-  const res = await fetch(API_URL, {
-    method: 'POST',
-    headers: { 'Content-Type': 'text/plain' },
-    body: JSON.stringify(Object.assign({ action: action }, params))
+  return new Promise((resolve, reject) => {
+    const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
+    const cleanup = () => { delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); };
+    window[cbName] = (data) => { resolve(data); cleanup(); };
+    const query = new URLSearchParams(Object.assign({ action, callback: cbName }, params)).toString();
+    const script = document.createElement('script');
+    script.src = API_URL + '?' + query;
+    script.onerror = () => { reject(new Error('เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ')); cleanup(); };
+    document.body.appendChild(script);
   });
-  return res.json();
 }
 function updateClock() {
   var now = new Date();
