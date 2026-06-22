@@ -15,211 +15,116 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --primary:      #14b8a6;
-            --primary-dark: #0d9488;
-            --accent:       #0ea5e9;
-            --glass-bg:     rgba(255,255,255,0.78);
-            --glass-border: rgba(255,255,255,0.9);
-            --text-main:    #1e293b;
-            --text-sub:     #475569;
-            --text-muted:   #94a3b8;
-            --fs-xs:    clamp(0.75rem,  2vw,  0.875rem);
-            --fs-sm:    clamp(0.875rem, 2.5vw, 1rem);
-            --fs-base:  clamp(1rem,     3vw,  1.125rem);
-            --fs-lg:    clamp(1.125rem, 3.5vw, 1.375rem);
-            --fs-xl:    clamp(1.25rem,  4vw,  1.625rem);
-            --fs-2xl:   clamp(1.5rem,   5vw,  2rem);
-            --fs-hero:  clamp(2.25rem,  8vw,  3.25rem);
-            --sp-sm:  clamp(0.75rem, 3vw, 1.25rem);
-            --sp-md:  clamp(1rem,    4vw, 1.75rem);
-            --sp-lg:  clamp(1.5rem,  5vw, 2.5rem);
-            --sp-xl:  clamp(2rem,    6vw, 3.5rem);
-            --card-w: min(100%, 520px);
-            --card-r: clamp(1rem, 4vw, 1.75rem);
+            --primary:#14b8a6; --primary-dark:#0d9488; --accent:#0ea5e9;
+            --glass-bg:rgba(255,255,255,0.78); --glass-border:rgba(255,255,255,0.9);
+            --text-main:#1e293b; --text-sub:#475569; --text-muted:#94a3b8;
+            --fs-xs:clamp(0.75rem,2vw,0.875rem); --fs-sm:clamp(0.875rem,2.5vw,1rem);
+            --fs-base:clamp(1rem,3vw,1.125rem); --fs-lg:clamp(1.125rem,3.5vw,1.375rem);
+            --fs-xl:clamp(1.25rem,4vw,1.625rem); --fs-2xl:clamp(1.5rem,5vw,2rem);
+            --fs-hero:clamp(2.25rem,8vw,3.25rem);
+            --sp-sm:clamp(0.75rem,3vw,1.25rem); --sp-md:clamp(1rem,4vw,1.75rem);
+            --sp-lg:clamp(1.5rem,5vw,2.5rem); --sp-xl:clamp(2rem,6vw,3.5rem);
+            --card-w:min(100%,520px); --card-r:clamp(1rem,4vw,1.75rem);
         }
-
-        *, *::before, *::after { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
-
-        html, body {
-            margin: 0; padding: 0;
-            height: 100%;
-            -webkit-text-size-adjust: 100%;
+        *,*::before,*::after{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+        html,body{margin:0;padding:0;height:100%;-webkit-text-size-adjust:100%;}
+        body{font-family:'Prompt',sans-serif;font-size:var(--fs-base);color:var(--text-main);
+            background:linear-gradient(145deg,#e8fdf5 0%,#e0f4ff 55%,#f8faff 100%);
+            min-height:100vh;min-height:100dvh;display:flex;justify-content:center;align-items:flex-start;}
+        #app-shell{width:var(--card-w);min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;
+            background:var(--glass-bg);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+            box-shadow:0 0 60px -10px rgba(14,165,233,0.15);}
+        @media(min-width:560px){
+            body{align-items:center;padding:1.5rem;min-height:100vh;}
+            #app-shell{min-height:auto;height:calc(100vh - 3rem);height:calc(100dvh - 3rem);
+                border-radius:var(--card-r);border:1px solid var(--glass-border);}
         }
-
-        body {
-            font-family: 'Prompt', sans-serif;
-            font-size: var(--fs-base);
-            color: var(--text-main);
-            background: linear-gradient(145deg, #e8fdf5 0%, #e0f4ff 55%, #f8faff 100%);
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        #app-shell {
-            width: var(--card-w);
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: flex;
-            flex-direction: column;
-            background: var(--glass-bg);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            box-shadow: 0 0 60px -10px rgba(14,165,233,0.15);
-        }
-
-        @media (min-width: 560px) {
-            body { align-items: center; padding: 1.5rem; min-height: 100vh; }
-            #app-shell {
-                min-height: auto;
-                height: calc(100vh - 3rem);
-                height: calc(100dvh - 3rem);
-                border-radius: var(--card-r);
-                border: 1px solid var(--glass-border);
-            }
-        }
-
-        #app-header {
-            flex-shrink: 0;
-            padding: var(--sp-sm) var(--sp-md);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: rgba(255,255,255,0.6);
-            border-bottom: 1px solid rgba(255,255,255,0.7);
-            position: sticky; top: 0; z-index: 10;
-        }
-        .brand-label { font-family: 'Cinzel', serif; font-size: var(--fs-sm); color: var(--text-muted); letter-spacing: 0.15em; }
-        .admin-btn {
-            display: inline-flex; align-items: center; gap: 0.4em;
-            font-size: var(--fs-xs); font-weight: 600; color: var(--text-muted);
-            padding: 0.45em 1em; border-radius: 999px; border: none;
-            background: transparent; cursor: pointer; transition: all 0.2s;
-        }
-        .admin-btn:hover { color: var(--primary-dark); background: rgba(255,255,255,0.75); }
-
-        #app-main {
-            flex: 1;
-            padding: var(--sp-md);
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        .step { display: none; }
-        .step.active { display: block; animation: fadeUp 0.35s ease-out both; }
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(14px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        .hero-icon {
-            width: clamp(4rem, 14vw, 6rem); height: clamp(4rem, 14vw, 6rem);
-            border-radius: 50%;
-            background: linear-gradient(135deg, #ccfbf1, #e0f2fe);
-            color: #0f766e;
-            display: flex; align-items: center; justify-content: center;
-            font-size: clamp(1.5rem, 5vw, 2.25rem);
-            box-shadow: inset 0 2px 4px rgba(255,255,255,0.9), 0 6px 20px rgba(13,148,136,0.12);
-            margin-inline: auto;
-        }
-        .hero-title {
-            font-family: 'Cinzel', serif;
-            font-size: var(--fs-hero);
-            background: linear-gradient(135deg, #059669, #0284c7);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            letter-spacing: 0.05em; line-height: 1.1; text-align: center;
-        }
-        .date-badge {
-            display: inline-flex; align-items: center; gap: 0.6em;
-            background: rgba(255,255,255,0.85); border: 1px solid rgba(20,184,166,0.15);
-            border-radius: 999px; padding: 0.55em 1.4em;
-            font-size: var(--fs-sm); font-weight: 600; color: var(--text-sub);
-        }
-        .date-dot {
-            width: 0.55em; height: 0.55em; border-radius: 50%;
-            animation: blink-dot 2s ease-in-out infinite;
-        }
-        @keyframes blink-dot {
-            0%,100% { background: #2dd4bf; box-shadow: 0 0 0 0 rgba(45,212,191,0.4); }
-            50%      { background: #38bdf8; box-shadow: 0 0 0 5px rgba(56,189,248,0); }
-        }
-
-        .field-label {
-            font-size: var(--fs-xs); font-weight: 700; color: var(--text-muted);
-            text-transform: uppercase; letter-spacing: 0.12em;
-            display: block; margin-bottom: 0.5em; margin-left: 0.25em;
-        }
-        .input-wrap { position: relative; }
-        .input-icon {
-            position: absolute; left: 1.1em; top: 50%; transform: translateY(-50%);
-            font-size: var(--fs-lg); color: var(--text-muted); pointer-events: none; transition: color 0.2s;
-        }
-        .input-wrap:focus-within .input-icon { color: var(--primary); }
-        .field-input {
-            width: 100%; background: rgba(255,255,255,0.7);
-            border: 1.5px solid #e2e8f0; border-radius: var(--card-r);
-            padding: 0.9em 1.2em 0.9em 3em;
-            font-family: 'Prompt', sans-serif; font-size: var(--fs-lg); font-weight: 600;
-            color: var(--text-main); transition: all 0.2s; -webkit-appearance: none;
-        }
-        .field-input::placeholder { color: #cbd5e1; font-weight: 400; }
-        .field-input:focus {
-            background: rgba(255,255,255,0.98); border-color: #99f6e4;
-            box-shadow: 0 0 0 4px rgba(153,246,228,0.28); outline: none;
-        }
-        .pin-input { letter-spacing: 0.7em; text-align: center; padding-left: 1.2em !important; -webkit-text-security: disc; text-security: disc; }
-
-        .btn-primary {
-            width: 100%;
-            background: linear-gradient(135deg, #2dd4bf 0%, #38bdf8 100%);
-            color: #fff; font-family: 'Prompt', sans-serif;
-            font-size: var(--fs-lg); font-weight: 700;
-            border: none; border-radius: var(--card-r); padding: 1em 1.5em;
-            cursor: pointer; position: relative; overflow: hidden;
-            box-shadow: 0 6px 24px rgba(56,189,248,0.28);
-            transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
-        }
-        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 32px rgba(56,189,248,0.38); }
-        .btn-primary:active { transform: translateY(0); }
-        .btn-primary:disabled { background: linear-gradient(135deg, #e2e8f0, #cbd5e1); box-shadow: none; color: #94a3b8; cursor: not-allowed; }
-        .btn-ghost { width: 100%; background: transparent; border: none; font-family: 'Prompt', sans-serif; font-size: var(--fs-sm); color: var(--text-muted); padding: 0.75em; cursor: pointer; transition: color 0.2s; }
-        .btn-ghost:hover { color: var(--text-sub); }
-
-        .g-card { background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.8); border-radius: var(--card-r); box-shadow: 0 4px 20px rgba(14,165,233,0.06); }
-
-        .quota-track { background: #e2e8f0; border-radius: 999px; height: 9px; overflow: hidden; }
-        .quota-fill { background: linear-gradient(90deg, #34d399, #38bdf8); border-radius: 999px; height: 100%; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
-
-        .ticket-divider { border-top: 2px dashed rgba(148,163,184,0.3); margin: var(--sp-md) 0; padding-top: var(--sp-md); }
-
-        .swal2-container { position: fixed !important; top: 0 !important; left: 0 !important; width: 100% !important; height: 100% !important; display: flex !important; align-items: center !important; justify-content: center !important; padding: 1rem !important; z-index: 9999 !important; }
-        .swal2-popup { border-radius: 1.5rem !important; font-family: 'Prompt', sans-serif !important; font-size: var(--fs-base) !important; width: min(90vw, 400px) !important; }
-        .swal2-title { font-size: var(--fs-xl) !important; font-weight: 700 !important; color: var(--text-main) !important; }
-        .swal2-confirm, .swal2-cancel { font-family: 'Prompt', sans-serif !important; font-size: var(--fs-base) !important; border-radius: 0.875rem !important; padding: 0.65em 1.4em !important; }
-
-        .icon-soft { background: linear-gradient(135deg, #ccfbf1, #e0f2fe); color: #0f766e; }
-        .space-y > * + * { margin-top: var(--sp-md); }
-        .space-y-sm > * + * { margin-top: var(--sp-sm); }
-        button, a, input, select { touch-action: manipulation; }
-        .hidden { display: none; }
+        #app-header{flex-shrink:0;padding:var(--sp-sm) var(--sp-md);display:flex;align-items:center;
+            justify-content:space-between;background:rgba(255,255,255,0.6);
+            border-bottom:1px solid rgba(255,255,255,0.7);position:sticky;top:0;z-index:10;}
+        .brand-label{font-family:'Cinzel',serif;font-size:var(--fs-sm);color:var(--text-muted);letter-spacing:0.15em;}
+        .admin-btn{display:inline-flex;align-items:center;gap:0.4em;font-size:var(--fs-xs);font-weight:600;
+            color:var(--text-muted);padding:0.45em 1em;border-radius:999px;border:none;
+            background:transparent;cursor:pointer;transition:all 0.2s;}
+        .admin-btn:hover{color:var(--primary-dark);background:rgba(255,255,255,0.75);}
+        #app-main{flex:1;padding:var(--sp-md);overflow-y:auto;display:flex;flex-direction:column;justify-content:center;}
+        .step{display:none;}
+        .step.active{display:block;animation:fadeUp 0.35s ease-out both;}
+        @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+        @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}
+            40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
+        .hero-icon{width:clamp(4rem,14vw,6rem);height:clamp(4rem,14vw,6rem);border-radius:50%;
+            background:linear-gradient(135deg,#ccfbf1,#e0f2fe);color:#0f766e;
+            display:flex;align-items:center;justify-content:center;font-size:clamp(1.5rem,5vw,2.25rem);
+            box-shadow:inset 0 2px 4px rgba(255,255,255,0.9),0 6px 20px rgba(13,148,136,0.12);margin-inline:auto;}
+        .hero-title{font-family:'Cinzel',serif;font-size:var(--fs-hero);
+            background:linear-gradient(135deg,#059669,#0284c7);
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            letter-spacing:0.05em;line-height:1.1;text-align:center;}
+        .date-badge{display:inline-flex;align-items:center;gap:0.6em;background:rgba(255,255,255,0.85);
+            border:1px solid rgba(20,184,166,0.15);border-radius:999px;padding:0.55em 1.4em;
+            font-size:var(--fs-sm);font-weight:600;color:var(--text-sub);}
+        .date-dot{width:0.55em;height:0.55em;border-radius:50%;animation:blink-dot 2s ease-in-out infinite;}
+        @keyframes blink-dot{0%,100%{background:#2dd4bf;box-shadow:0 0 0 0 rgba(45,212,191,0.4);}
+            50%{background:#38bdf8;box-shadow:0 0 0 5px rgba(56,189,248,0);}}
+        .field-label{font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;
+            letter-spacing:0.12em;display:block;margin-bottom:0.5em;margin-left:0.25em;}
+        .input-wrap{position:relative;}
+        .input-icon{position:absolute;left:1.1em;top:50%;transform:translateY(-50%);
+            font-size:var(--fs-lg);color:var(--text-muted);pointer-events:none;transition:color 0.2s;}
+        .input-wrap:focus-within .input-icon{color:var(--primary);}
+        .field-input{width:100%;background:rgba(255,255,255,0.7);border:1.5px solid #e2e8f0;
+            border-radius:var(--card-r);padding:0.9em 1.2em 0.9em 3em;
+            font-family:'Prompt',sans-serif;font-size:var(--fs-lg);font-weight:600;
+            color:var(--text-main);transition:all 0.2s;-webkit-appearance:none;}
+        .field-input::placeholder{color:#cbd5e1;font-weight:400;}
+        .field-input:focus{background:rgba(255,255,255,0.98);border-color:#99f6e4;
+            box-shadow:0 0 0 4px rgba(153,246,228,0.28);outline:none;}
+        .pin-input{letter-spacing:0.7em;text-align:center;padding-left:1.2em !important;
+            -webkit-text-security:disc;text-security:disc;}
+        .btn-primary{width:100%;background:linear-gradient(135deg,#a855f7 0%,#ec4899 100%);
+            color:#fff;font-family:'Prompt',sans-serif;font-size:var(--fs-lg);font-weight:700;
+            border:none;border-radius:var(--card-r);padding:1em 1.5em;cursor:pointer;
+            position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(168,85,247,0.28);
+            transition:all 0.3s cubic-bezier(0.4,0,0.2,1);}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(168,85,247,0.38);}
+        .btn-primary:active{transform:translateY(0);}
+        .btn-primary:disabled{background:linear-gradient(135deg,#e2e8f0,#cbd5e1);box-shadow:none;color:#94a3b8;cursor:not-allowed;}
+        .btn-ghost{width:100%;background:transparent;border:none;font-family:'Prompt',sans-serif;
+            font-size:var(--fs-sm);color:var(--text-muted);padding:0.75em;cursor:pointer;transition:color 0.2s;}
+        .btn-ghost:hover{color:var(--text-sub);}
+        .g-card{background:rgba(255,255,255,0.6);border:1px solid rgba(255,255,255,0.8);
+            border-radius:var(--card-r);box-shadow:0 4px 20px rgba(14,165,233,0.06);}
+        .quota-track{background:#e2e8f0;border-radius:999px;height:9px;overflow:hidden;}
+        .quota-fill{background:linear-gradient(90deg,#34d399,#38bdf8);border-radius:999px;height:100%;
+            transition:width 0.8s cubic-bezier(0.4,0,0.2,1);}
+        .ticket-divider{border-top:2px dashed rgba(148,163,184,0.3);margin:var(--sp-md) 0;padding-top:var(--sp-md);}
+        .swal2-container{position:fixed !important;top:0 !important;left:0 !important;width:100% !important;
+            height:100% !important;display:flex !important;align-items:center !important;
+            justify-content:center !important;padding:1rem !important;z-index:9999 !important;}
+        .swal2-popup{border-radius:1.5rem !important;font-family:'Prompt',sans-serif !important;
+            font-size:var(--fs-base) !important;width:min(90vw,400px) !important;}
+        .swal2-title{font-size:var(--fs-xl) !important;font-weight:700 !important;color:var(--text-main) !important;}
+        .swal2-confirm,.swal2-cancel{font-family:'Prompt',sans-serif !important;font-size:var(--fs-base) !important;
+            border-radius:0.875rem !important;padding:0.65em 1.4em !important;}
+        .icon-soft{background:linear-gradient(135deg,#ccfbf1,#e0f2fe);color:#0f766e;}
+        .space-y>*+*{margin-top:var(--sp-md);}
+        .space-y-sm>*+*{margin-top:var(--sp-sm);}
+        button,a,input,select{touch-action:manipulation;}
+        .hidden{display:none;}
     </style>
 </head>
 <body>
 <div id="app-shell">
-
     <header id="app-header">
         <span class="brand-label">FitPass69</span>
         <button class="admin-btn" onclick="goToAdmin()">
             <i class="fa-solid fa-user-shield"></i> ผู้ดูแลระบบ
         </button>
     </header>
-
     <main id="app-main">
 
+        <!-- STEP 1: IDENTIFY -->
         <div id="step-identify" class="step active">
             <div class="space-y" style="text-align:center;">
                 <div class="hero-icon"><i class="fa-solid fa-person-running"></i></div>
@@ -233,10 +138,13 @@
                 </div>
                 <div class="g-card space-y-sm" style="padding:var(--sp-md);text-align:left;margin-top:var(--sp-md);">
                     <label class="field-label" for="input-studentId">รหัสนักศึกษา</label>
-                    <div class="input-wrap">
+                    <div class="input-wrap" id="wrap-studentId">
                         <span class="input-icon"><i class="fa-solid fa-id-card"></i></span>
-                        <input type="text" id="input-studentId" class="field-input" inputmode="numeric" maxlength="11" placeholder="69xxxxxxxx" onkeydown="if(event.key==='Enter') handleIdentify()">
+                        <input type="text" id="input-studentId" class="field-input" inputmode="numeric"
+                            maxlength="11" placeholder="69xxxxxxxx"
+                            onkeydown="if(event.key==='Enter') handleIdentify()">
                     </div>
+                    <p id="err-studentId" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;margin-top:0.3em;margin-left:0.25em;"></p>
                     <button class="btn-primary" onclick="handleIdentify()" style="margin-top:var(--sp-sm);">
                         ตรวจสอบข้อมูล <i class="fa-solid fa-arrow-right" style="margin-left:0.4em;"></i>
                     </button>
@@ -244,6 +152,7 @@
             </div>
         </div>
 
+        <!-- STEP 2: PIN -->
         <div id="step-pin" class="step">
             <div class="space-y" style="text-align:center;">
                 <div style="width:clamp(3.5rem,12vw,5rem);height:clamp(3.5rem,12vw,5rem);border-radius:50%;margin-inline:auto;display:flex;align-items:center;justify-content:center;font-size:clamp(1.25rem,4.5vw,2rem);" class="icon-soft">
@@ -259,17 +168,36 @@
                         <div class="space-y-sm">
                             <div>
                                 <label class="field-label">ตั้ง PIN 6 หลัก</label>
-                                <input type="text" id="new-pin-1" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="field-input pin-input" placeholder="• • • • • •">
+                                <div class="input-wrap" id="wrap-pin1">
+                                    <input type="text" id="new-pin-1" maxlength="6" inputmode="numeric"
+                                        pattern="[0-9]*" autocomplete="one-time-code"
+                                        class="field-input pin-input" placeholder="• • • • • •"
+                                        style="padding-left:1.2em;">
+                                </div>
+                                <p id="err-pin1" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;margin-top:0.3em;margin-left:0.25em;"></p>
                             </div>
                             <div>
                                 <label class="field-label">ยืนยัน PIN อีกครั้ง</label>
-                                <input type="text" id="new-pin-2" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="field-input pin-input" placeholder="• • • • • •">
+                                <div class="input-wrap" id="wrap-pin2">
+                                    <input type="text" id="new-pin-2" maxlength="6" inputmode="numeric"
+                                        pattern="[0-9]*" autocomplete="one-time-code"
+                                        class="field-input pin-input" placeholder="• • • • • •"
+                                        style="padding-left:1.2em;">
+                                </div>
+                                <p id="err-pin2" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;margin-top:0.3em;margin-left:0.25em;"></p>
                             </div>
                         </div>
                     </div>
                     <div id="section-login-pin" class="hidden">
                         <label class="field-label">ใส่ PIN 6 หลัก</label>
-                        <input type="text" id="login-pin" maxlength="6" inputmode="numeric" pattern="[0-9]*" autocomplete="one-time-code" class="field-input pin-input" placeholder="• • • • • •" onkeydown="if(event.key==='Enter') handlePinSubmit()">
+                        <div class="input-wrap" id="wrap-login-pin">
+                            <input type="text" id="login-pin" maxlength="6" inputmode="numeric"
+                                pattern="[0-9]*" autocomplete="one-time-code"
+                                class="field-input pin-input" placeholder="• • • • • •"
+                                style="padding-left:1.2em;"
+                                onkeydown="if(event.key==='Enter') handlePinSubmit()">
+                        </div>
+                        <p id="err-login-pin" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;margin-top:0.3em;margin-left:0.25em;"></p>
                     </div>
                     <button class="btn-primary" onclick="handlePinSubmit()" style="margin-top:var(--sp-sm);">
                         ยืนยัน <i class="fa-solid fa-check" style="margin-left:0.4em;"></i>
@@ -281,6 +209,7 @@
             </div>
         </div>
 
+        <!-- STEP 3: DASHBOARD -->
         <div id="step-dashboard" class="step">
             <div class="space-y">
                 <div class="g-card space-y-sm" style="padding:var(--sp-md);text-align:center;">
@@ -302,7 +231,7 @@
                         </p>
                     </div>
                     <button id="checkin-btn" class="btn-primary" onclick="handleGoToCheckin()">
-                        <i class="fa-solid fa-bolt" style="margin-right:0.4em;"></i>เข้าใช้งานตอนนี้
+                        🎫 ใช้สิทธิ์วันนี้
                     </button>
                     <p id="lock-msg" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;"></p>
                 </div>
@@ -316,6 +245,7 @@
             </div>
         </div>
 
+        <!-- STEP 4: SUCCESS -->
         <div id="step-success" class="step">
             <div style="border-radius:var(--card-r);overflow:hidden;box-shadow:0 20px 50px -8px rgba(14,165,233,0.2);border:1px solid rgba(255,255,255,0.7);">
                 <div style="background:linear-gradient(135deg,#10b981,#0ea5e9);padding:var(--sp-lg);text-align:center;color:#fff;">
@@ -362,20 +292,13 @@
 
 <script>
 const API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
-
-// ✅ แก้แล้ว: ชี้ไปที่หน้า Admin ใหม่บน GitHub Pages โดยตรง แทนหน้า Admin เก่าใน Apps Script
 const ADMIN_URL = 'https://ntheerathep-ux.github.io/fitpass69/Admin.html';
 
-// JSONP — เลี่ยงปัญหา CORS ของ Apps Script เวลาเรียกจากเว็บนอก (GitHub Pages)
 function api(action, params = {}) {
     return new Promise((resolve, reject) => {
         const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
-        const cleanup = () => {
-            delete window[cbName];
-            if (script.parentNode) script.parentNode.removeChild(script);
-        };
+        const cleanup = () => { delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); };
         window[cbName] = (data) => { resolve(data); cleanup(); };
-
         const query = new URLSearchParams({ action, callback: cbName, ...params }).toString();
         const script = document.createElement('script');
         script.src = API_URL + '?' + query;
@@ -391,6 +314,28 @@ const state = { studentId: '', name: '', isNewUser: false };
     if (el) el.addEventListener('input', () => { el.value = el.value.replace(/\D/g, ''); });
 });
 
+// ======== SHAKE HELPER ========
+function shakeInput(inputId, wrapId, errId, msg) {
+    const input = document.getElementById(inputId);
+    const wrap  = document.getElementById(wrapId);
+    const err   = document.getElementById(errId);
+    if (err) { err.textContent = msg; err.classList.remove('hidden'); }
+    input.style.borderColor = '#f43f5e';
+    input.style.boxShadow   = '0 0 0 4px rgba(244,63,94,0.2)';
+    wrap.style.animation    = 'none';
+    wrap.offsetHeight; // reflow
+    wrap.style.animation    = 'shake 0.4s ease';
+    input.focus();
+    setTimeout(() => {
+        input.style.borderColor = '';
+        input.style.boxShadow   = '';
+        wrap.style.animation    = '';
+        if (err) err.classList.add('hidden');
+    }, 2000);
+}
+
+function clearErr(errId) { const e = document.getElementById(errId); if(e) e.classList.add('hidden'); }
+
 function goToStep(stepId) {
     document.querySelectorAll('.step').forEach(el => el.classList.remove('active'));
     document.getElementById(stepId).classList.add('active');
@@ -400,23 +345,22 @@ function goToDashboard() { renderDashboard(); goToStep('step-dashboard'); }
 function goToAdmin() { window.location.href = ADMIN_URL; }
 function handleLogout() {
     state.studentId = ''; state.name = ''; state.isNewUser = false;
-    ['input-studentId','new-pin-1','new-pin-2','login-pin'].forEach(id => {
-        const el = document.getElementById(id); if (el) el.value = '';
-    });
+    ['input-studentId','new-pin-1','new-pin-2','login-pin'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
     goToStep('step-identify');
 }
 
 const swalOpts = { scrollbarPadding: false, heightAuto: false };
-function loading(title) {
-    Swal.fire({ ...swalOpts, title, allowOutsideClick: false, didOpen: () => Swal.showLoading() });
-}
-function toast(icon, title) {
-    Swal.fire({ icon, title, toast: true, position: 'top', timer: 2500, showConfirmButton: false });
-}
+function loading(title) { Swal.fire({ ...swalOpts, title, allowOutsideClick: false, didOpen: () => Swal.showLoading() }); }
+function toast(icon, title) { Swal.fire({ icon, title, toast: true, position: 'top', timer: 2500, showConfirmButton: false }); }
 
+// ======== STEP 1 ========
 async function handleIdentify() {
     const sid = document.getElementById('input-studentId').value.trim();
-    if (!sid) return toast('warning', 'กรุณากรอกรหัสนักศึกษา');
+    if (!sid) {
+        shakeInput('input-studentId', 'wrap-studentId', 'err-studentId', 'กรุณากรอกรหัสนักศึกษา');
+        return;
+    }
+    clearErr('err-studentId');
     loading('กำลังตรวจสอบ...');
     try {
         const res = await api('findStudent', { studentId: sid });
@@ -433,10 +377,12 @@ async function handleIdentify() {
     }
 }
 
+// ======== STEP 2 ========
 function setupPinPage() {
     document.getElementById('pin-name').innerText = state.name;
     document.getElementById('pin-id-display').innerText = 'รหัส: ' + state.studentId;
     ['new-pin-1','new-pin-2','login-pin'].forEach(id => { const el = document.getElementById(id); if(el) el.value=''; });
+    ['err-pin1','err-pin2','err-login-pin'].forEach(id => clearErr(id));
     if (state.isNewUser) {
         document.getElementById('pin-title').innerText = '🎉 ยินดีต้อนรับ! ตั้ง PIN';
         document.getElementById('section-new-pin').classList.remove('hidden');
@@ -453,24 +399,26 @@ function handlePinSubmit() { state.isNewUser ? handleRegister() : handleLogin();
 async function handleRegister() {
     const p1 = document.getElementById('new-pin-1').value.trim();
     const p2 = document.getElementById('new-pin-2').value.trim();
-    if (p1.length !== 6) return toast('warning', 'PIN ต้องมี 6 หลัก');
-    if (p1 !== p2) return toast('error', 'PIN ทั้งสองครั้งไม่ตรงกัน');
+    if (!p1 || p1.length !== 6 || !/^\d{6}$/.test(p1)) {
+        shakeInput('new-pin-1', 'wrap-pin1', 'err-pin1', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return;
+    }
+    if (p1 !== p2) {
+        shakeInput('new-pin-2', 'wrap-pin2', 'err-pin2', 'PIN ทั้งสองครั้งไม่ตรงกัน'); return;
+    }
     loading('กำลังลงทะเบียน...');
     try {
         const res = await api('register', { studentId: state.studentId, pin: p1, name: state.name });
         Swal.close();
-        if (res.status === 'success') {
-            goToDashboard();
-            toast('success', 'ลงทะเบียนสำเร็จ! 🎉');
-        } else {
-            Swal.fire({ ...swalOpts, icon: 'error', title: 'ผิดพลาด', text: res.message, confirmButtonColor: '#0d9488' });
-        }
+        if (res.status === 'success') { goToDashboard(); toast('success', 'ลงทะเบียนสำเร็จ! 🎉'); }
+        else { Swal.fire({ ...swalOpts, icon: 'error', title: 'ผิดพลาด', text: res.message, confirmButtonColor: '#0d9488' }); }
     } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
 }
 
 async function handleLogin() {
     const pin = document.getElementById('login-pin').value.trim();
-    if (pin.length !== 6) return toast('warning', 'PIN ต้องมี 6 หลัก');
+    if (!pin || pin.length !== 6 || !/^\d{6}$/.test(pin)) {
+        shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return;
+    }
     loading('กำลังยืนยัน...');
     try {
         const res = await api('verifyPin', { studentId: state.studentId, pin });
@@ -478,11 +426,12 @@ async function handleLogin() {
         if (res.status === 'success') { goToDashboard(); }
         else {
             document.getElementById('login-pin').value = '';
-            Swal.fire({ ...swalOpts, icon: 'error', title: 'PIN ไม่ถูกต้อง', text: 'กรุณาลองใหม่', confirmButtonColor: '#0d9488' });
+            shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ไม่ถูกต้อง กรุณาลองใหม่');
         }
     } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
 }
 
+// ======== STEP 3 ========
 async function renderDashboard() {
     document.getElementById('dash-name').innerText = 'คุณ ' + state.name;
     document.getElementById('dash-id').innerText = state.studentId;
@@ -515,6 +464,7 @@ async function renderDashboard() {
     }
 }
 
+// ======== CHECK-IN ========
 async function handleGoToCheckin() {
     const { value: loc } = await Swal.fire({
         ...swalOpts, title: 'เลือกสถานที่', input: 'select',
