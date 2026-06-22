@@ -496,23 +496,15 @@ setInterval(function() {
 }, 30000);
 function doLogin() {
   var pass = document.getElementById('admin-pass').value;
+  var errEl = document.getElementById('login-error');
   if (!pass) return;
-  document.getElementById('login-error').style.display = 'none';
-  
-  // ตรวจสอบฝั่ง client ก่อน (password อยู่ใน HTML อยู่แล้ว ไม่ต้องรอ API)
-  if (pass === 'fitpass2569**+-') {
+  errEl.style.display = 'none';
+  if (pass === 'fitjangdex69') {
     showApp();
-    return;
+  } else {
+    errEl.textContent = 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่';
+    errEl.style.display = 'block';
   }
-  
-  // ถ้าไม่ตรง ค่อยยิง API เพื่อ double-check
-  api('adminLogin', { password: pass }).then(function(res) {
-    if (res.success) { showApp(); }
-    else { document.getElementById('login-error').style.display = 'block'; }
-  }).catch(function(err) {
-    document.getElementById('login-error').style.display = 'block';
-    console.error('Login error:', err);
-  });
 }
 function showApp() {
   sessionStorage.setItem('adminAuth', '1');
