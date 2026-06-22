@@ -30,8 +30,6 @@
   --sidebar-w-collapsed:64px;
 }
 html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);}
-
-/* ===================== LOGIN ===================== */
 #login-page{
   min-height:100vh; display:flex; align-items:center; justify-content:center;
   background:linear-gradient(135deg,#ede9fe 0%,#f8f9fc 60%,#fef3c7 100%);
@@ -64,12 +62,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 }
 .login-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,58,237,0.3);}
 .login-error{color:var(--danger);font-size:0.8rem;text-align:center;margin-top:0.75rem;display:none;}
-
-/* ===================== LAYOUT ===================== */
 #app{display:none;height:100vh;overflow:hidden;}
 .layout{display:flex;height:100%;}
-
-/* ===================== SIDEBAR ===================== */
 .sidebar{
   width:var(--sidebar-w);flex-shrink:0;
   background:var(--surface);border-right:1px solid var(--border);
@@ -94,10 +88,8 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
   border-radius:6px;transition:all 0.2s;
 }
 .sidebar-toggle:hover{background:var(--bg);color:var(--text-primary);}
-
 .sidebar-section{padding:1rem 0.75rem 0.25rem;font-size:0.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.08em;white-space:nowrap;overflow:hidden;}
 .sidebar.collapsed .sidebar-section{opacity:0;}
-
 .nav-item{
   display:flex;align-items:center;gap:0.75rem;
   padding:0.6rem 0.75rem;border-radius:10px;margin:1px 0.5rem;
@@ -109,7 +101,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .nav-item:hover{background:var(--bg);color:var(--text-primary);}
 .nav-item.active{background:var(--primary-light);color:var(--primary);font-weight:600;}
 .nav-label{white-space:nowrap;overflow:hidden;}
-
 .sidebar-bottom{margin-top:auto;border-top:1px solid var(--border);padding:0.75rem 0.5rem;}
 .logout-btn{
   display:flex;align-items:center;gap:0.75rem;padding:0.6rem 0.75rem;
@@ -119,8 +110,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 }
 .logout-btn:hover{background:#fef2f2;}
 .logout-btn i{font-size:16px;flex-shrink:0;width:20px;text-align:center;}
-
-/* ===================== MAIN ===================== */
 .main{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
 .topbar{
   background:var(--surface);border-bottom:1px solid var(--border);
@@ -137,14 +126,9 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 }
 .refresh-btn:hover{border-color:var(--primary);color:var(--primary);}
 .topbar-time{font-size:0.8rem;color:var(--text-muted);}
-
 .content{padding:1.5rem;flex:1;}
-
-/* ===================== PAGES ===================== */
 .page{display:none;}
 .page.active{display:block;}
-
-/* ===================== STAT CARDS ===================== */
 .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-bottom:1.5rem;}
 .stat-card{
   background:var(--surface);border:1px solid var(--border);border-radius:14px;
@@ -160,8 +144,6 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .up{color:var(--success);}
 .down{color:var(--danger);}
 .neutral{color:var(--text-muted);}
-
-/* ===================== CHART SECTION ===================== */
 .chart-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
 @media(max-width:900px){.chart-grid{grid-template-columns:1fr;}}
 .chart-card{
@@ -173,22 +155,16 @@ html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:
 .chart-num{font-size:2rem;font-weight:700;margin-top:0.1rem;line-height:1;}
 .chart-pct{font-size:0.8rem;font-weight:600;}
 .chart-wrap{position:relative;height:140px;}
-
-/* BAR section */
 .bar-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;}
 .bar-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
 .bar-card-title{font-size:1rem;font-weight:700;}
 .bar-wrap{position:relative;height:200px;}
-
-/* HORIZONTAL BARS */
 .hbar-section{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;}
 .hbar-item{margin-bottom:1rem;}
 .hbar-item:last-child{margin-bottom:0;}
 .hbar-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.4rem;font-size:0.875rem;font-weight:500;}
 .hbar-track{background:#f1f5f9;border-radius:999px;height:8px;overflow:hidden;}
 .hbar-fill{height:100%;border-radius:999px;transition:width 1s cubic-bezier(0.4,0,0.2,1);}
-
-/* RECENT TABLE */
 .table-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:1.5rem;}
 .table-head{padding:1rem 1.25rem;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--border);}
 .table-title{font-size:1rem;font-weight:700;}
@@ -200,8 +176,6 @@ tr:hover td{background:#fafafa;}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 10px;border-radius:999px;font-size:0.75rem;font-weight:600;}
 .badge-teal{background:var(--teal-light);color:var(--teal);}
 .badge-coral{background:var(--coral-light);color:var(--coral);}
-
-/* ===================== REPORT PAGE ===================== */
 .filter-bar{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:1.25rem;margin-bottom:1.5rem;display:flex;align-items:flex-end;gap:1rem;flex-wrap:wrap;}
 .field-group{display:flex;flex-direction:column;gap:0.4rem;}
 .field-group label{font-size:0.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.06em;}
@@ -214,8 +188,6 @@ tr:hover td{background:#fafafa;}
 }
 .search-btn:hover{background:#6d28d9;}
 .report-summary{font-size:0.875rem;color:var(--text-secondary);text-align:center;padding:0.75rem;border-top:1px solid var(--border);}
-
-/* ===================== MANAGE PAGE ===================== */
 .manage-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem;}
 @media(max-width:800px){.manage-grid{grid-template-columns:1fr;}}
 .manage-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;}
@@ -230,12 +202,8 @@ tr:hover td{background:#fafafa;}
 .result-box{padding:0.875rem 1rem;border-radius:10px;font-size:0.875rem;margin-top:0.75rem;display:none;}
 .result-success{background:#f0fdf4;border:1px solid #bbf7d0;color:#15803d;}
 .result-error{background:#fef2f2;border:1px solid #fecaca;color:#dc2626;}
-
-/* ===================== LOADING ===================== */
 .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(124,58,237,0.2);border-top-color:var(--primary);border-radius:50%;animation:spin 0.7s linear infinite;margin-right:6px;}
 @keyframes spin{to{transform:rotate(360deg);}}
-
-/* ===================== MOBILE SIDEBAR ===================== */
 @media(max-width:768px){
   .sidebar{position:fixed;left:-250px;top:0;bottom:0;z-index:100;transition:left 0.25s;}
   .sidebar.open{left:0;box-shadow:0 0 30px rgba(0,0,0,0.15);}
@@ -248,8 +216,6 @@ tr:hover td{background:#fafafa;}
 </style>
 </head>
 <body>
-
-<!-- ===================== LOGIN ===================== -->
 <div id="login-page">
   <div class="login-card">
     <div class="login-logo"><i class="fa-solid fa-shield-halved"></i></div>
@@ -262,19 +228,14 @@ tr:hover td{background:#fafafa;}
     <p class="login-error" id="login-error">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</p>
   </div>
 </div>
-
-<!-- ===================== APP ===================== -->
 <div id="app">
   <div class="layout">
-
-    <!-- SIDEBAR -->
     <aside class="sidebar" id="sidebar">
       <div class="sidebar-top">
         <div class="sidebar-logo"><i class="fa-solid fa-person-running"></i></div>
         <span class="sidebar-brand">Fit<span>Pass</span>69</span>
         <button class="sidebar-toggle" onclick="toggleSidebar()" title="ย่อ/ขยาย"><i class="fa-solid fa-bars"></i></button>
       </div>
-
       <div class="sidebar-section">เมนูหลัก</div>
       <button class="nav-item active" id="nav-overview" onclick="switchPage('overview')">
         <i class="fa-solid fa-chart-pie"></i><span class="nav-label">ภาพรวม</span>
@@ -285,18 +246,13 @@ tr:hover td{background:#fafafa;}
       <button class="nav-item" id="nav-manage" onclick="switchPage('manage')">
         <i class="fa-solid fa-users-gear"></i><span class="nav-label">จัดการสมาชิก</span>
       </button>
-
       <div class="sidebar-bottom">
         <button class="logout-btn" onclick="doLogout()">
           <i class="fa-solid fa-right-from-bracket"></i><span class="nav-label">ออกจากระบบ</span>
         </button>
       </div>
     </aside>
-
-    <!-- OVERLAY (mobile) -->
     <div class="overlay" id="overlay" onclick="closeSidebar()"></div>
-
-    <!-- MAIN -->
     <div class="main">
       <div class="topbar">
         <div style="display:flex;align-items:center;gap:0.75rem;">
@@ -310,13 +266,8 @@ tr:hover td{background:#fafafa;}
           </button>
         </div>
       </div>
-
       <div class="content">
-
-        <!-- ========== PAGE: OVERVIEW ========== -->
         <div class="page active" id="page-overview">
-
-          <!-- STAT CARDS -->
           <div class="stat-grid">
             <div class="stat-card">
               <div class="stat-top">
@@ -325,21 +276,24 @@ tr:hover td{background:#fafafa;}
               </div>
               <div class="stat-num" id="s-today">—</div>
               <div class="stat-label">คนเข้าใช้วันนี้</div>
-              <div class="stat-change" id="s-today-vs">
-                <span class="neutral">เทียบเมื่อวาน: —</span>
+              <div class="stat-change" id="s-today-vs"><span class="neutral">เทียบเมื่อวาน: —</span></div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-top">
+                <div class="stat-icon" style="background:#dbeafe;color:#2563eb;"><i class="fa-solid fa-database"></i></div>
               </div>
+              <div class="stat-num" id="s-master">—</div>
+              <div class="stat-label">นักศึกษาทั้งหมดในระบบ</div>
+              <div class="stat-change"><span class="neutral">จาก MasterStudent</span></div>
             </div>
             <div class="stat-card">
               <div class="stat-top">
                 <div class="stat-icon" style="background:#ede9fe;color:#7c3aed;"><i class="fa-solid fa-user-check"></i></div>
               </div>
               <div class="stat-num" id="s-users">—</div>
-              <div class="stat-label">ผู้ลงทะเบียนทั้งหมด</div>
-              <div class="stat-change">
-                <span class="neutral">สิทธิ์ที่ใช้ไป: <span id="s-pct">—</span>%</span>
-              </div>
+              <div class="stat-label">ลงทะเบียนแล้ว</div>
+              <div class="stat-change"><span class="neutral">ยังไม่ลงทะเบียน: <span id="s-not-reg">—</span> คน</span></div>
             </div>
-            <!-- มูลค่าที่มหาวิทยาลัยจ่ายแทน -->
             <div class="stat-card">
               <div class="stat-top">
                 <div class="stat-icon" style="background:#fef9c3;color:#ca8a04;"><i class="fa-solid fa-coins"></i></div>
@@ -347,11 +301,8 @@ tr:hover td{background:#fafafa;}
               </div>
               <div class="stat-num" id="s-subsidy" style="font-size:1.6rem;">—</div>
               <div class="stat-label">มูลค่าที่ ม. จ่ายแทน (บาท)</div>
-              <div class="stat-change" style="margin-top:0.5rem;">
-                <span style="font-size:0.72rem;color:var(--text-muted);">ฟิตเนส 15฿ · สระ 25฿/ครั้ง</span>
-              </div>
+              <div class="stat-change"><span style="font-size:0.72rem;color:var(--text-muted);">ฟิตเนส 15฿ · สระ 25฿/ครั้ง</span></div>
             </div>
-            <!-- สัดส่วน mini -->
             <div class="stat-card">
               <div class="stat-top">
                 <div class="stat-icon" style="background:#f0fdf4;color:#16a34a;"><i class="fa-solid fa-chart-pie"></i></div>
@@ -377,9 +328,15 @@ tr:hover td{background:#fafafa;}
                 </div>
               </div>
             </div>
+            <div class="stat-card">
+              <div class="stat-top">
+                <div class="stat-icon" style="background:#ccfbf1;color:#0d9488;"><i class="fa-solid fa-person-running"></i></div>
+              </div>
+              <div class="stat-num" id="s-pct" style="font-size:1.75rem;">—%</div>
+              <div class="stat-label">สิทธิ์ที่ใช้ไปแล้ว</div>
+              <div class="stat-change"><span class="neutral">จากทั้งหมด <span id="s-total-quota">—</span> ครั้ง</span></div>
+            </div>
           </div>
-
-          <!-- LINE CHARTS: ฟิตเนส + สระ -->
           <div class="chart-grid">
             <div class="chart-card">
               <div class="chart-header">
@@ -422,8 +379,6 @@ tr:hover td{background:#fafafa;}
               <div class="chart-wrap"><canvas id="chart-pool"></canvas></div>
             </div>
           </div>
-
-          <!-- BAR CHART: เปรียบเทียบรายวัน -->
           <div class="bar-card">
             <div class="bar-card-header">
               <span class="bar-card-title">ยอดผู้ใช้ 7 วันย้อนหลัง</span>
@@ -431,17 +386,13 @@ tr:hover td{background:#fafafa;}
             </div>
             <div class="bar-wrap"><canvas id="chart-bar"></canvas></div>
           </div>
-
-          <!-- PEAK HOUR CHART -->
           <div class="bar-card" style="margin-bottom:1.5rem;">
             <div class="bar-card-header">
               <span class="bar-card-title">ช่วงเวลาที่มาใช้บริการ (Peak Hour)</span>
-              <span style="font-size:0.8rem;color:var(--text-muted);">06:30 – 21:00 น.</span>
+              <span style="font-size:0.8rem;color:var(--text-muted);">06:00 – 21:00 น.</span>
             </div>
             <div class="bar-wrap" style="height:220px;"><canvas id="chart-peak"></canvas></div>
           </div>
-
-          <!-- RECENT TABLE -->
           <div class="table-card">
             <div class="table-head">
               <span class="table-title">รายการล่าสุด</span>
@@ -457,8 +408,6 @@ tr:hover td{background:#fafafa;}
             </div>
           </div>
         </div>
-
-        <!-- ========== PAGE: REPORT ========== -->
         <div class="page" id="page-report">
           <div class="filter-bar">
             <div class="field-group">
@@ -483,34 +432,24 @@ tr:hover td{background:#fafafa;}
             <div class="report-summary" id="report-summary"></div>
           </div>
         </div>
-
-        <!-- ========== PAGE: MANAGE ========== -->
         <div class="page" id="page-manage">
           <div class="manage-grid">
-            <!-- เพิ่มนักศึกษา -->
             <div class="manage-card">
-              <div class="manage-card-head"><i class="fa-solid fa-user-plus" style="margin-right:8px;color:var(--primary);"></i>เพิ่มนักศึกษา</div>
+              <div class="manage-card-head"><i class="fa-solid fa-key" style="margin-right:8px;color:var(--primary);"></i>รีเซ็ต PIN นักศึกษา</div>
               <div class="manage-body">
+                <p style="font-size:0.8rem;color:var(--text-secondary);margin-bottom:1rem;line-height:1.6;">
+                  ใช้เมื่อนักศึกษาลืม PIN — ระบบจะ<strong>ลบ PIN เดิมออก</strong> นักศึกษาสามารถตั้ง PIN ใหม่ได้เองตอนเข้าระบบครั้งถัดไป
+                </p>
                 <div class="form-group">
                   <label class="form-label">รหัสนักศึกษา</label>
-                  <input type="text" id="add-id" class="form-input" placeholder="เช่น 6910512345" inputmode="numeric">
+                  <input type="text" id="reset-id" class="form-input" placeholder="เช่น 6910512345" inputmode="numeric" onkeydown="if(event.key==='Enter') resetPin()">
                 </div>
-                <div class="form-group">
-                  <label class="form-label">ชื่อ-นามสกุล</label>
-                  <input type="text" id="add-name" class="form-input" placeholder="ชื่อ นามสกุล">
-                </div>
-                <div class="form-group">
-                  <label class="form-label">PIN 6 หลัก</label>
-                  <input type="text" id="add-pin" class="form-input" placeholder="ตั้ง PIN ให้นักศึกษา" maxlength="6" inputmode="numeric">
-                </div>
-                <button class="submit-btn" onclick="addStudent()">
-                  <i class="fa-solid fa-plus" style="margin-right:6px;"></i>เพิ่มนักศึกษา
+                <button class="submit-btn" onclick="resetPin()" style="background:linear-gradient(135deg,#dc2626,#f97316);">
+                  <i class="fa-solid fa-key" style="margin-right:6px;"></i>รีเซ็ต PIN
                 </button>
-                <div class="result-box" id="add-result"></div>
+                <div class="result-box" id="reset-result"></div>
               </div>
             </div>
-
-            <!-- ค้นหานักศึกษา -->
             <div class="manage-card">
               <div class="manage-card-head"><i class="fa-solid fa-magnifying-glass" style="margin-right:8px;color:var(--primary);"></i>ค้นหานักศึกษา</div>
               <div class="manage-body">
@@ -526,17 +465,12 @@ tr:hover td{background:#fafafa;}
             </div>
           </div>
         </div>
-
-      </div><!-- /content -->
-    </div><!-- /main -->
-  </div><!-- /layout -->
-</div><!-- /app -->
-
+      </div>
+    </div>
+  </div>
+</div>
 <script>
-// ===================== CONFIG =====================
-var API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec'; // ← ใส่ Apps Script URL ตรงนี้
-
-// ===================== API =====================
+var API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
 async function api(action, params) {
   params = params || {};
   const res = await fetch(API_URL, {
@@ -546,8 +480,6 @@ async function api(action, params) {
   });
   return res.json();
 }
-
-// ===================== CLOCK =====================
 function updateClock() {
   var now = new Date();
   document.getElementById('topbar-time').textContent =
@@ -555,13 +487,9 @@ function updateClock() {
     now.toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
 }
 setInterval(updateClock, 1000); updateClock();
-
-// ===================== AUTO REFRESH =====================
 setInterval(function() {
   if (document.getElementById('page-overview').classList.contains('active')) loadOverview();
 }, 30000);
-
-// ===================== LOGIN =====================
 function doLogin() {
   var pass = document.getElementById('admin-pass').value;
   if (!pass) return;
@@ -572,7 +500,6 @@ function doLogin() {
       else { document.getElementById('login-error').style.display = 'block'; }
     });
   } else {
-    // Dev mode — ไม่มี API URL ยังใช้ได้
     if (pass === 'fitpass69') { showApp(); }
     else { document.getElementById('login-error').style.display = 'block'; }
   }
@@ -591,8 +518,6 @@ function doLogout() {
   document.getElementById('admin-pass').value = '';
 }
 if (sessionStorage.getItem('adminAuth')) { showApp(); }
-
-// ===================== SIDEBAR =====================
 var sidebarCollapsed = false;
 function toggleSidebar() {
   sidebarCollapsed = !sidebarCollapsed;
@@ -606,8 +531,6 @@ function closeSidebar() {
   document.getElementById('sidebar').classList.remove('open');
   document.getElementById('overlay').classList.remove('show');
 }
-
-// ===================== PAGE SWITCH =====================
 var pageTitles = { overview: 'ภาพรวม', report: 'รายงาน', manage: 'จัดการสมาชิก' };
 function switchPage(name) {
   document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
@@ -617,11 +540,7 @@ function switchPage(name) {
   document.getElementById('topbar-title').textContent = pageTitles[name];
   closeSidebar();
 }
-
-// ===================== CHARTS =====================
 var chartFitness, chartPool, chartBar;
-
-// Line chart — มูลค่า (บาท) ต่อวัน
 function makeLine(id, labels, data, color, unit) {
   var ctx = document.getElementById(id).getContext('2d');
   var grad = ctx.createLinearGradient(0, 0, 0, 140);
@@ -651,7 +570,6 @@ function makeLine(id, labels, data, color, unit) {
   };
   return new Chart(ctx, cfg);
 }
-
 function makeBar(labels, fitnessData, poolData) {
   var ctx = document.getElementById('chart-bar').getContext('2d');
   if (chartBar) chartBar.destroy();
@@ -677,22 +595,18 @@ function makeBar(labels, fitnessData, poolData) {
     }
   });
 }
-
 var chartPeak;
 function makePeakChart(peakHours) {
-  // 06:30 — 21:00 ทุก 30 นาที
   var slots = [];
   var fitData = [];
   var poolData = [];
-  // สร้าง slot ทุก 30 นาที ตั้งแต่ 06:30 ถึง 21:00
   for (var h = 6; h <= 21; h++) {
-    var minutes = (h === 6) ? [30] : (h === 21) ? [0] : [0, 30];
+    var minutes = (h === 21) ? [0] : [0, 30];
     minutes.forEach(function(m) {
       var label = (h < 10 ? '0' : '') + h + ':' + (m === 0 ? '00' : '30');
       slots.push(label);
-      // map ชั่วโมงนั้นๆ
       var key = String(h);
-      var ratio = 0.5; // แต่ละ slot = ครึ่งชั่วโมง แบ่งค่า hour ออกเป็น 2
+      var ratio = 0.5;
       fitData.push(Math.round(((peakHours[key] && peakHours[key].fitness) || 0) * ratio));
       poolData.push(Math.round(((peakHours[key] && peakHours[key].pool) || 0) * ratio));
     });
@@ -721,11 +635,8 @@ function makePeakChart(peakHours) {
     }
   });
 }
-
-// ===================== LOAD OVERVIEW =====================
 async function loadOverview() {
   if (!API_URL) {
-    // Demo data ถ้าไม่มี API
     renderOverview({
       todayCount: 12, yesterdayCount: 8, totalCheckIns: 47, totalUsers: 25,
       remainingQuota: { percent: 63 },
@@ -770,63 +681,48 @@ async function loadOverview() {
     renderOverview(data);
   } catch(e) { console.error(e); }
 }
-
 function renderOverview(data) {
-  // Stat cards
   document.getElementById('s-today').textContent = data.todayCount;
+  document.getElementById('s-master').textContent = data.masterCount || '—';
   document.getElementById('s-users').textContent = data.totalUsers;
-  document.getElementById('s-pct').textContent = data.remainingQuota.percent;
-
+  document.getElementById('s-not-reg').textContent = ((data.masterCount || 0) - data.totalUsers);
+  document.getElementById('s-pct').textContent = data.remainingQuota.percent + '%';
+  document.getElementById('s-total-quota').textContent = data.remainingQuota.total;
   var diff = data.todayCount - (data.yesterdayCount || 0);
   var vsEl = document.getElementById('s-today-vs');
   if (diff > 0) vsEl.innerHTML = '<span class="up">↑ ' + diff + ' คน จากเมื่อวาน</span>';
   else if (diff < 0) vsEl.innerHTML = '<span class="down">↓ ' + Math.abs(diff) + ' คน จากเมื่อวาน</span>';
   else vsEl.innerHTML = '<span class="neutral">เท่ากับเมื่อวาน</span>';
-
-  // Location counts
   var fit = data.locations['ฟิตเนส'] || 0;
   var pool = data.locations['สระว่ายน้ำ'] || 0;
   var total = fit + pool || 1;
-
-  // Line chart labels
   document.getElementById('c-fitness-num').textContent = fit;
   document.getElementById('c-fitness-baht').textContent = (fit * 15).toLocaleString('th-TH');
   document.getElementById('c-pool-num').textContent = pool;
   document.getElementById('c-pool-baht').textContent = (pool * 25).toLocaleString('th-TH');
   document.getElementById('c-fitness-pct').textContent = '15 ฿ / ครั้ง';
   document.getElementById('c-pool-pct').textContent = '25 ฿ / ครั้ง';
-
-  // Subsidy calculation: ฟิตเนส 15฿ + สระ 25฿
   var subsidy = (fit * 15) + (pool * 25);
   document.getElementById('s-subsidy').textContent = subsidy.toLocaleString('th-TH') + ' ฿';
-
-  // Mini pie bars
   var fitPct = Math.round(fit / total * 100);
   var poolPct = Math.round(pool / total * 100);
   document.getElementById('mini-fit-pct').textContent = fitPct + '%';
   document.getElementById('mini-pool-pct').textContent = poolPct + '%';
   document.getElementById('mini-fit-bar').style.width = fitPct + '%';
   document.getElementById('mini-pool-bar').style.width = poolPct + '%';
-
-  // Line charts — มูลค่า (บาท) ต่อวัน: ฟิตเนส×15 + สระ×25
   var daily = data.daily || [];
   var labels = daily.map(function(d) { return d.date; });
   var fitnessValue = daily.map(function(d) { return (d.fitness || 0) * 15; });
   var poolValue    = daily.map(function(d) { return (d.pool || 0) * 25; });
   var fitnessCount = daily.map(function(d) { return d.fitness || 0; });
   var poolCount    = daily.map(function(d) { return d.pool || 0; });
-
   if (chartFitness) chartFitness.destroy();
   if (chartPool) chartPool.destroy();
   chartFitness = makeLine('chart-fitness', labels, fitnessValue, '#7c3aed', '฿');
   chartPool    = makeLine('chart-pool',    labels, poolValue,    '#f97316', '฿');
   makeBar(labels, fitnessCount, poolCount);
-
-  // Peak hour chart
   var peakHours = data.peakHours || {};
   makePeakChart(peakHours);
-
-  // Recent table
   var tbody = document.getElementById('recent-tbody');
   if (!data.recent || data.recent.length === 0) {
     tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ยังไม่มีรายการ</td></tr>';
@@ -839,15 +735,12 @@ function renderOverview(data) {
     }).join('');
   }
 }
-
-// ===================== DAILY REPORT =====================
 async function loadDailyReport() {
   var date = document.getElementById('filter-date').value;
   if (!date) return;
   document.getElementById('report-table-wrap').style.display = 'block';
   document.getElementById('report-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;"><span class="spinner"></span>กำลังโหลด...</td></tr>';
   document.getElementById('report-date-label').textContent = 'รายงานวันที่ ' + date;
-
   if (!API_URL) {
     setTimeout(function() {
       document.getElementById('report-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ยังไม่ได้เชื่อมต่อ API</td></tr>';
@@ -874,40 +767,21 @@ async function loadDailyReport() {
     document.getElementById('report-tbody').innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--danger);padding:2rem;">โหลดไม่สำเร็จ</td></tr>';
   }
 }
-
-// ===================== ADD STUDENT =====================
-async function addStudent() {
-  var id = document.getElementById('add-id').value.trim();
-  var name = document.getElementById('add-name').value.trim();
-  var pin = document.getElementById('add-pin').value.trim();
-  var resultEl = document.getElementById('add-result');
-
-  if (!id || !name || !pin) {
+async function resetPin() {
+  var id  = document.getElementById('reset-id').value.trim();
+  var resultEl = document.getElementById('reset-result');
+  if (!id) {
     resultEl.className = 'result-box result-error';
     resultEl.style.display = 'block';
-    resultEl.textContent = 'กรุณากรอกข้อมูลให้ครบ';
-    return;
-  }
-  if (pin.length !== 6) {
-    resultEl.className = 'result-box result-error';
-    resultEl.style.display = 'block';
-    resultEl.textContent = 'PIN ต้องมี 6 หลัก';
-    return;
-  }
-  if (!API_URL) {
-    resultEl.className = 'result-box result-error';
-    resultEl.style.display = 'block';
-    resultEl.textContent = 'ยังไม่ได้เชื่อมต่อ API';
+    resultEl.textContent = 'กรุณากรอกรหัสนักศึกษา';
     return;
   }
   try {
-    var res = await api('register', { studentId: id, pin: pin, name: name });
+    var res = await api('resetPin', { studentId: id });
     if (res.status === 'success') {
       resultEl.className = 'result-box result-success';
-      resultEl.textContent = '✓ เพิ่ม ' + name + ' สำเร็จ';
-      document.getElementById('add-id').value = '';
-      document.getElementById('add-name').value = '';
-      document.getElementById('add-pin').value = '';
+      resultEl.innerHTML = '✓ ลบ PIN ของ <strong>' + res.name + '</strong> สำเร็จ<br><span style="font-size:0.8rem;">นักศึกษาสามารถตั้ง PIN ใหม่ได้เองตอนเข้าระบบ</span>';
+      document.getElementById('reset-id').value = '';
     } else {
       resultEl.className = 'result-box result-error';
       resultEl.textContent = '✗ ' + res.message;
@@ -919,8 +793,6 @@ async function addStudent() {
     resultEl.style.display = 'block';
   }
 }
-
-// ===================== SEARCH STUDENT =====================
 async function searchStudent() {
   var id = document.getElementById('search-id').value.trim();
   var resultEl = document.getElementById('search-result');
