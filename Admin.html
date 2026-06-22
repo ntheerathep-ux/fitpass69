@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FitPass69 | Admin</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prompt:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Prompt:wght@400;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
@@ -32,36 +32,66 @@
 html,body{height:100%;font-family:'Inter',sans-serif;background:var(--bg);color:var(--text-primary);}
 #login-page{
   min-height:100vh; display:flex; align-items:center; justify-content:center;
-  background:linear-gradient(135deg,#ede9fe 0%,#f8f9fc 60%,#fef3c7 100%);
+  background:linear-gradient(145deg,#e8fdf5 0%,#e0f4ff 55%,#f8faff 100%);
+  font-family:'Prompt',sans-serif;
+  padding:1rem;
 }
 .login-card{
-  background:var(--surface); border-radius:20px; padding:2.5rem;
-  width:min(100%,400px); margin:1rem;
-  box-shadow:0 4px 32px rgba(124,58,237,0.08), 0 1px 4px rgba(0,0,0,0.04);
-  border:1px solid var(--border);
+  background:rgba(255,255,255,0.78);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-radius:1.5rem;
+  padding:2.5rem 2rem;
+  width:min(100%,420px);
+  box-shadow:0 8px 40px rgba(14,165,233,0.13), 0 1.5px 6px rgba(0,0,0,0.04);
+  border:1px solid rgba(255,255,255,0.9);
 }
 .login-logo{
-  width:52px;height:52px;border-radius:14px;
-  background:linear-gradient(135deg,#7c3aed,#a855f7);
+  width:clamp(4rem,14vw,5.5rem);height:clamp(4rem,14vw,5.5rem);border-radius:50%;
+  background:linear-gradient(135deg,#ccfbf1,#e0f2fe);color:#0f766e;
   display:flex;align-items:center;justify-content:center;
-  color:#fff;font-size:22px;margin:0 auto 1.25rem;
+  font-size:clamp(1.5rem,5vw,2.2rem);
+  box-shadow:inset 0 2px 4px rgba(255,255,255,0.9),0 6px 20px rgba(13,148,136,0.12);
+  margin:0 auto 1.25rem;
 }
-.login-card h1{font-size:1.5rem;font-weight:700;text-align:center;margin-bottom:0.25rem;}
-.login-card p{font-size:0.875rem;color:var(--text-secondary);text-align:center;margin-bottom:1.75rem;}
+.login-brand{
+  font-family:'Cinzel',serif;font-size:clamp(2rem,7vw,2.75rem);
+  background:linear-gradient(135deg,#059669,#0284c7);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  letter-spacing:0.05em;line-height:1.1;text-align:center;
+  display:block;margin-bottom:0.25rem;
+}
+.login-sub{font-size:0.9rem;color:#475569;text-align:center;margin-bottom:0.5rem;font-weight:500;}
+.login-badge{
+  display:inline-flex;align-items:center;gap:0.5em;
+  background:rgba(255,255,255,0.85);border:1px solid rgba(20,184,166,0.15);
+  border-radius:999px;padding:0.4em 1.1em;font-size:0.8rem;font-weight:600;
+  color:#475569;margin:0 auto 1.75rem;
+}
+.login-badge-dot{width:0.5em;height:0.5em;border-radius:50%;background:#2dd4bf;
+  box-shadow:0 0 0 3px rgba(45,212,191,0.2);}
+.login-label{font-size:0.72rem;font-weight:700;color:#94a3b8;text-transform:uppercase;
+  letter-spacing:0.12em;display:block;margin-bottom:0.5em;margin-left:0.2em;}
+.login-input-wrap{position:relative;margin-bottom:1rem;}
+.login-input-icon{position:absolute;left:1em;top:50%;transform:translateY(-50%);
+  color:#94a3b8;pointer-events:none;font-size:1rem;}
 .login-input{
-  width:100%;border:1.5px solid var(--border);border-radius:10px;
-  padding:0.75rem 1rem;font-family:'Inter',sans-serif;font-size:0.9rem;
-  color:var(--text-primary);background:var(--bg);transition:all 0.2s;
+  width:100%;background:rgba(255,255,255,0.7);border:1.5px solid #e2e8f0;
+  border-radius:1rem;padding:0.85em 1.1em 0.85em 2.8em;
+  font-family:'Prompt',sans-serif;font-size:1rem;font-weight:600;
+  color:#1e293b;transition:all 0.2s;-webkit-appearance:none;
 }
-.login-input:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(124,58,237,0.12);}
+.login-input::placeholder{color:#cbd5e1;font-weight:400;}
+.login-input:focus{background:rgba(255,255,255,0.98);border-color:#99f6e4;
+  box-shadow:0 0 0 4px rgba(153,246,228,0.28);outline:none;}
 .login-btn{
-  width:100%;margin-top:1rem;padding:0.85rem;border:none;border-radius:10px;
-  background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff;
-  font-family:'Inter',sans-serif;font-size:0.95rem;font-weight:600;cursor:pointer;
-  transition:all 0.2s;
+  width:100%;margin-top:0.25rem;padding:0.95em;border:none;border-radius:1rem;
+  background:linear-gradient(135deg,#14b8a6 0%,#0ea5e9 100%);color:#fff;
+  font-family:'Prompt',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;
+  box-shadow:0 6px 20px rgba(14,184,166,0.28);transition:all 0.3s;
 }
-.login-btn:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(124,58,237,0.3);}
-.login-error{color:var(--danger);font-size:0.8rem;text-align:center;margin-top:0.75rem;display:none;}
+.login-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(14,184,166,0.38);}
+.login-btn:active{transform:translateY(0);}
+.login-error{color:#f43f5e;font-size:0.8rem;font-weight:600;text-align:center;margin-top:0.75rem;display:none;}
 #app{display:none;height:100vh;overflow:hidden;}
 .layout{display:flex;height:100%;}
 .sidebar{
@@ -218,13 +248,22 @@ tr:hover td{background:#fafafa;}
 <body>
 <div id="login-page">
   <div class="login-card">
-    <div class="login-logo"><i class="fa-solid fa-shield-halved"></i></div>
-    <h1>Admin Dashboard</h1>
-    <p>FitPass69 — ระบบจัดการสมาชิก</p>
-    <div style="position:relative;">
-      <input type="password" id="admin-pass" class="login-input" placeholder="รหัสผ่านผู้ดูแลระบบ" onkeydown="if(event.key==='Enter') doLogin()">
+    <div class="login-logo"><i class="fa-solid fa-person-running"></i></div>
+    <span class="login-brand">FitPass69</span>
+    <p class="login-sub">ระบบจัดการสมาชิก</p>
+    <div style="display:flex;justify-content:center;">
+      <div class="login-badge">
+        <span class="login-badge-dot"></span>ผู้ดูแลระบบ
+      </div>
     </div>
-    <button class="login-btn" onclick="doLogin()">เข้าสู่ระบบ</button>
+    <label class="login-label" for="admin-pass">รหัสผ่าน</label>
+    <div class="login-input-wrap">
+      <span class="login-input-icon"><i class="fa-solid fa-lock"></i></span>
+      <input type="password" id="admin-pass" class="login-input" placeholder="กรอกรหัสผ่าน" onkeydown="if(event.key==='Enter') doLogin()">
+    </div>
+    <button class="login-btn" onclick="doLogin()">
+      เข้าสู่ระบบ <i class="fa-solid fa-arrow-right" style="margin-left:0.4em;"></i>
+    </button>
     <p class="login-error" id="login-error">รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่</p>
   </div>
 </div>
@@ -261,7 +300,18 @@ tr:hover td{background:#fafafa;}
         </div>
         <div class="topbar-right">
           <span class="topbar-time" id="topbar-time"></span>
-          <button class="refresh-btn" onclick="loadOverview()">
+          <div style="display:flex;align-items:center;gap:0.5rem;">
+            <input type="date" id="overview-date"
+              style="border:1px solid var(--border);border-radius:8px;padding:0.4rem 0.6rem;font-family:'Inter',sans-serif;font-size:0.8rem;color:var(--text-primary);background:var(--surface);cursor:pointer;"
+              onchange="onOverviewDateChange()">
+            <button onclick="resetOverviewToToday()" id="btn-today"
+              style="padding:0.4rem 0.75rem;border-radius:8px;border:1px solid var(--border);background:var(--surface);font-family:'Inter',sans-serif;font-size:0.8rem;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all 0.2s;"
+              onmouseover="this.style.borderColor='var(--primary)';this.style.color='var(--primary)'"
+              onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text-muted)'">
+              วันนี้
+            </button>
+          </div>
+          <button class="refresh-btn" onclick="refreshOverview()">
             <i class="fa-solid fa-rotate-right"></i> รีเฟรช
           </button>
         </div>
@@ -275,7 +325,7 @@ tr:hover td{background:#fafafa;}
                 <span class="stat-badge" style="background:#ede9fe;color:#7c3aed;">วันนี้</span>
               </div>
               <div class="stat-num" id="s-today">—</div>
-              <div class="stat-label">คนเข้าใช้วันนี้</div>
+              <div class="stat-label" id="s-today-label">คนเข้าใช้วันนี้</div>
               <div class="stat-change" id="s-today-vs"><span class="neutral">เทียบเมื่อวาน: —</span></div>
             </div>
             <div class="stat-card">
@@ -471,18 +521,14 @@ tr:hover td{background:#fafafa;}
 </div>
 <script>
 var API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
-function api(action, params) {
+async function api(action, params) {
   params = params || {};
-  return new Promise((resolve, reject) => {
-    const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
-    const cleanup = () => { delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); };
-    window[cbName] = (data) => { resolve(data); cleanup(); };
-    const query = new URLSearchParams(Object.assign({ action, callback: cbName }, params)).toString();
-    const script = document.createElement('script');
-    script.src = API_URL + '?' + query;
-    script.onerror = () => { reject(new Error('เชื่อมต่อเซิร์ฟเวอร์ไม่สำเร็จ')); cleanup(); };
-    document.body.appendChild(script);
+  const res = await fetch(API_URL, {
+    method: 'POST',
+    headers: { 'Content-Type': 'text/plain' },
+    body: JSON.stringify(Object.assign({ action: action }, params))
   });
+  return res.json();
 }
 function updateClock() {
   var now = new Date();
@@ -492,18 +538,20 @@ function updateClock() {
 }
 setInterval(updateClock, 1000); updateClock();
 setInterval(function() {
-  if (document.getElementById('page-overview').classList.contains('active')) loadOverview();
+  if (document.getElementById('page-overview').classList.contains('active')) refreshOverview();
 }, 30000);
 function doLogin() {
   var pass = document.getElementById('admin-pass').value;
-  var errEl = document.getElementById('login-error');
   if (!pass) return;
-  errEl.style.display = 'none';
-  if (pass === 'fitjangdex69') {
-    showApp();
+  document.getElementById('login-error').style.display = 'none';
+  if (API_URL) {
+    api('adminLogin', { password: pass }).then(function(res) {
+      if (res.success) { showApp(); }
+      else { document.getElementById('login-error').style.display = 'block'; }
+    });
   } else {
-    errEl.textContent = 'รหัสผ่านไม่ถูกต้อง กรุณาลองใหม่';
-    errEl.style.display = 'block';
+    if (pass === 'fitpass69') { showApp(); }
+    else { document.getElementById('login-error').style.display = 'block'; }
   }
 }
 function showApp() {
@@ -511,6 +559,8 @@ function showApp() {
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app').style.display = 'block';
   document.getElementById('filter-date').valueAsDate = new Date();
+  // ตั้งค่า date picker ภาพรวมเป็นวันนี้
+  document.getElementById('overview-date').valueAsDate = new Date();
   loadOverview();
 }
 function doLogout() {
@@ -637,6 +687,88 @@ function makePeakChart(peakHours) {
     }
   });
 }
+// ===================== OVERVIEW DATE PICKER =====================
+function getTodayStr() {
+  var d = new Date();
+  return d.toISOString().split('T')[0];
+}
+function onOverviewDateChange() {
+  var sel = document.getElementById('overview-date').value;
+  var today = getTodayStr();
+  if (sel === today || !sel) {
+    loadOverview();
+  } else {
+    loadDayOverview(sel);
+  }
+}
+function resetOverviewToToday() {
+  document.getElementById('overview-date').valueAsDate = new Date();
+  loadOverview();
+}
+function refreshOverview() {
+  var sel = document.getElementById('overview-date') && document.getElementById('overview-date').value;
+  var today = getTodayStr();
+  if (sel && sel !== today) {
+    loadDayOverview(sel);
+  } else {
+    loadOverview();
+  }
+}
+async function loadDayOverview(dateStr) {
+  try {
+    var data = await api('getDailyReport', { dateString: dateStr });
+    // คำนวณ stats จากข้อมูลวันนั้น
+    var fit = 0, pool = 0;
+    var peakHours = {};
+    for (var h = 6; h <= 21; h++) peakHours[String(h)] = { fitness: 0, pool: 0 };
+    data.forEach(function(r) {
+      if (r.location === 'ฟิตเนส') fit++;
+      else if (r.location === 'สระว่ายน้ำ') pool++;
+      // peak hour จาก time string "HH:mm:ss"
+      if (r.time) {
+        var h = parseInt(r.time.split(':')[0]);
+        if (h >= 6 && h <= 21) {
+          if (!peakHours[String(h)]) peakHours[String(h)] = { fitness: 0, pool: 0 };
+          if (r.location === 'ฟิตเนส') peakHours[String(h)].fitness++;
+          else if (r.location === 'สระว่ายน้ำ') peakHours[String(h)].pool++;
+        }
+      }
+    });
+    // แสดงวันที่ที่เลือกใน label
+    var parts = dateStr.split('-');
+    var label = parts[2] + '/' + parts[1] + '/' + (parseInt(parts[0]) + 543);
+    document.getElementById('s-today').textContent = data.length;
+    document.getElementById('s-today-label').textContent = 'คนเข้าใช้ ' + label;
+    document.getElementById('s-today-vs').innerHTML = '<span class="neutral">ฟิตเนส ' + fit + ' · สระ ' + pool + ' คน</span>';
+    var total = fit + pool || 1;
+    var subsidy = (fit * 15) + (pool * 25);
+    document.getElementById('c-fitness-num').textContent = fit;
+    document.getElementById('c-fitness-baht').textContent = (fit * 15).toLocaleString('th-TH');
+    document.getElementById('c-pool-num').textContent = pool;
+    document.getElementById('c-pool-baht').textContent = (pool * 25).toLocaleString('th-TH');
+    document.getElementById('s-subsidy').textContent = subsidy.toLocaleString('th-TH') + ' ฿';
+    var fitPct = Math.round(fit / total * 100);
+    var poolPct = Math.round(pool / total * 100);
+    document.getElementById('mini-fit-pct').textContent = fitPct + '%';
+    document.getElementById('mini-pool-pct').textContent = poolPct + '%';
+    document.getElementById('mini-fit-bar').style.width = fitPct + '%';
+    document.getElementById('mini-pool-bar').style.width = poolPct + '%';
+    makePeakChart(peakHours);
+    // recent table
+    var tbody = document.getElementById('recent-tbody');
+    if (data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--text-muted);padding:2rem;">ไม่มีข้อมูลวันที่ ' + label + '</td></tr>';
+    } else {
+      tbody.innerHTML = data.slice().reverse().map(function(r) {
+        var badge = r.location === 'ฟิตเนส'
+          ? '<span class="badge badge-teal"><i class="fa-solid fa-dumbbell"></i>' + r.location + '</span>'
+          : '<span class="badge badge-coral"><i class="fa-solid fa-person-swimming"></i>' + r.location + '</span>';
+        return '<tr><td style="font-weight:500;">' + r.name + '</td><td style="font-family:monospace;color:var(--text-muted);">' + r.id + '</td><td>' + badge + '</td><td style="color:var(--text-muted);">' + r.time + '</td></tr>';
+      }).join('');
+    }
+  } catch(e) { console.error(e); }
+}
+
 async function loadOverview() {
   if (!API_URL) {
     renderOverview({
@@ -685,6 +817,7 @@ async function loadOverview() {
 }
 function renderOverview(data) {
   document.getElementById('s-today').textContent = data.todayCount;
+  document.getElementById('s-today-label').textContent = 'คนเข้าใช้วันนี้';
   document.getElementById('s-master').textContent = data.masterCount || '—';
   document.getElementById('s-users').textContent = data.totalUsers;
   document.getElementById('s-not-reg').textContent = ((data.masterCount || 0) - data.totalUsers);
