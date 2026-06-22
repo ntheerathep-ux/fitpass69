@@ -619,10 +619,9 @@ function showApp() {
   sessionStorage.setItem('adminAuth', '1');
   document.getElementById('login-page').style.display = 'none';
   document.getElementById('app').style.display = 'block';
-  document.getElementById('filter-date').valueAsDate = new Date();
-  document.getElementById('overview-date').valueAsDate = new Date();
-  loadSystemStats(); // โหลด masterCount / totalUsers ครั้งเดียว
-  loadOverview();   // โหลดข้อมูลวันนี้
+  setPickerValue(document.getElementById('filter-date'), new Date());
+  document.getElementById('overview-date').value = '';
+  loadAllTimeOverview();
 }
 function doLogout() {
   sessionStorage.removeItem('adminAuth');
@@ -669,7 +668,11 @@ function closeSidebar() {
    DATE HELPERS
 ══════════════════════════════════════════ */
 function getTodayStr() {
-  return new Date().toISOString().split('T')[0];
+  // ใช้ local time ไม่ใช่ UTC — แก้บัก timezone
+  var d = new Date();
+  var mm = String(d.getMonth() + 1).padStart(2, '0');
+  var dd = String(d.getDate()).padStart(2, '0');
+  return d.getFullYear() + '-' + mm + '-' + dd;
 }
 function formatThaiDate(dateStr) {
   var p = dateStr.split('-');
@@ -678,9 +681,19 @@ function formatThaiDate(dateStr) {
   return p[2] + ' ' + months[parseInt(p[1]) - 1] + ' ' + thYear;
 }
 function formatShortDate(dateStr) {
-  // dd/MM
   var p = dateStr.split('-');
   return p[2] + '/' + p[1];
+}
+// แปลง picker value (yyyy-MM-dd string) เป็น Date object แบบ local ไม่ drift
+function parseDateLocal(str) {
+  var p = str.split('-');
+  return new Date(parseInt(p[0]), parseInt(p[1]) - 1, parseInt(p[2]));
+}
+// set input[type=date] value โดยไม่ผ่าน valueAsDate (UTC) 
+function setPickerValue(input, dateObj) {
+  var mm = String(dateObj.getMonth() + 1).padStart(2, '0');
+  var dd = String(dateObj.getDate()).padStart(2, '0');
+  input.value = dateObj.getFullYear() + '-' + mm + '-' + dd;
 }
 
 /* ══════════════════════════════════════════
@@ -688,22 +701,35 @@ function formatShortDate(dateStr) {
 ══════════════════════════════════════════ */
 function onOverviewDateChange() {
   var sel = document.getElementById('overview-date').value;
-  if (!sel) return;
+  if (!sel) {
+    // ไม่ได้เลือกวัน → แสดงยอดรวมทั้งหมด
+    loadAllTimeOverview();
+    return;
+  }
   if (sel === getTodayStr()) {
-    loadOverview();
+    loadOverview();        // วันนี้ → LIVE
   } else {
-    loadDayOverview(sel);
+    loadDayOverview(sel);  // วันอื่น → filter
   }
 }
 function resetOverviewToToday() {
-  document.getElementById('overview-date').valueAsDate = new Date();
+  setPickerValue(document.getElementById('overview-date'), new Date());
   loadOverview();
+}
+function clearDateFilter() {
+  document.getElementById('overview-date').value = '';
+  loadAllTimeOverview();
 }
 function shiftDate(delta) {
   var picker = document.getElementById('overview-date');
-  var d = picker.value ? new Date(picker.value + 'T00:00:00') : new Date();
-  d.setDate(d.getDate() + delta);
-  picker.valueAsDate = d;
+  var base;
+  if (picker.value) {
+    base = parseDateLocal(picker.value); // parse local ไม่ drift
+  } else {
+    base = new Date(); // ถ้าว่างอยู่ เริ่มจากวันนี้
+  }
+  base.setDate(base.getDate() + delta);
+  setPickerValue(picker, base);          // set ด้วย string ไม่ใช่ valueAsDate
   onOverviewDateChange();
 }
 function refreshCurrent() {
@@ -716,34 +742,55 @@ function refreshCurrent() {
    UPDATE DATE BANNER
 ══════════════════════════════════════════ */
 function updateBanner(dateStr) {
-  var banner  = document.getElementById('date-banner');
-  var textEl  = document.getElementById('date-banner-text');
-  var subEl   = document.getElementById('date-banner-sub');
-  var tagEl   = document.getElementById('date-banner-tag');
-  var peakEl  = document.getElementById('peak-date-label');
-  var rtTitle = document.getElementById('recent-table-title');
+  var banner   = document.getElementById('date-banner');
+  var textEl   = document.getElementById('date-banner-text');
+  var subEl    = document.getElementById('date-banner-sub');
+  var tagEl    = document.getElementById('date-banner-tag');
+  var peakEl   = document.getElementById('peak-date-label');
+  var rtTitle  = document.getElementById('recent-table-title');
   var barTitle = document.getElementById('bar-chart-title');
 
-  if (dateStr === getTodayStr()) {
+  // reset inline styles ก่อน
+  banner.style.background = '';
+  banner.style.borderColor = '';
+  tagEl.style.background = '';
+
+  if (!dateStr) {
+    // ALL-TIME MODE
+    banner.classList.remove('is-today');
+    banner.style.background  = 'linear-gradient(90deg,#f0f9ff,#f5f3ff)';
+    banner.style.borderColor = '#bae6fd';
+    tagEl.style.background   = '#0ea5e9';
+    textEl.textContent   = 'ยอดรวมทั้งหมด (18 – 30 มิ.ย.)';
+    subEl.textContent    = 'สถิติรวมตลอดโครงการ ไม่กรองวัน';
+    tagEl.textContent    = 'ALL';
+    peakEl.textContent   = 'ตลอดโครงการ';
+    rtTitle.textContent  = '10 รายการล่าสุด';
+    barTitle.textContent = 'ยอดผู้ใช้ 7 วันย้อนหลัง';
+    document.getElementById('s-today-badge').textContent = 'รวม';
+    document.getElementById('s-today-label').textContent = 'คนเข้าใช้ทั้งหมด';
+  } else if (dateStr === getTodayStr()) {
+    // TODAY MODE
     banner.classList.add('is-today');
-    textEl.textContent  = 'วันนี้ — ' + formatThaiDate(dateStr);
-    subEl.textContent   = 'ข้อมูลอัปเดตอัตโนมัติทุก 30 วินาที';
-    tagEl.textContent   = 'LIVE';
-    peakEl.textContent  = 'วันนี้';
-    rtTitle.textContent = 'รายการล่าสุดวันนี้';
+    textEl.textContent   = 'วันนี้ — ' + formatThaiDate(dateStr);
+    subEl.textContent    = 'ข้อมูลอัปเดตอัตโนมัติทุก 30 วินาที';
+    tagEl.textContent    = 'LIVE';
+    peakEl.textContent   = 'วันนี้';
+    rtTitle.textContent  = 'รายการล่าสุดวันนี้';
     barTitle.textContent = 'ยอดผู้ใช้ 7 วันย้อนหลัง';
     document.getElementById('s-today-badge').textContent = 'วันนี้';
     document.getElementById('s-today-label').textContent = 'คนเข้าใช้วันนี้';
   } else {
+    // PAST DAY MODE
     banner.classList.remove('is-today');
-    textEl.textContent  = 'ดูข้อมูลย้อนหลัง — ' + formatThaiDate(dateStr);
-    subEl.textContent   = 'ข้อมูลสถิติเฉพาะวันที่เลือก';
-    tagEl.textContent   = formatShortDate(dateStr);
-    peakEl.textContent  = formatThaiDate(dateStr);
-    rtTitle.textContent = 'รายการทั้งหมด ' + formatThaiDate(dateStr);
+    textEl.textContent   = 'ดูข้อมูลย้อนหลัง — ' + formatThaiDate(dateStr);
+    subEl.textContent    = 'ข้อมูลสถิติเฉพาะวันที่เลือก';
+    tagEl.textContent    = formatShortDate(dateStr);
+    peakEl.textContent   = formatThaiDate(dateStr);
+    rtTitle.textContent  = 'รายการทั้งหมด ' + formatThaiDate(dateStr);
     barTitle.textContent = 'ยอดผู้ใช้วันที่ ' + formatThaiDate(dateStr);
     document.getElementById('s-today-badge').textContent = formatShortDate(dateStr);
-    document.getElementById('s-today-label').textContent = 'คนเข้าใช้วันนี้';
+    document.getElementById('s-today-label').textContent = 'คนเข้าใช้';
   }
 }
 
@@ -908,19 +955,35 @@ function renderSystemStats(data) {
 }
 
 /* ══════════════════════════════════════════
-   LOAD SYSTEM STATS (once on login)
+   LOAD ALL-TIME (ไม่ได้เลือกวัน) = getAdminStats ยอดรวมทั้งหมด
 ══════════════════════════════════════════ */
-async function loadSystemStats() {
+async function loadAllTimeOverview() {
+  updateBanner(null); // null = all-time
+  document.getElementById('s-today-vs').innerHTML = '<span class="neutral"><span class="spinner"></span>กำลังโหลด...</span>';
   try {
     var data = await api('getAdminStats');
     renderSystemStats(data);
-    // เก็บไว้เผื่อ compare yesterday
     window._systemStats = data;
-  } catch (e) { console.error('loadSystemStats', e); }
+
+    // ยอดรวม = totalCheckIns แยก location
+    var fit  = (data.locations && data.locations['ฟิตเนส'])    || 0;
+    var pool = (data.locations && data.locations['สระว่ายน้ำ']) || 0;
+
+    document.getElementById('s-today-vs').innerHTML =
+      '<span class="neutral">ฟิตเนส ' + fit + ' · สระ ' + pool + ' ครั้ง</span>';
+
+    var daily7 = data.daily || [];
+    var recent = data.recent || [];
+
+    renderDateStats(fit, pool, data.totalCheckIns || (fit + pool), recent, data.peakHours || {}, daily7, null);
+  } catch (e) {
+    console.error('loadAllTimeOverview', e);
+    document.getElementById('s-today-vs').innerHTML = '<span style="color:var(--danger);">โหลดไม่สำเร็จ</span>';
+  }
 }
 
 /* ══════════════════════════════════════════
-   LOAD TODAY (full stats from getAdminStats)
+   LOAD TODAY = วันนี้ (LIVE)
 ══════════════════════════════════════════ */
 async function loadOverview() {
   var dateStr = getTodayStr();
@@ -935,17 +998,34 @@ async function loadOverview() {
     var fit  = (data.locations && data.locations['ฟิตเนส'])    || 0;
     var pool = (data.locations && data.locations['สระว่ายน้ำ']) || 0;
 
-    // today vs yesterday
+    // today vs yesterday — ใช้ todayCount จาก API
     var diff = data.todayCount - (data.yesterdayCount || 0);
     var vsEl = document.getElementById('s-today-vs');
     if (diff > 0)      vsEl.innerHTML = '<span class="up">↑ ' + diff + ' คน จากเมื่อวาน</span>';
     else if (diff < 0) vsEl.innerHTML = '<span class="down">↓ ' + Math.abs(diff) + ' คน จากเมื่อวาน</span>';
     else               vsEl.innerHTML = '<span class="neutral">เท่ากับเมื่อวาน</span>';
 
-    var daily7 = data.daily || [];
-    var recent = data.recent || [];
+    // สำหรับวันนี้ ใช้ todayCount + locations ของวันนี้จาก getDailyReport
+    var rows = await api('getDailyReport', { dateString: dateStr });
+    var fitToday = 0, poolToday = 0, peakToday = {};
+    for (var h = 6; h <= 21; h++) peakToday[String(h)] = { fitness: 0, pool: 0 };
+    rows.forEach(function(r) {
+      if (r.location === 'ฟิตเนส') fitToday++;
+      else if (r.location === 'สระว่ายน้ำ') poolToday++;
+      if (r.time) {
+        var hr = parseInt(r.time.split(':')[0]);
+        if (hr >= 6 && hr <= 21) {
+          if (r.location === 'ฟิตเนส') peakToday[String(hr)].fitness++;
+          else if (r.location === 'สระว่ายน้ำ') peakToday[String(hr)].pool++;
+        }
+      }
+    });
 
-    renderDateStats(fit, pool, data.todayCount, recent, data.peakHours || {}, daily7, dateStr);
+    var recent = rows.slice().reverse().slice(0, 10).map(function(r) {
+      return { name: r.name, id: r.id, location: r.location, time: r.time };
+    });
+
+    renderDateStats(fitToday, poolToday, rows.length, recent, peakToday, data.daily || [], dateStr);
   } catch (e) { console.error('loadOverview', e); }
 }
 
