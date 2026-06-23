@@ -409,7 +409,7 @@ async function handleRegister() {
     try {
         const res = await api('register', { studentId: state.studentId, pin: p1, name: state.name });
         Swal.close();
-        if (res.status === 'success') { goToDashboard(); toast('success', 'ลงทะเบียนสำเร็จ! 🎉'); }
+        if (res.status === 'success') { goToDashboard(); }
         else { Swal.fire({ ...swalOpts, icon: 'error', title: 'ผิดพลาด', text: res.message, confirmButtonColor: '#0d9488' }); }
     } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
 }
