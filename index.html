@@ -85,9 +85,9 @@
         .btn-primary{width:100%;background:linear-gradient(135deg,#14b8a6 0%,#0ea5e9 100%);
             color:#fff;font-family:'Prompt',sans-serif;font-size:var(--fs-lg);font-weight:700;
             border:none;border-radius:var(--card-r);padding:1em 1.5em;cursor:pointer;
-            position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(20,184,166,0.28);
+            position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(168,85,247,0.28);
             transition:all 0.3s cubic-bezier(0.4,0,0.2,1);}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(20,184,166,0.38);}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(168,85,247,0.38);}
         .btn-primary:active{transform:translateY(0);}
         .btn-primary:disabled{background:linear-gradient(135deg,#e2e8f0,#cbd5e1);box-shadow:none;color:#94a3b8;cursor:not-allowed;}
         .btn-ghost{width:100%;background:transparent;border:none;font-family:'Prompt',sans-serif;
@@ -112,24 +112,6 @@
         .space-y-sm>*+*{margin-top:var(--sp-sm);}
         button,a,input,select{touch-action:manipulation;}
         .hidden{display:none;}
-        /* ======= TAROT TICKET ======= */
-        .ticket-img-wrap{position:relative;overflow:hidden;}
-        .ticket-img-wrap img{width:100%;height:clamp(200px,55vw,280px);object-fit:cover;object-position:top center;display:block;}
-        .ticket-img-overlay{
-            position:absolute;bottom:0;left:0;right:0;
-            background:linear-gradient(to top,rgba(10,15,30,0.72) 0%,transparent 100%);
-            padding:1.2rem var(--sp-md) 0.9rem;
-            display:flex;align-items:flex-end;justify-content:space-between;
-        }
-        .ticket-success-badge{display:flex;align-items:center;gap:0.5em;color:#fff;}
-        .ticket-success-badge i{font-size:1.5rem;color:#34d399;filter:drop-shadow(0 0 6px rgba(52,211,153,0.6));}
-        .ticket-success-badge span{font-size:var(--fs-lg);font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,0.4);}
-        .ticket-roman{
-            font-family:'Cinzel',serif;font-size:var(--fs-sm);font-weight:700;
-            color:rgba(255,255,255,0.9);letter-spacing:0.2em;
-            text-shadow:0 1px 4px rgba(0,0,0,0.5);
-        }
-        .ticket-staff-note{font-size:var(--fs-xs);color:rgba(255,255,255,0.65);}
     </style>
 </head>
 <body>
@@ -266,23 +248,11 @@
         <!-- STEP 4: SUCCESS -->
         <div id="step-success" class="step">
             <div style="border-radius:var(--card-r);overflow:hidden;box-shadow:0 20px 50px -8px rgba(14,165,233,0.2);border:1px solid rgba(255,255,255,0.7);">
-
-                <!-- ===== TAROT CARD IMAGE HEADER ===== -->
-                <div class="ticket-img-wrap">
-                    <img id="ticket-card-img" src="" alt="ticket card">
-                    <div class="ticket-img-overlay">
-                        <div class="ticket-success-badge">
-                            <i class="fa-solid fa-circle-check"></i>
-                            <span>เช็คอินสำเร็จ!</span>
-                        </div>
-                        <div style="text-align:right;">
-                            <div id="ticket-roman" class="ticket-roman"></div>
-                            <div class="ticket-staff-note">โชว์ต่อเจ้าหน้าที่</div>
-                        </div>
-                    </div>
+                <div style="background:linear-gradient(135deg,#10b981,#0ea5e9);padding:var(--sp-lg);text-align:center;color:#fff;">
+                    <i class="fa-solid fa-circle-check" style="font-size:clamp(2.5rem,8vw,4rem);"></i>
+                    <h2 style="font-size:var(--fs-2xl);font-weight:800;margin-top:0.5em;">เช็คอินสำเร็จ!</h2>
+                    <p style="font-size:var(--fs-sm);opacity:0.85;">โชว์หน้าจอนี้ต่อเจ้าหน้าที่</p>
                 </div>
-                <!-- ===== END TAROT HEADER ===== -->
-
                 <div style="background:rgba(255,255,255,0.55);padding:var(--sp-md);text-align:center;">
                     <div class="ticket-divider">
                         <p style="font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:0.4em;">วันที่ใช้สิทธิ์</p>
@@ -324,13 +294,6 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
 const ADMIN_URL = 'https://ntheerathep-ux.github.io/fitpass69/Admin.html';
 
-// ======== TICKET IMAGES — เปลี่ยน URL รูปที่นี่ ========
-const TICKET_CONFIG = {
-    'ฟิตเนส':    { img: 'fitness-card.png', roman: 'VIII' },
-    'สระว่ายน้ำ': { img: 'pool-card.png',   roman: 'XVII'  }
-};
-// ========================================================
-
 function api(action, params = {}) {
     return new Promise((resolve, reject) => {
         const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
@@ -351,6 +314,7 @@ const state = { studentId: '', name: '', isNewUser: false };
     if (el) el.addEventListener('input', () => { el.value = el.value.replace(/\D/g, ''); });
 });
 
+// ======== SHAKE HELPER ========
 function shakeInput(inputId, wrapId, errId, msg) {
     const input = document.getElementById(inputId);
     const wrap  = document.getElementById(wrapId);
@@ -359,7 +323,7 @@ function shakeInput(inputId, wrapId, errId, msg) {
     input.style.borderColor = '#f43f5e';
     input.style.boxShadow   = '0 0 0 4px rgba(244,63,94,0.2)';
     wrap.style.animation    = 'none';
-    wrap.offsetHeight;
+    wrap.offsetHeight; // reflow
     wrap.style.animation    = 'shake 0.4s ease';
     input.focus();
     setTimeout(() => {
@@ -389,9 +353,13 @@ const swalOpts = { scrollbarPadding: false, heightAuto: false };
 function loading(title) { Swal.fire({ ...swalOpts, title, allowOutsideClick: false, didOpen: () => Swal.showLoading() }); }
 function toast(icon, title) { Swal.fire({ icon, title, toast: true, position: 'top', timer: 2500, showConfirmButton: false }); }
 
+// ======== STEP 1 ========
 async function handleIdentify() {
     const sid = document.getElementById('input-studentId').value.trim();
-    if (!sid) { shakeInput('input-studentId', 'wrap-studentId', 'err-studentId', 'กรุณากรอกรหัสนักศึกษา'); return; }
+    if (!sid) {
+        shakeInput('input-studentId', 'wrap-studentId', 'err-studentId', 'กรุณากรอกรหัสนักศึกษา');
+        return;
+    }
     clearErr('err-studentId');
     loading('กำลังตรวจสอบ...');
     try {
@@ -403,9 +371,13 @@ async function handleIdentify() {
         } else {
             Swal.fire({ ...swalOpts, icon: 'error', title: 'ไม่พบข้อมูล', text: res.message, confirmButtonColor: '#0d9488' });
         }
-    } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'เชื่อมต่อไม่ได้', text: e.message }); }
+    } catch(e) {
+        Swal.close();
+        Swal.fire({ ...swalOpts, icon: 'error', title: 'เชื่อมต่อไม่ได้', text: e.message });
+    }
 }
 
+// ======== STEP 2 ========
 function setupPinPage() {
     document.getElementById('pin-name').innerText = state.name;
     document.getElementById('pin-id-display').innerText = 'รหัส: ' + state.studentId;
@@ -427,8 +399,12 @@ function handlePinSubmit() { state.isNewUser ? handleRegister() : handleLogin();
 async function handleRegister() {
     const p1 = document.getElementById('new-pin-1').value.trim();
     const p2 = document.getElementById('new-pin-2').value.trim();
-    if (!p1 || p1.length !== 6 || !/^\d{6}$/.test(p1)) { shakeInput('new-pin-1', 'wrap-pin1', 'err-pin1', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return; }
-    if (p1 !== p2) { shakeInput('new-pin-2', 'wrap-pin2', 'err-pin2', 'PIN ทั้งสองครั้งไม่ตรงกัน'); return; }
+    if (!p1 || p1.length !== 6 || !/^\d{6}$/.test(p1)) {
+        shakeInput('new-pin-1', 'wrap-pin1', 'err-pin1', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return;
+    }
+    if (p1 !== p2) {
+        shakeInput('new-pin-2', 'wrap-pin2', 'err-pin2', 'PIN ทั้งสองครั้งไม่ตรงกัน'); return;
+    }
     loading('กำลังลงทะเบียน...');
     try {
         const res = await api('register', { studentId: state.studentId, pin: p1, name: state.name });
@@ -440,16 +416,22 @@ async function handleRegister() {
 
 async function handleLogin() {
     const pin = document.getElementById('login-pin').value.trim();
-    if (!pin || pin.length !== 6 || !/^\d{6}$/.test(pin)) { shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return; }
+    if (!pin || pin.length !== 6 || !/^\d{6}$/.test(pin)) {
+        shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return;
+    }
     loading('กำลังยืนยัน...');
     try {
         const res = await api('verifyPin', { studentId: state.studentId, pin });
         Swal.close();
         if (res.status === 'success') { goToDashboard(); }
-        else { document.getElementById('login-pin').value = ''; shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ไม่ถูกต้อง กรุณาลองใหม่'); }
+        else {
+            document.getElementById('login-pin').value = '';
+            shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ไม่ถูกต้อง กรุณาลองใหม่');
+        }
     } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
 }
 
+// ======== STEP 3 ========
 async function renderDashboard() {
     document.getElementById('dash-name').innerText = 'คุณ ' + state.name;
     document.getElementById('dash-id').innerText = state.studentId;
@@ -482,6 +464,7 @@ async function renderDashboard() {
     }
 }
 
+// ======== CHECK-IN ========
 async function handleGoToCheckin() {
     const { value: loc } = await Swal.fire({
         ...swalOpts, title: 'เลือกสถานที่', input: 'select',
@@ -508,11 +491,6 @@ async function handleGoToCheckin() {
             document.getElementById('res-location').innerText = res.location;
             document.getElementById('res-token').innerText = res.token;
             document.getElementById('res-time').innerText = res.timestamp;
-            // ===== ตั้งรูป tarot card ตามสถานที่ที่เลือก =====
-            const cfg = TICKET_CONFIG[res.location] || {};
-            document.getElementById('ticket-card-img').src = cfg.img || '';
-            document.getElementById('ticket-roman').innerText = cfg.roman || '';
-            // ===================================================
             goToStep('step-success');
             confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 } });
         } else {
