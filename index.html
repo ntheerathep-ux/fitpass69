@@ -18,9 +18,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- SweetAlert2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" defer></script>
-    <!-- Confetti — โหลด defer ไม่บล็อก render -->
+    <!-- SweetAlert2 — ต้องโหลดก่อน script หลัก ห้าม defer -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <!-- Confetti — โหลด defer ได้ เพราะเรียกหลัง user action -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" defer></script>
     <!-- Font Awesome subset — solid เท่านั้น -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
@@ -169,13 +169,13 @@
             color:#fff;font-size:clamp(2rem,7vw,3rem);
         }
         .success-title{
-            font-family:'Cinzel',serif;
-            font-size:var(--fs-2xl);font-weight:700;
+            font-family:'Prompt',sans-serif;
+            font-size:var(--fs-2xl);font-weight:800;
             background:linear-gradient(135deg,#059669,#0284c7,#7c3aed);
             background-size:200% auto;
             -webkit-background-clip:text;-webkit-text-fill-color:transparent;
             animation:shimmer 3s linear 0.5s infinite;
-            letter-spacing:0.04em;margin-bottom:0.2em;
+            letter-spacing:0.01em;margin-bottom:0.2em;
         }
         .success-sub{font-size:var(--fs-sm);color:var(--text-muted);animation:slideUp 0.4s ease-out 0.3s both;}
 
@@ -235,23 +235,32 @@
             border:1px solid rgba(253,230,138,0.7);
             border-radius:calc(var(--card-r)*0.75);
             padding:0.85em 1em;
-            animation:slideUp 0.4s ease-out 0.5s both;
+            animation:slideUp 0.4s ease-out 0.52s both;
         }
         .warn-note-title{font-size:var(--fs-sm);font-weight:700;color:#92400e;margin-bottom:0.4em;}
         .warn-note ul{font-size:var(--fs-xs);color:#b45309;list-style:disc;padding-left:1.2em;line-height:1.9;margin:0;}
 
-        /* Footer meta */
+        /* Meta row ใต้ info-grid */
         .ticket-meta{
-            margin:0.75rem var(--sp-md) 0;
-            display:flex;justify-content:space-between;
-            font-size:var(--fs-xs);color:var(--text-muted);font-family:monospace;
-            animation:slideUp 0.4s ease-out 0.55s both;
+            margin:0.5rem var(--sp-md) 0;
+            display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;
+            animation:slideUp 0.4s ease-out 0.42s both;
         }
+        .meta-cell{
+            background:rgba(255,255,255,0.5);
+            border:1px solid rgba(255,255,255,0.8);
+            border-radius:calc(var(--card-r)*0.6);
+            padding:0.65em 0.9em;
+        }
+        .meta-cell-label{font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);
+            text-transform:uppercase;letter-spacing:0.1em;margin-bottom:0.2em;}
+        .meta-cell-value{font-size:var(--fs-xs);font-weight:700;color:var(--text-sub);
+            font-family:monospace;word-break:break-all;}
 
         /* CTA button at bottom */
         .success-cta{
             margin:var(--sp-md) var(--sp-md) 0;
-            animation:slideUp 0.4s ease-out 0.6s both;
+            animation:slideUp 0.4s ease-out 0.62s both;
         }
         .btn-success{width:100%;background:linear-gradient(135deg,#10b981,#0ea5e9);
             color:#fff;font-family:'Prompt',sans-serif;font-size:var(--fs-base);font-weight:700;
@@ -425,6 +434,18 @@
                 </div>
             </div>
 
+            <!-- Date + Token ใต้ชื่อ -->
+            <div class="ticket-meta">
+                <div class="meta-cell">
+                    <div class="meta-cell-label">วันที่เช็คอิน</div>
+                    <div id="res-time" class="meta-cell-value">—</div>
+                </div>
+                <div class="meta-cell">
+                    <div class="meta-cell-label">รหัสอ้างอิง</div>
+                    <div class="meta-cell-value">REF: <span id="res-token"></span></div>
+                </div>
+            </div>
+
             <!-- Location pill -->
             <div class="location-pill">
                 <div class="location-icon" id="res-loc-icon">
@@ -443,12 +464,6 @@
                     <li>บัตรนักศึกษา (ตัวจริง)</li>
                     <li>แอป <strong>SIS PSU</strong> หน้าบัตรดิจิตอล</li>
                 </ul>
-            </div>
-
-            <!-- Meta row: token + time -->
-            <div class="ticket-meta">
-                <span>REF: <strong id="res-token" style="color:var(--text-sub);"></strong></span>
-                <span id="res-time"></span>
             </div>
 
             <!-- CTA -->
@@ -531,7 +546,7 @@ function goToStep(stepId) {
     document.getElementById(stepId).classList.add('active');
     document.getElementById('app-main').scrollTo({ top: 0, behavior: 'smooth' });
 }
-function goToDashboard() { renderDashboard(); goToStep('step-dashboard'); }
+async function goToDashboard() { goToStep('step-dashboard'); await renderDashboard(); }
 function goToAdmin() { window.location.href = ADMIN_URL; }
 function handleLogout() {
     state.studentId = ''; state.name = ''; state.isNewUser = false;
@@ -613,7 +628,7 @@ async function renderDashboard() {
     document.getElementById('history-list').innerHTML = '<p style="text-align:center;color:#94a3b8;padding:1.5em 0;">กำลังโหลด...</p>';
     const btn = document.getElementById('checkin-btn');
     const msg = document.getElementById('lock-msg');
-    btn.disabled = false; msg.classList.add('hidden');url
+    btn.disabled = false; msg.classList.add('hidden');
     try {
         const res = await api('getDashboard', { studentId: state.studentId });
         document.getElementById('dash-used').innerText = res.totalUsed;
