@@ -8,11 +8,23 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>FitPass69 | เช็คสิทธิ์</title>
+    <!-- PRECONNECT ลด latency ก่อน browser ดึง resource -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdn.tailwindcss.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <!-- Fonts เฉพาะ weight ที่ใช้จริง ลดขนาด payload -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@400;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js" defer></script>
+    <!-- Confetti — โหลด defer ไม่บล็อก render -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js" defer></script>
+    <!-- Font Awesome subset — solid เท่านั้น -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
     <style>
         :root {
             --primary:#14b8a6; --primary-dark:#0d9488; --accent:#0ea5e9;
@@ -43,7 +55,7 @@
             justify-content:space-between;background:rgba(255,255,255,0.6);
             border-bottom:1px solid rgba(255,255,255,0.7);position:sticky;top:0;z-index:10;}
         .brand-label{font-family:'Cinzel',serif;font-size:var(--fs-sm);color:var(--text-muted);letter-spacing:0.15em;}
-        .admin-btn{display:inline-flex;align-items:center;gap:0.4em;font-size:var(--fs-xs);font-weight:600;
+        .admin-btn{display:inline-flex;align-items:center;gap:0.4em;font-size:var(--fs-xs);font-weight:700;
             color:var(--text-muted);padding:0.45em 1em;border-radius:999px;border:none;
             background:transparent;cursor:pointer;transition:all 0.2s;}
         .admin-btn:hover{color:var(--primary-dark);background:rgba(255,255,255,0.75);}
@@ -53,6 +65,16 @@
         @keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
         @keyframes shake{0%,100%{transform:translateX(0);}20%{transform:translateX(-8px);}
             40%{transform:translateX(8px);}60%{transform:translateX(-5px);}80%{transform:translateX(5px);}}
+
+        /* ── SUCCESS SCREEN ANIMATIONS ── */
+        @keyframes popIn{0%{opacity:0;transform:scale(0.7);}60%{transform:scale(1.08);}100%{opacity:1;transform:scale(1);}}
+        @keyframes slideUp{from{opacity:0;transform:translateY(24px);}to{opacity:1;transform:translateY(0);}}
+        @keyframes shimmer{0%{background-position:-200% center;}100%{background-position:200% center;}}
+        @keyframes pulse-ring{0%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(52,211,153,0.5);}
+            70%{transform:scale(1);box-shadow:0 0 0 12px rgba(52,211,153,0);}100%{transform:scale(0.95);box-shadow:0 0 0 0 rgba(52,211,153,0);}}
+        @keyframes countUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+        @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
         .hero-icon{width:clamp(4rem,14vw,6rem);height:clamp(4rem,14vw,6rem);border-radius:50%;
             background:linear-gradient(135deg,#ccfbf1,#e0f2fe);color:#0f766e;
             display:flex;align-items:center;justify-content:center;font-size:clamp(1.5rem,5vw,2.25rem);
@@ -63,7 +85,7 @@
             letter-spacing:0.05em;line-height:1.1;text-align:center;}
         .date-badge{display:inline-flex;align-items:center;gap:0.6em;background:rgba(255,255,255,0.85);
             border:1px solid rgba(20,184,166,0.15);border-radius:999px;padding:0.55em 1.4em;
-            font-size:var(--fs-sm);font-weight:600;color:var(--text-sub);}
+            font-size:var(--fs-sm);font-weight:700;color:var(--text-sub);}
         .date-dot{width:0.55em;height:0.55em;border-radius:50%;animation:blink-dot 2s ease-in-out infinite;}
         @keyframes blink-dot{0%,100%{background:#2dd4bf;box-shadow:0 0 0 0 rgba(45,212,191,0.4);}
             50%{background:#38bdf8;box-shadow:0 0 0 5px rgba(56,189,248,0);}}
@@ -75,7 +97,7 @@
         .input-wrap:focus-within .input-icon{color:var(--primary);}
         .field-input{width:100%;background:rgba(255,255,255,0.7);border:1.5px solid #e2e8f0;
             border-radius:var(--card-r);padding:0.9em 1.2em 0.9em 3em;
-            font-family:'Prompt',sans-serif;font-size:var(--fs-lg);font-weight:600;
+            font-family:'Prompt',sans-serif;font-size:var(--fs-lg);font-weight:700;
             color:var(--text-main);transition:all 0.2s;-webkit-appearance:none;}
         .field-input::placeholder{color:#cbd5e1;font-weight:400;}
         .field-input:focus{background:rgba(255,255,255,0.98);border-color:#99f6e4;
@@ -85,9 +107,9 @@
         .btn-primary{width:100%;background:linear-gradient(135deg,#14b8a6 0%,#0ea5e9 100%);
             color:#fff;font-family:'Prompt',sans-serif;font-size:var(--fs-lg);font-weight:700;
             border:none;border-radius:var(--card-r);padding:1em 1.5em;cursor:pointer;
-            position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(168,85,247,0.28);
+            position:relative;overflow:hidden;box-shadow:0 6px 24px rgba(20,184,166,0.28);
             transition:all 0.3s cubic-bezier(0.4,0,0.2,1);}
-        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(168,85,247,0.38);}
+        .btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(20,184,166,0.38);}
         .btn-primary:active{transform:translateY(0);}
         .btn-primary:disabled{background:linear-gradient(135deg,#e2e8f0,#cbd5e1);box-shadow:none;color:#94a3b8;cursor:not-allowed;}
         .btn-ghost{width:100%;background:transparent;border:none;font-family:'Prompt',sans-serif;
@@ -98,7 +120,6 @@
         .quota-track{background:#e2e8f0;border-radius:999px;height:9px;overflow:hidden;}
         .quota-fill{background:linear-gradient(90deg,#34d399,#38bdf8);border-radius:999px;height:100%;
             transition:width 0.8s cubic-bezier(0.4,0,0.2,1);}
-        .ticket-divider{border-top:2px dashed rgba(148,163,184,0.3);margin:var(--sp-md) 0;padding-top:var(--sp-md);}
         .swal2-container{position:fixed !important;top:0 !important;left:0 !important;width:100% !important;
             height:100% !important;display:flex !important;align-items:center !important;
             justify-content:center !important;padding:1rem !important;z-index:9999 !important;}
@@ -112,6 +133,132 @@
         .space-y-sm>*+*{margin-top:var(--sp-sm);}
         button,a,input,select{touch-action:manipulation;}
         .hidden{display:none;}
+
+        /* ── TAROT TICKET (old) ── */
+        .ticket-img-wrap{position:relative;overflow:hidden;}
+        .ticket-img-wrap img{width:100%;height:clamp(200px,55vw,280px);object-fit:cover;object-position:top center;display:block;}
+        .ticket-img-overlay{
+            position:absolute;bottom:0;left:0;right:0;
+            background:linear-gradient(to top,rgba(10,15,30,0.72) 0%,transparent 100%);
+            padding:1.2rem var(--sp-md) 0.9rem;
+            display:flex;align-items:flex-end;justify-content:space-between;
+        }
+        .ticket-success-badge{display:flex;align-items:center;gap:0.5em;color:#fff;}
+        .ticket-success-badge i{font-size:1.5rem;color:#34d399;filter:drop-shadow(0 0 6px rgba(52,211,153,0.6));}
+        .ticket-success-badge span{font-size:var(--fs-lg);font-weight:800;text-shadow:0 1px 4px rgba(0,0,0,0.4);}
+        .ticket-roman{font-family:'Cinzel',serif;font-size:var(--fs-sm);font-weight:700;
+            color:rgba(255,255,255,0.9);letter-spacing:0.2em;text-shadow:0 1px 4px rgba(0,0,0,0.5);}
+        .ticket-staff-note{font-size:var(--fs-xs);color:rgba(255,255,255,0.65);}
+
+        /* ══════════════════════════════════════
+           SUCCESS SCREEN v2 — WOW EDITION
+        ══════════════════════════════════════ */
+        #step-success{padding-bottom:var(--sp-lg);}
+
+        .success-hero{
+            text-align:center;
+            padding:var(--sp-md) var(--sp-md) 0;
+        }
+        .success-check-ring{
+            width:clamp(5rem,20vw,7rem);height:clamp(5rem,20vw,7rem);
+            border-radius:50%;
+            background:linear-gradient(135deg,#34d399,#10b981);
+            display:flex;align-items:center;justify-content:center;
+            margin:0 auto var(--sp-sm);
+            animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) both, pulse-ring 2.5s ease-in-out 0.6s infinite;
+            color:#fff;font-size:clamp(2rem,7vw,3rem);
+        }
+        .success-title{
+            font-family:'Cinzel',serif;
+            font-size:var(--fs-2xl);font-weight:700;
+            background:linear-gradient(135deg,#059669,#0284c7,#7c3aed);
+            background-size:200% auto;
+            -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+            animation:shimmer 3s linear 0.5s infinite;
+            letter-spacing:0.04em;margin-bottom:0.2em;
+        }
+        .success-sub{font-size:var(--fs-sm);color:var(--text-muted);animation:slideUp 0.4s ease-out 0.3s both;}
+
+        /* Day counter — big number */
+        .day-counter-wrap{
+            display:flex;flex-direction:column;align-items:center;
+            margin:var(--sp-md) 0;
+            animation:countUp 0.5s ease-out 0.2s both;
+        }
+        .day-label-top{font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);
+            text-transform:uppercase;letter-spacing:0.18em;margin-bottom:0.3em;}
+        .day-number-row{display:flex;align-items:flex-end;gap:0.2em;line-height:1;}
+        .day-num{font-size:clamp(5rem,22vw,9rem);font-weight:800;color:#0d9488;line-height:1;}
+        .day-denom{font-size:clamp(1.5rem,6vw,2.5rem);color:#94a3b8;font-weight:300;padding-bottom:0.5em;}
+
+        /* Info cards grid */
+        .info-grid{
+            display:grid;grid-template-columns:1fr 1fr;gap:0.75rem;
+            padding:0 var(--sp-md);
+            animation:slideUp 0.4s ease-out 0.35s both;
+        }
+        .info-cell{
+            background:rgba(255,255,255,0.65);
+            border:1px solid rgba(255,255,255,0.85);
+            border-radius:calc(var(--card-r)*0.75);
+            padding:0.8em 1em;text-align:left;
+        }
+        .info-cell-label{font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);
+            text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.25em;}
+        .info-cell-value{font-size:var(--fs-sm);font-weight:800;color:var(--text-main);line-height:1.3;}
+
+        /* Location pill — full-width highlight */
+        .location-pill{
+            margin:0.75rem var(--sp-md) 0;
+            background:linear-gradient(135deg,rgba(204,251,241,0.8),rgba(224,242,254,0.8));
+            border:1.5px solid rgba(52,211,153,0.35);
+            border-radius:calc(var(--card-r)*0.75);
+            padding:1em 1.2em;
+            display:flex;align-items:center;gap:0.75em;
+            animation:slideUp 0.4s ease-out 0.45s both;
+        }
+        .location-icon{width:2.6em;height:2.6em;border-radius:50%;
+            background:linear-gradient(135deg,#34d399,#38bdf8);
+            display:flex;align-items:center;justify-content:center;
+            color:#fff;font-size:var(--fs-lg);flex-shrink:0;
+            animation:float 3s ease-in-out 1s infinite;
+        }
+        .location-text-wrap{flex:1;}
+        .location-text-sub{font-size:var(--fs-xs);font-weight:700;color:#0d9488;
+            text-transform:uppercase;letter-spacing:0.12em;margin-bottom:0.1em;}
+        .location-text-main{font-size:var(--fs-xl);font-weight:800;color:#065f46;}
+
+        /* Warning note */
+        .warn-note{
+            margin:0.75rem var(--sp-md) 0;
+            background:rgba(254,243,199,0.7);
+            border:1px solid rgba(253,230,138,0.7);
+            border-radius:calc(var(--card-r)*0.75);
+            padding:0.85em 1em;
+            animation:slideUp 0.4s ease-out 0.5s both;
+        }
+        .warn-note-title{font-size:var(--fs-sm);font-weight:700;color:#92400e;margin-bottom:0.4em;}
+        .warn-note ul{font-size:var(--fs-xs);color:#b45309;list-style:disc;padding-left:1.2em;line-height:1.9;margin:0;}
+
+        /* Footer meta */
+        .ticket-meta{
+            margin:0.75rem var(--sp-md) 0;
+            display:flex;justify-content:space-between;
+            font-size:var(--fs-xs);color:var(--text-muted);font-family:monospace;
+            animation:slideUp 0.4s ease-out 0.55s both;
+        }
+
+        /* CTA button at bottom */
+        .success-cta{
+            margin:var(--sp-md) var(--sp-md) 0;
+            animation:slideUp 0.4s ease-out 0.6s both;
+        }
+        .btn-success{width:100%;background:linear-gradient(135deg,#10b981,#0ea5e9);
+            color:#fff;font-family:'Prompt',sans-serif;font-size:var(--fs-base);font-weight:700;
+            border:none;border-radius:var(--card-r);padding:1em 1.5em;cursor:pointer;
+            box-shadow:0 6px 24px rgba(16,185,129,0.3);
+            transition:all 0.3s cubic-bezier(0.4,0,0.2,1);}
+        .btn-success:hover{transform:translateY(-2px);box-shadow:0 10px 32px rgba(16,185,129,0.4);}
     </style>
 </head>
 <body>
@@ -144,7 +291,7 @@
                             maxlength="11" placeholder="69xxxxxxxx"
                             onkeydown="if(event.key==='Enter') handleIdentify()">
                     </div>
-                    <p id="err-studentId" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;margin-top:0.3em;margin-left:0.25em;"></p>
+                    <p id="err-studentId" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:700;margin-top:0.3em;margin-left:0.25em;"></p>
                     <button class="btn-primary" onclick="handleIdentify()" style="margin-top:var(--sp-sm);">
                         ตรวจสอบข้อมูล <i class="fa-solid fa-arrow-right" style="margin-left:0.4em;"></i>
                     </button>
@@ -174,7 +321,7 @@
                                         class="field-input pin-input" placeholder="• • • • • •"
                                         style="padding-left:1.2em;">
                                 </div>
-                                <p id="err-pin1" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;margin-top:0.3em;margin-left:0.25em;"></p>
+                                <p id="err-pin1" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:700;margin-top:0.3em;margin-left:0.25em;"></p>
                             </div>
                             <div>
                                 <label class="field-label">ยืนยัน PIN อีกครั้ง</label>
@@ -184,7 +331,7 @@
                                         class="field-input pin-input" placeholder="• • • • • •"
                                         style="padding-left:1.2em;">
                                 </div>
-                                <p id="err-pin2" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;margin-top:0.3em;margin-left:0.25em;"></p>
+                                <p id="err-pin2" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:700;margin-top:0.3em;margin-left:0.25em;"></p>
                             </div>
                         </div>
                     </div>
@@ -197,7 +344,7 @@
                                 style="padding-left:1.2em;"
                                 onkeydown="if(event.key==='Enter') handlePinSubmit()">
                         </div>
-                        <p id="err-login-pin" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;margin-top:0.3em;margin-left:0.25em;"></p>
+                        <p id="err-login-pin" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:700;margin-top:0.3em;margin-left:0.25em;"></p>
                     </div>
                     <button class="btn-primary" onclick="handlePinSubmit()" style="margin-top:var(--sp-sm);">
                         ยืนยัน <i class="fa-solid fa-check" style="margin-left:0.4em;"></i>
@@ -218,7 +365,7 @@
                     </div>
                     <div>
                         <h2 id="dash-name" style="font-size:var(--fs-xl);font-weight:800;color:var(--text-main);">คุณ...</h2>
-                        <p style="font-size:var(--fs-sm);color:var(--text-muted);">รหัส: <span id="dash-id" style="font-weight:600;"></span></p>
+                        <p style="font-size:var(--fs-sm);color:var(--text-muted);">รหัส: <span id="dash-id" style="font-weight:700;"></span></p>
                     </div>
                     <div style="background:rgba(255,255,255,0.55);border-radius:calc(var(--card-r)*0.7);padding:var(--sp-sm);border:1px solid rgba(255,255,255,0.7);">
                         <div style="display:flex;justify-content:space-between;font-size:var(--fs-sm);color:var(--text-sub);margin-bottom:0.6em;">
@@ -233,7 +380,7 @@
                     <button id="checkin-btn" class="btn-primary" onclick="handleGoToCheckin()">
                         🎫 ใช้สิทธิ์วันนี้
                     </button>
-                    <p id="lock-msg" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:600;"></p>
+                    <p id="lock-msg" class="hidden" style="font-size:var(--fs-xs);color:#f43f5e;font-weight:700;"></p>
                 </div>
                 <div class="g-card" style="padding:var(--sp-md);">
                     <h3 style="font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.12em;margin-bottom:var(--sp-sm);">ประวัติการใช้บริการ</h3>
@@ -245,47 +392,73 @@
             </div>
         </div>
 
-        <!-- STEP 4: SUCCESS -->
+        <!-- STEP 4: SUCCESS — WOW EDITION -->
         <div id="step-success" class="step">
-            <div style="border-radius:var(--card-r);overflow:hidden;box-shadow:0 20px 50px -8px rgba(14,165,233,0.2);border:1px solid rgba(255,255,255,0.7);">
-                <div style="background:linear-gradient(135deg,#10b981,#0ea5e9);padding:var(--sp-lg);text-align:center;color:#fff;">
-                    <i class="fa-solid fa-circle-check" style="font-size:clamp(2.5rem,8vw,4rem);"></i>
-                    <h2 style="font-size:var(--fs-2xl);font-weight:800;margin-top:0.5em;">เช็คอินสำเร็จ!</h2>
-                    <p style="font-size:var(--fs-sm);opacity:0.85;">โชว์หน้าจอนี้ต่อเจ้าหน้าที่</p>
+
+            <!-- Hero: check icon + title -->
+            <div class="success-hero">
+                <div class="success-check-ring">
+                    <i class="fa-solid fa-check"></i>
                 </div>
-                <div style="background:rgba(255,255,255,0.55);padding:var(--sp-md);text-align:center;">
-                    <div class="ticket-divider">
-                        <p style="font-size:var(--fs-xs);font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.2em;margin-bottom:0.4em;">วันที่ใช้สิทธิ์</p>
-                        <div style="display:flex;align-items:baseline;justify-content:center;gap:0.3em;">
-                            <span id="res-day" style="font-size:clamp(4rem,18vw,7rem);font-weight:800;color:#0d9488;line-height:1;">1</span>
-                            <span style="font-size:var(--fs-2xl);color:#cbd5e1;font-weight:300;">/3</span>
-                        </div>
-                    </div>
-                    <div style="margin-bottom:var(--sp-sm);">
-                        <h3 id="res-name" style="font-size:var(--fs-xl);font-weight:800;color:var(--text-main);"></h3>
-                        <p id="res-id" style="font-size:var(--fs-sm);color:var(--text-muted);font-family:monospace;margin-top:0.2em;"></p>
-                    </div>
-                    <div style="background:rgba(204,251,241,0.5);border:1px solid rgba(167,243,208,0.6);border-radius:calc(var(--card-r)*0.7);padding:var(--sp-sm) var(--sp-md);margin-bottom:var(--sp-sm);">
-                        <p style="font-size:var(--fs-xs);font-weight:700;color:#0d9488;text-transform:uppercase;letter-spacing:0.15em;margin-bottom:0.25em;">สถานที่ใช้บริการ</p>
-                        <p id="res-location" style="font-size:var(--fs-xl);font-weight:800;color:#065f46;"></p>
-                    </div>
-                    <div style="background:rgba(254,243,199,0.6);border:1px solid rgba(253,230,138,0.6);border-radius:calc(var(--card-r)*0.7);padding:var(--sp-sm);text-align:left;margin-bottom:var(--sp-sm);">
-                        <p style="font-size:var(--fs-sm);font-weight:700;color:#92400e;margin-bottom:0.4em;"><i class="fa-solid fa-triangle-exclamation" style="margin-right:0.4em;"></i>กรุณาแสดงต่อเจ้าหน้าที่</p>
-                        <ul style="font-size:var(--fs-xs);color:#b45309;list-style:disc;padding-left:1.2em;line-height:1.8;">
-                            <li>บัตรนักศึกษา (ตัวจริง)</li>
-                            <li>แอป <strong>SIS PSU</strong> หน้าบัตรดิจิตอล</li>
-                        </ul>
-                    </div>
-                    <div style="display:flex;justify-content:space-between;font-size:var(--fs-xs);color:var(--text-muted);font-family:monospace;">
-                        <span>REF: <strong id="res-token" style="color:var(--text-sub);"></strong></span>
-                        <span id="res-time"></span>
-                    </div>
+                <div class="success-title">เช็คอินสำเร็จ!</div>
+                <div class="success-sub">แสดงหน้าจอนี้ต่อเจ้าหน้าที่</div>
+            </div>
+
+            <!-- Big day counter -->
+            <div class="day-counter-wrap">
+                <div class="day-label-top">วันที่ใช้สิทธิ์</div>
+                <div class="day-number-row">
+                    <span id="res-day" class="day-num">1</span>
+                    <span class="day-denom">/3</span>
                 </div>
-                <button onclick="goToDashboard()" style="width:100%;background:linear-gradient(135deg,#10b981,#0ea5e9);color:#fff;border:none;padding:var(--sp-sm) var(--sp-md);font-family:'Prompt',sans-serif;font-size:var(--fs-base);font-weight:700;cursor:pointer;">
-                    <i class="fa-solid fa-chart-bar" style="margin-right:0.4em;"></i>ดูสรุปสิทธิ์ของฉัน
+            </div>
+
+            <!-- Name + ID grid -->
+            <div class="info-grid">
+                <div class="info-cell">
+                    <div class="info-cell-label">ชื่อ-นามสกุล</div>
+                    <div id="res-name" class="info-cell-value">—</div>
+                </div>
+                <div class="info-cell">
+                    <div class="info-cell-label">รหัสนักศึกษา</div>
+                    <div id="res-id" class="info-cell-value" style="font-family:monospace;letter-spacing:0.05em;">—</div>
+                </div>
+            </div>
+
+            <!-- Location pill -->
+            <div class="location-pill">
+                <div class="location-icon" id="res-loc-icon">
+                    <i class="fa-solid fa-dumbbell"></i>
+                </div>
+                <div class="location-text-wrap">
+                    <div class="location-text-sub">สถานที่ใช้บริการ</div>
+                    <div id="res-location" class="location-text-main">ฟิตเนส</div>
+                </div>
+            </div>
+
+            <!-- Warning note -->
+            <div class="warn-note">
+                <div class="warn-note-title"><i class="fa-solid fa-triangle-exclamation" style="margin-right:0.4em;color:#f59e0b;"></i>กรุณาแสดงต่อเจ้าหน้าที่</div>
+                <ul>
+                    <li>บัตรนักศึกษา (ตัวจริง)</li>
+                    <li>แอป <strong>SIS PSU</strong> หน้าบัตรดิจิตอล</li>
+                </ul>
+            </div>
+
+            <!-- Meta row: token + time -->
+            <div class="ticket-meta">
+                <span>REF: <strong id="res-token" style="color:var(--text-sub);"></strong></span>
+                <span id="res-time"></span>
+            </div>
+
+            <!-- CTA -->
+            <div class="success-cta">
+                <button class="btn-success" onclick="goToDashboard()">
+                    <i class="fa-solid fa-chart-bar" style="margin-right:0.5em;"></i>ดูสรุปสิทธิ์ของฉัน
                 </button>
             </div>
-        </div>
+
+        </div><!-- /step-success -->
 
     </main>
 </div>
@@ -294,11 +467,29 @@
 const API_URL = 'https://script.google.com/macros/s/AKfycbye_HlMNIZryLkYSCVFUi2gB8R3qsA6aaiIU4L5-nMoXMmn__Y5ijD8Z4SkZlHLBYTi/exec';
 const ADMIN_URL = 'https://ntheerathep-ux.github.io/fitpass69/Admin.html';
 
-function api(action, params = {}) {
+/* ─────────────────────────────────────────
+   LOCATION CONFIG  (icon + label)
+───────────────────────────────────────── */
+const LOC_CONFIG = {
+    'ฟิตเนส':    { icon: 'fa-solid fa-dumbbell' },
+    'สระว่ายน้ำ': { icon: 'fa-solid fa-water-ladder' }
+};
+
+/* ─────────────────────────────────────────
+   API: JSONP (ไม่มี async overhead พิเศษ
+   แต่ timeout ป้องกัน hang)
+───────────────────────────────────────── */
+function api(action, params = {}, timeoutMs = 10000) {
     return new Promise((resolve, reject) => {
-        const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
-        const cleanup = () => { delete window[cbName]; if (script.parentNode) script.parentNode.removeChild(script); };
+        const cbName = 'cb_' + Date.now() + '_' + Math.floor(Math.random() * 1e6);
+        let timer;
+        const cleanup = () => {
+            clearTimeout(timer);
+            delete window[cbName];
+            if (script.parentNode) script.parentNode.removeChild(script);
+        };
         window[cbName] = (data) => { resolve(data); cleanup(); };
+        timer = setTimeout(() => { reject(new Error('หมดเวลาเชื่อมต่อ กรุณาลองใหม่')); cleanup(); }, timeoutMs);
         const query = new URLSearchParams({ action, callback: cbName, ...params }).toString();
         const script = document.createElement('script');
         script.src = API_URL + '?' + query;
@@ -314,7 +505,6 @@ const state = { studentId: '', name: '', isNewUser: false };
     if (el) el.addEventListener('input', () => { el.value = el.value.replace(/\D/g, ''); });
 });
 
-// ======== SHAKE HELPER ========
 function shakeInput(inputId, wrapId, errId, msg) {
     const input = document.getElementById(inputId);
     const wrap  = document.getElementById(wrapId);
@@ -323,7 +513,7 @@ function shakeInput(inputId, wrapId, errId, msg) {
     input.style.borderColor = '#f43f5e';
     input.style.boxShadow   = '0 0 0 4px rgba(244,63,94,0.2)';
     wrap.style.animation    = 'none';
-    wrap.offsetHeight; // reflow
+    wrap.offsetHeight;
     wrap.style.animation    = 'shake 0.4s ease';
     input.focus();
     setTimeout(() => {
@@ -351,15 +541,10 @@ function handleLogout() {
 
 const swalOpts = { scrollbarPadding: false, heightAuto: false };
 function loading(title) { Swal.fire({ ...swalOpts, title, allowOutsideClick: false, didOpen: () => Swal.showLoading() }); }
-function toast(icon, title) { Swal.fire({ icon, title, toast: true, position: 'top', timer: 2500, showConfirmButton: false }); }
 
-// ======== STEP 1 ========
 async function handleIdentify() {
     const sid = document.getElementById('input-studentId').value.trim();
-    if (!sid) {
-        shakeInput('input-studentId', 'wrap-studentId', 'err-studentId', 'กรุณากรอกรหัสนักศึกษา');
-        return;
-    }
+    if (!sid) { shakeInput('input-studentId', 'wrap-studentId', 'err-studentId', 'กรุณากรอกรหัสนักศึกษา'); return; }
     clearErr('err-studentId');
     loading('กำลังตรวจสอบ...');
     try {
@@ -371,13 +556,9 @@ async function handleIdentify() {
         } else {
             Swal.fire({ ...swalOpts, icon: 'error', title: 'ไม่พบข้อมูล', text: res.message, confirmButtonColor: '#0d9488' });
         }
-    } catch(e) {
-        Swal.close();
-        Swal.fire({ ...swalOpts, icon: 'error', title: 'เชื่อมต่อไม่ได้', text: e.message });
-    }
+    } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'เชื่อมต่อไม่ได้', text: e.message }); }
 }
 
-// ======== STEP 2 ========
 function setupPinPage() {
     document.getElementById('pin-name').innerText = state.name;
     document.getElementById('pin-id-display').innerText = 'รหัส: ' + state.studentId;
@@ -399,46 +580,40 @@ function handlePinSubmit() { state.isNewUser ? handleRegister() : handleLogin();
 async function handleRegister() {
     const p1 = document.getElementById('new-pin-1').value.trim();
     const p2 = document.getElementById('new-pin-2').value.trim();
-    if (!p1 || p1.length !== 6 || !/^\d{6}$/.test(p1)) {
-        shakeInput('new-pin-1', 'wrap-pin1', 'err-pin1', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return;
-    }
-    if (p1 !== p2) {
-        shakeInput('new-pin-2', 'wrap-pin2', 'err-pin2', 'PIN ทั้งสองครั้งไม่ตรงกัน'); return;
-    }
+    if (!p1 || p1.length !== 6 || !/^\d{6}$/.test(p1)) { shakeInput('new-pin-1', 'wrap-pin1', 'err-pin1', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return; }
+    if (p1 !== p2) { shakeInput('new-pin-2', 'wrap-pin2', 'err-pin2', 'PIN ทั้งสองครั้งไม่ตรงกัน'); return; }
     loading('กำลังลงทะเบียน...');
     try {
         const res = await api('register', { studentId: state.studentId, pin: p1, name: state.name });
         Swal.close();
-        if (res.status === 'success') { goToDashboard(); }
-        else { Swal.fire({ ...swalOpts, icon: 'error', title: 'ผิดพลาด', text: res.message, confirmButtonColor: '#0d9488' }); }
+        if (res.status === 'success') {
+            /* ── ลงทะเบียนสำเร็จ → ไป dashboard เลย ไม่แสดง toast ── */
+            goToDashboard();
+        } else {
+            Swal.fire({ ...swalOpts, icon: 'error', title: 'ผิดพลาด', text: res.message, confirmButtonColor: '#0d9488' });
+        }
     } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
 }
 
 async function handleLogin() {
     const pin = document.getElementById('login-pin').value.trim();
-    if (!pin || pin.length !== 6 || !/^\d{6}$/.test(pin)) {
-        shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return;
-    }
+    if (!pin || pin.length !== 6 || !/^\d{6}$/.test(pin)) { shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ต้องเป็นตัวเลข 6 หลักเท่านั้น'); return; }
     loading('กำลังยืนยัน...');
     try {
         const res = await api('verifyPin', { studentId: state.studentId, pin });
         Swal.close();
         if (res.status === 'success') { goToDashboard(); }
-        else {
-            document.getElementById('login-pin').value = '';
-            shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ไม่ถูกต้อง กรุณาลองใหม่');
-        }
+        else { document.getElementById('login-pin').value = ''; shakeInput('login-pin', 'wrap-login-pin', 'err-login-pin', 'PIN ไม่ถูกต้อง กรุณาลองใหม่'); }
     } catch(e) { Swal.close(); Swal.fire({ ...swalOpts, icon: 'error', title: 'Error', text: e.message }); }
 }
 
-// ======== STEP 3 ========
 async function renderDashboard() {
     document.getElementById('dash-name').innerText = 'คุณ ' + state.name;
     document.getElementById('dash-id').innerText = state.studentId;
     document.getElementById('history-list').innerHTML = '<p style="text-align:center;color:#94a3b8;padding:1.5em 0;">กำลังโหลด...</p>';
     const btn = document.getElementById('checkin-btn');
     const msg = document.getElementById('lock-msg');
-    btn.disabled = false; msg.classList.add('hidden');
+    btn.disabled = false; msg.classList.add('hidden');url
     try {
         const res = await api('getDashboard', { studentId: state.studentId });
         document.getElementById('dash-used').innerText = res.totalUsed;
@@ -464,7 +639,6 @@ async function renderDashboard() {
     }
 }
 
-// ======== CHECK-IN ========
 async function handleGoToCheckin() {
     const { value: loc } = await Swal.fire({
         ...swalOpts, title: 'เลือกสถานที่', input: 'select',
@@ -485,14 +659,21 @@ async function handleGoToCheckin() {
         const res = await api('checkIn', { studentId: state.studentId, location: loc });
         Swal.close();
         if (res.status === 'success') {
+            /* ── ป้อนข้อมูลลง success screen ── */
             document.getElementById('res-day').innerText = res.day;
             document.getElementById('res-name').innerText = res.name;
             document.getElementById('res-id').innerText = res.studentId;
             document.getElementById('res-location').innerText = res.location;
             document.getElementById('res-token').innerText = res.token;
             document.getElementById('res-time').innerText = res.timestamp;
+
+            /* ── อัปเดต icon ตามสถานที่ ── */
+            const cfg = LOC_CONFIG[res.location] || { icon: 'fa-solid fa-star' };
+            document.getElementById('res-loc-icon').innerHTML = `<i class="${cfg.icon}"></i>`;
+
             goToStep('step-success');
-            confetti({ particleCount: 180, spread: 80, origin: { y: 0.6 } });
+            /* ── confetti เล็กน้อย delay ให้ animation ขึ้นก่อน ── */
+            setTimeout(() => confetti({ particleCount: 200, spread: 90, origin: { y: 0.55 } }), 400);
         } else {
             Swal.fire({ ...swalOpts, icon: 'error', title: 'ไม่สำเร็จ', text: res.message, confirmButtonColor: '#0d9488' });
         }
